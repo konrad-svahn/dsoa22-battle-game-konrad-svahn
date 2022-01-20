@@ -21,4 +21,14 @@ public class UserInterface {
     public static void printRegen(){
         System.out.println("troll");
     }
+
+    public static void printDeath(GameCharacter killer ,GameCharacter victim){
+        System.out.println( killer.getName() +" has won the battle");
+        System.out.println(victim.getName() + " has died");
+    }
+
+    public static void printGameStart(){
+        System.out.println("Game start");
+        System.out.println("A black knight blocks the bridge before you");
+    }
 }

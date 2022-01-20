@@ -22,10 +22,19 @@ public abstract class GameCharacter {
         defender.takeDamage(damage);
         if(defender.getHelth() < 0){defender.setHelth(0);}
         UserInterface.printDamage(GameCharacter.this,defender,damage);
+
     }
 
     private void takeDamage(int damage){
         this.helth = this.helth - damage;
+    }
+
+    public boolean isDead(){
+        if (this.helth <= 0){
+        return true;
+
+        }else{
+            return false;}
     }
     
     public boolean isPlayer() {
