@@ -1,11 +1,13 @@
+import java.util.ArrayList;
+
 public class UserInterface {
 
-    public static void printBattleStart(GameCharacter[] charackters){
+    public static void printBattleStart(ArrayList<GameCharacter>  charackters){
         System.out.println("A battle has begun");
-        for(int i = 0; i < charackters.length; i++){
+        for(int i = 0; i < charackters.size(); i++){
             int j = i+1;
             System.out.println(
-                charackters[i].getName()+" has "+charackters[i].getHelth()+" helth and is number "+j+" in the atack order"
+                charackters.get(i).getName()+" has "+charackters.get(i).getHelth()+" helth and is number "+j+" in the atack order"
             );
         }
     } 

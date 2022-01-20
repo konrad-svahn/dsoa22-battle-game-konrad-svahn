@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
@@ -19,10 +20,16 @@ public class Main {
             System.out.println("A black knight blocks the bridge before you");
                 
             GameCharacter enemy1 = new Npc("the black knight", 500,4);
+            GameCharacter enemy2 = new Npc("the black knight", 500,1);
+            GameCharacter enemy3 = new Npc("the black knight", 500,8);
 
-            GameCharacter[] battle1 = {enemy1,player};
-            sortCharacters(battle1);
-            UserInterface.printBattleStart(battle1);
+            ArrayList<GameCharacter> battleParticipants = new ArrayList<>();
+            battleParticipants.add(enemy1);
+            battleParticipants.add(player);
+            battleParticipants.add(enemy2);
+            battleParticipants.add(enemy3);
+            sortCharacters(battleParticipants);
+            UserInterface.printBattleStart(battleParticipants);
             
             while (true) {
                 player.attack(enemy1);
@@ -46,17 +53,17 @@ public class Main {
         }   
     }
 
-    public static GameCharacter[] sortCharacters(GameCharacter[] charackters){
-        for(int i = 0; i < charackters.length; i++){
+    public static ArrayList<GameCharacter> sortCharacters(ArrayList<GameCharacter> charackters){
+        for(int i = 0; i < charackters.size(); i++){
+            System.out.println(charackters.get(0).getInitiative()+""+charackters.get(1).getInitiative()+""+charackters.get(2).getInitiative()+""+charackters.get(3).getInitiative());
             int bigest = 0;
-            for(int j = 0 + i; j < charackters.length; j++){
+            for(int j = 0 + i; j < charackters.size(); j++){
                 if(j == 0 + i){bigest = j;}
-                else if(charackters[j].getInitiative() > charackters[j-1].getInitiative()){bigest = j;}
+                else if(charackters.get(j).getInitiative() > charackters.get(bigest).getInitiative()){bigest = j;}
             }
-            //System.out.println(charackters[0].getInitiative()+""+charackters[1].getInitiative()+""+charackters[2].getInitiative()+""+charackters[3].getInitiative());
-            GameCharacter temp = charackters[i];
-            charackters[i] = charackters[bigest];
-            charackters[bigest] = temp;
+            GameCharacter temp = charackters.get(i);
+            charackters.set(i,charackters.get(bigest)); 
+            charackters.set(bigest,temp);
         }
         return charackters;
     }
