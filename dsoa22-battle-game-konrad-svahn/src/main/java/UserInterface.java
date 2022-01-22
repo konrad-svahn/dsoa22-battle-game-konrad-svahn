@@ -31,4 +31,8 @@ public class UserInterface {
         System.out.println("Game start");
         System.out.println("A black knight blocks the bridge before you");
     }
+
+    public static void printContinuePromt(){
+        System.out.println("press q to quit pres another buton to continue");
+    }
 }
