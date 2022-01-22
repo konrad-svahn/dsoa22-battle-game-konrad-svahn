@@ -12,7 +12,7 @@ public class Main {
             name = scannName.nextLine();
             
             GameCharacter player = new Player(name,100,5);
-            GameCharacter enemy1 = new Npc("the black knight", 5,4);
+            GameCharacter enemy1 = new Npc("the black knight", 500,4);
             GameCharacter enemy2 = new Npc("rapier wielding bandit", 75,8);
             GameCharacter enemy3 = new Npc("torch wielding bandit", 150,2);
             enemy2.setWeapon(new Weapon("rapier", 30));
@@ -24,7 +24,8 @@ public class Main {
             //battleParticipants.add(enemy2);
             //battleParticipants.add(enemy3);
             while (true) {
-                if(CombatManager.runEncounter(battleParticipants)){break;}
+                CombatManager.runEncounter(scannName ,battleParticipants);
+                if(CombatManager.endOfBattleChoise(scannName)){break;}
             }
         } catch (Exception e) {
             System.out.println(e);

@@ -24,16 +24,16 @@ public class CombatManager {
         return isGameOver;
     }
 
-    public static boolean runEncounter(ArrayList<GameCharacter> fighters){
+    public static void runEncounter(Scanner scannAction ,ArrayList<GameCharacter> fighters){
 
-        try (Scanner scanAction = new Scanner(System.in)) {
-            
+        
+
             UserInterface.printGameStart();
             sortCharacters(fighters);
             UserInterface.printBattleStart(fighters);
                 
             while (true) {
-                playerAction(scanAction);
+                playerAction(scannAction);
                 fighters.get(0).attack(fighters.get(1));
     
                 if (fighters.get(1).isDead()){
@@ -49,29 +49,31 @@ public class CombatManager {
                     break;
                 } 
             }
-            return endOfBattleChoise(scanAction);
-        } catch (Exception e) {
-            System.out.println(e);}
-        return true;
-    }
+    } 
      
 
-    private static int playerAction(Scanner scanAction){
-        while (true){
-            String input = scanAction.nextLine();
-            if (input.matches("-?\\d+")){
-                return Integer.valueOf(input);
+    private static int playerAction(Scanner scanAction ){
+       
+             
+        while (true){scanAction.tokens();
+            if(scanAction.hasNext()){String input = scanAction.nextLine();
+                if (input.matches("-?\\d+")){
+                    return Integer.valueOf(input);
+                }
             }
         }
     }
 
     public static boolean endOfBattleChoise(Scanner scanAction){
-        if(CombatManager.isGameOver()){return true;}
-        UserInterface.printContinuePromt();
             
+        if(CombatManager.isGameOver()){
+            return true;
+        }
+        UserInterface.printContinuePromt();    
         String input = scanAction.nextLine();
-        System.out.println(input);
-        if(input.equals("q")){return true;}
-        else{return false;} 
+    
+        if(input.equals("q")){return true;
+        } else {return false;
+        } 
     }
 }
