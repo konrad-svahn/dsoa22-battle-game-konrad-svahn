@@ -27,34 +27,39 @@ public class CombatManager {
 
     public static void runEncounter(Scanner scannAction ,ArrayList<GameCharacter> fighters) {
 
-            UserInterface.printGameStart();
-            sortCharacters(fighters);
-            UserInterface.printBattleStart(fighters);
+        int action;
+        UserInterface.printGameStart();
+        sortCharacters(fighters);
+        initialiseHelth(fighters);
+        UserInterface.printBattleStart(fighters);
                 
-            while (true) {
-                playerAction(scannAction);
-                fighters.get(0).attack(fighters.get(1));
-    
-                if (fighters.get(1).isDead()) {
-                    UserInterface.printDeath(fighters.get(0), fighters.get(1));
-                    break;
-                } 
+        while (true) {
+            
+            action = playerAction(scannAction, 2);
+            //if(action == 0){}
+            if(action == 1){break;}
+
+            fighters.get(0).attack(fighters.get(1));
+            if (isKillingBow(fighters.get(0), fighters.get(1))) {
+                break;
+             }
                         
-                fighters.get(1).attack(fighters.get(0));
-    
-                if (fighters.get(0).isDead()) {
-                    UserInterface.printDeath(fighters.get(1), fighters.get(0));
-                    isGameOver = true;
-                    break;
-                } 
+            fighters.get(1).attack(fighters.get(0));
+            if (isKillingBow(fighters.get(1), fighters.get(0))) {
+                break;
             }
+        }
     } 
      
-    private static int playerAction(Scanner scanAction ) {   
-        while (true){scanAction.tokens();
+    private static int playerAction(Scanner scanAction, int length) {   
+        while (true){
+            UserInterface.printActionPromt();
             if (scanAction.hasNext()){String input = scanAction.nextLine();
                 if (input.matches("-?\\d+")) {
-                    return Integer.valueOf(input);
+                    int intput = Integer.valueOf(input);
+                    if (intput < length && intput >= 0) {
+                        return intput;
+                    }
                 }
             }
         }
@@ -68,5 +73,21 @@ public class CombatManager {
         } else {
             return false;
         } 
+    }
+
+    private static void initialiseHelth(ArrayList<GameCharacter> fighters){
+        for (int i = 0; i < fighters.size(); i++) {
+            fighters.get(i).resetHelth();
+        }
+    }
+
+    private static boolean isKillingBow(GameCharacter attacker, GameCharacter defender) {
+        if (defender.isDead()) {
+            UserInterface.printDeath(attacker, defender);
+            if (defender.isPlayer) {isGameOver = true;}
+            return true;
+        } else {
+            return false;
+        }
     }
 }

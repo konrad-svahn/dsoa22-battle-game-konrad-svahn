@@ -29,6 +29,10 @@ public class UserInterface {
     }
 
     public static void printGameStart() {
-        System.out.println("A black knight blocks the bridge before you");
+        System.out.println("A rapier wielding bandit blocks the bridge before you");
+    }
+
+    public static void printActionPromt() {
+        System.out.println("press 1 to run away and 0 to attack");
     }
 }
