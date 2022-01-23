@@ -5,6 +5,5 @@ public class Player extends GameCharacter{
         this.isPlayer = true;
         setInitiative(initiative);
         setAttackVariance(5);
-    }
-    
+    } 
 }

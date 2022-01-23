@@ -4,36 +4,41 @@ public abstract class GameCharacter {
     
     private String name; 
     private int helth;
+    private int maxHelth;
     private int initiative;
     private int attackVariance;
     public boolean isPlayer;
     private Weapon weapon;
     Random ran = new Random();
     
-    public GameCharacter(String name, int helth ,int initiative) {
+    public GameCharacter(String name, int maxHelth ,int initiative) {
         this.name = name;
-        this.helth = helth;
+        this.maxHelth = maxHelth;
+        this.helth = maxHelth;
         this.weapon = new Weapon("sword", 25);;
     }
 
-    public void attack(GameCharacter defender){
+    public void attack(GameCharacter defender) {
         int damage = this.weapon.damage + ran.nextInt(this.attackVariance*2) - this.attackVariance;
-        if(damage < 0){damage = 0;}
+        if (damage < 0) {damage = 0;}
         defender.takeDamage(damage);
-        if(defender.getHelth() < 0){defender.setHelth(0);}
-        UserInterface.printDamage(GameCharacter.this,defender,damage);
+        if (defender.getHelth() < 0) {defender.setHelth(0);}
+        UserInterface.printDamage(GameCharacter.this, defender, damage);
 
     }
 
-    private void takeDamage(int damage){
+    public void resetHelth() {
+        setHelth(getMaxHelth());
+    }
+
+    private void takeDamage(int damage) {
         this.helth = this.helth - damage;
     }
 
-    public boolean isDead(){
-        if (this.helth <= 0){
-        return true;
-
-        }else{
+    public boolean isDead() {
+        if (this.helth <= 0) {
+            return true;
+        } else {
             return false;}
     }
     
@@ -62,9 +67,9 @@ public abstract class GameCharacter {
     }
 
     public void setInitiative(int initiative) {
-        if (this.isPlayer == true){initiative = 5;}
-        if (initiative < 1 || initiative > 9){initiative = 1;}
-        if (initiative == 5 && this.isPlayer == false){initiative = 4;}
+        if (this.isPlayer == true) {initiative = 5;}
+        if (initiative < 1 || initiative > 9) {initiative = 1;}
+        if (initiative == 5 && this.isPlayer == false) {initiative = 4;}
         this.initiative = initiative;
     }
 
@@ -84,4 +89,11 @@ public abstract class GameCharacter {
         this.attackVariance = attackVariance;
     }
 
+    public int getMaxHelth() {
+        return maxHelth;
+    }
+
+    public void setMaxHelth(int maxHelth) {
+        this.maxHelth = maxHelth;
+    }
 }

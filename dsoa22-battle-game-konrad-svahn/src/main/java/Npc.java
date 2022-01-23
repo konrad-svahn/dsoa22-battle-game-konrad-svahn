@@ -5,6 +5,5 @@ public class Npc extends GameCharacter{
         this.isPlayer = false;
         setInitiative(initiative);
         setAttackVariance(10);
-    }
-    
+    } 
 }
