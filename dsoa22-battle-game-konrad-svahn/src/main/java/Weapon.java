@@ -1,10 +1,15 @@
 public class Weapon {
-    String name;
-    int damage;
     
-    public Weapon(String name, int damage) {
+    private String name;
+    private int damage;
+    private Attacks attack1;
+    private Attacks attack2;
+    
+    public Weapon(String name, int damage, Attacks attack1, Attacks attack2) {
         this.name = name;
         this.damage = damage;
+        this.attack1 = attack1;
+        this.attack2 = attack2;
     }
 
     public String getName() {
@@ -21,6 +26,22 @@ public class Weapon {
 
     public void setDamage(int damage) {
         this.damage = damage;
+    }
+
+    public Attacks getAttack1() {
+        return attack1;
+    }
+
+    public void setAttack1(Attacks attack1) {
+        this.attack1 = attack1;
+    }
+
+    public Attacks getAttack2() {
+        return attack2;
+    }
+
+    public void setAttack2(Attacks attack2) {
+        this.attack2 = attack2;
     }
     
 }

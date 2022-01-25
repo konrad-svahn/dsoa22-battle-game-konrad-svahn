@@ -9,17 +9,19 @@ public abstract class GameCharacter {
     private int attackVariance;
     public boolean isPlayer;
     private Weapon weapon;
+    private int turnsOnFireLeft;
+   
     Random ran = new Random();
     
     public GameCharacter(String name, int maxHelth ,int initiative) {
         this.name = name;
         this.maxHelth = maxHelth;
         this.helth = maxHelth;
-        this.weapon = new Weapon("sword", 25);;
+        this.weapon = new Weapon("sword", 25, Attacks.ATTACK, Attacks.CHARGE);;
     }
 
     public void attack(GameCharacter defender) {
-        int damage = this.weapon.damage + ran.nextInt(this.attackVariance*2) - this.attackVariance;
+        int damage = this.weapon.getDamage() + ran.nextInt(this.attackVariance*2) - this.attackVariance;
         if (damage < 0) {damage = 0;}
         defender.takeDamage(damage);
         if (defender.getHelth() < 0) {defender.setHelth(0);}
@@ -95,5 +97,13 @@ public abstract class GameCharacter {
 
     public void setMaxHelth(int maxHelth) {
         this.maxHelth = maxHelth;
+    }
+
+    public int getTurnsOnFireLeft() {
+        return turnsOnFireLeft;
+    }
+
+    public void setTurnsOnFireLeft(int turnsOnFireLeft) {
+        this.turnsOnFireLeft = turnsOnFireLeft;
     }
 }

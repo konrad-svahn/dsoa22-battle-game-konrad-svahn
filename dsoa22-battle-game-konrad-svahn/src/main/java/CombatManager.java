@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.Scanner;
 
 public class CombatManager {
@@ -27,37 +28,54 @@ public class CombatManager {
 
     public static void runEncounter(Scanner scannAction ,ArrayList<GameCharacter> fighters) {
 
-        int action;
+        int actionP;
+        int player = 0;
+        int enemyToAttack = 0;
+
         UserInterface.printGameStart();
         sortCharacters(fighters);
         initialiseHelth(fighters);
         UserInterface.printBattleStart(fighters);
+
+        for (int i = 0; i < fighters.size(); i++) {      
+            if (fighters.get(i).isPlayer) {
+                player = i;
+            } 
+        }
                 
         while (true) {
-            
-            action = playerAction(scannAction, 2);
-            //if(action == 0){}
-            if(action == 1){break;}
+            UserInterface.printActionPromt(1);
+            actionP = playerAction(scannAction, 5); 
+            if (actionP == 1) {//run
+                break;
+            } else if (actionP == 5) {//inventory
 
-            fighters.get(0).attack(fighters.get(1));
-            if (isKillingBow(fighters.get(0), fighters.get(1))) {
-                break;
-             }
-                        
-            fighters.get(1).attack(fighters.get(0));
-            if (isKillingBow(fighters.get(1), fighters.get(0))) {
-                break;
             }
+            
+            if (actionP == 3 || actionP == 4) {
+                UserInterface.printActionPromt(2);
+
+                enemyToAttack = playerAction(scannAction, fighters.size()) - 1;
+
+                if (enemyToAttack == player && player != 0) {
+                    enemyToAttack = 0;
+                } else if (enemyToAttack == player && player == 0) {
+                    enemyToAttack = 1;  
+                }
+            }
+
+            if(actionLoop(actionP, fighters, player, enemyToAttack)){break;}
+             
         }
     } 
      
     private static int playerAction(Scanner scanAction, int length) {   
         while (true){
-            UserInterface.printActionPromt();
+            
             if (scanAction.hasNext()){String input = scanAction.nextLine();
                 if (input.matches("-?\\d+")) {
                     int intput = Integer.valueOf(input);
-                    if (intput < length && intput >= 0) {
+                    if (intput <= length && intput > 0) {
                         return intput;
                     }
                 }
@@ -88,6 +106,45 @@ public class CombatManager {
             return true;
         } else {
             return false;
+        }
+    }
+
+    private static boolean actionLoop(int actionP, ArrayList<GameCharacter> fighters, int player, int enemyToAttack){
+
+        int action;
+        Random ran = new Random();
+
+        for (int i = 0; i < fighters.size(); i++) {
+                
+            if (fighters.get(i).isPlayer) {
+                action = actionP;
+            } else {
+                action =  ran.nextInt(2) + 3;
+            }
+
+            System.out.println("action is: "+action);
+
+            if (action == 2) {//block
+
+            } else if (action == 3) {//1
+                return attackLoop(fighters, i, player, enemyToAttack); 
+            } else if (action == 4) {//2
+                return attackLoop(fighters, i, player, enemyToAttack);
+            }   
+        }
+        return false;
+    }
+
+    private static boolean attackLoop(ArrayList<GameCharacter> fighters, int current, int player, int enemyToAttack){
+        
+        if(fighters.get(current).isPlayer){
+            fighters.get(current).attack(fighters.get(enemyToAttack));
+            return isKillingBow(fighters.get(current), fighters.get(enemyToAttack));
+                
+            
+        }else{
+            fighters.get(current).attack(fighters.get(player));
+            return isKillingBow(fighters.get(current), fighters.get(player));
         }
     }
 }

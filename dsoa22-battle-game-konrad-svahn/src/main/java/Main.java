@@ -16,9 +16,9 @@ public class Main {
             GameCharacter enemy1 = new Npc("the black knight", 500, 4);
             GameCharacter enemy2 = new Npc("rapier wielding bandit", 75, 8);
             GameCharacter enemy3 = new Npc("torch wielding bandit", 150, 2);
-            enemy1.setWeapon(new Weapon("black mace", 50));
-            enemy2.setWeapon(new Weapon("rapier", 30));
-            enemy3.setWeapon(new Weapon("torch", 10));
+            enemy1.setWeapon(new Weapon("black mace", 50, Attacks.ATTACK, Attacks.CHARGE));
+            enemy2.setWeapon(new Weapon("rapier", 30, Attacks.ATTACK, Attacks.RAPID_STRIKES));
+            enemy3.setWeapon(new Weapon("torch", 10, Attacks.FLAME_ATTACK, Attacks.RAPID_FLAME_STRIKES));
     
             ArrayList<GameCharacter> battleParticipants = new ArrayList<>();
             battleParticipants.add(player);

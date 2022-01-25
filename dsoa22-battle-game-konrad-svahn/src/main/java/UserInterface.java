@@ -32,7 +32,11 @@ public class UserInterface {
         System.out.println("A rapier wielding bandit blocks the bridge before you");
     }
 
-    public static void printActionPromt() {
-        System.out.println("press 1 to run away and 0 to attack");
+    public static void printActionPromt(int promtNumber) {
+        if(promtNumber == 1){
+        System.out.println("press 1 to run away and 3 to attack");
+        } else if(promtNumber == 2) {
+        System.out.println("what enemy do you attack?");
+        }
     }
 }
