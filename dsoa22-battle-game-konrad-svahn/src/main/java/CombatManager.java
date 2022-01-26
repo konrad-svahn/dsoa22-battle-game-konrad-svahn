@@ -44,8 +44,11 @@ public class CombatManager {
         }
                 
         while (true) {
-            UserInterface.printActionPromt(1);
-            actionP = playerAction(scannAction, 5); 
+            //nullifies the last turns block by resetting armour to 0 
+            fighters.get(player).setArmour(0);
+
+            UserInterface.printActionPromt(fighters.get(player));
+            actionP = playerAction(scannAction, 5, 0); 
             if (actionP == 1) {//run
                 break;
             } else if (actionP == 5) {//inventory
@@ -53,25 +56,29 @@ public class CombatManager {
             }
             
             if (actionP == 3 || actionP == 4) {
-                UserInterface.printActionPromt(2);
+                 
+                UserInterface.printEnemySelecktionPromt(fighters,player);
+                enemyToAttack = fighters.size();
 
-                enemyToAttack = playerAction(scannAction, fighters.size()) - 1;
-
-                if (enemyToAttack == player && player != 0) {
-                    enemyToAttack = 0;
-                } else if (enemyToAttack == player && player == 0) {
-                    enemyToAttack = 1;  
+                while (enemyToAttack == fighters.size()) {
+                enemyToAttack = playerAction(scannAction, fighters.size(), -1);
+                if (enemyToAttack == fighters.size()) {UserInterface.printWarning(fighters.size() - 1);}
+                }
+                
+                if (enemyToAttack <= player) {
+                    enemyToAttack = enemyToAttack - 1;
                 }
             }
 
-            if(actionLoop(actionP, fighters, player, enemyToAttack)){break;}
-             
+            if(actionLoop(actionP, fighters, player, enemyToAttack)){break;}   
         }
     } 
      
-    private static int playerAction(Scanner scanAction, int length) {   
+    private static int playerAction(Scanner scanAction, int length, int promtMod) {  
+        boolean warning = false; 
         while (true){
-            
+            if (warning){UserInterface.printWarning(length + promtMod);}
+            warning = true;
             if (scanAction.hasNext()){String input = scanAction.nextLine();
                 if (input.matches("-?\\d+")) {
                     int intput = Integer.valueOf(input);
@@ -110,40 +117,44 @@ public class CombatManager {
     }
 
     private static boolean actionLoop(int actionP, ArrayList<GameCharacter> fighters, int player, int enemyToAttack){
-
+       
         int action;
         Random ran = new Random();
 
         for (int i = 0; i < fighters.size(); i++) {
-                
-            if (fighters.get(i).isPlayer) {
-                action = actionP;
-            } else {
-                action =  ran.nextInt(2) + 3;
-            }
 
-            System.out.println("action is: "+action);
+            if (fighters.get(i).getTurnsOnFireLeft() > 0) {
+                UserInterface.printFireDamage(fighters.get(i), fighters.get(i).TakeFireDamage());
+            }
+                
+            if (fighters.get(i).isPlayer) { action = actionP;} 
+            else { action =  ran.nextInt(2) + 3;}
 
             if (action == 2) {//block
-
-            } else if (action == 3) {//1
-                return attackLoop(fighters, i, player, enemyToAttack); 
-            } else if (action == 4) {//2
-                return attackLoop(fighters, i, player, enemyToAttack);
-            }   
+                fighters.get(player).setArmour(40);
+                UserInterface.printBlock(fighters.get(player));
+            } else if (action == 3 || action == 4) {//1
+                if (attackLoop(fighters, i, player, enemyToAttack, action)) {return true;}  
+            }
         }
         return false;
     }
 
-    private static boolean attackLoop(ArrayList<GameCharacter> fighters, int current, int player, int enemyToAttack){
-        
+    private static boolean attackLoop(ArrayList<GameCharacter> fighters, int current, int player, int enemyToAttack, int action){
+
+        Attacks attackType;
+
+        if (action == 3) {
+            attackType = fighters.get(current).getWeapon().getAttack1();
+        } else {
+            attackType = fighters.get(current).getWeapon().getAttack2();
+        }
+
         if(fighters.get(current).isPlayer){
-            fighters.get(current).attack(fighters.get(enemyToAttack));
-            return isKillingBow(fighters.get(current), fighters.get(enemyToAttack));
-                
-            
+            fighters.get(current).attack(fighters.get(enemyToAttack), attackType);
+            return isKillingBow(fighters.get(current), fighters.get(enemyToAttack));  
         }else{
-            fighters.get(current).attack(fighters.get(player));
+            fighters.get(current).attack(fighters.get(player), attackType);
             return isKillingBow(fighters.get(current), fighters.get(player));
         }
     }
