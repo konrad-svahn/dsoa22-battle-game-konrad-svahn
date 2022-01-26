@@ -100,14 +100,19 @@ public class CombatManager {
                 // if the curent fighter is the player they attack the enemy the player seleckted 
                 if(fighters.get(i).isPlayer){
                     fighters.get(i).attack(fighters.get(enemyToAttack), attackType);
+
+                    // this if statement fixes a bug but i have no idea why it works
+                    if (fighters.get(enemyToAttack).isDead() && fighters.get(enemyToAttack).getInitiative() < fighters.get(player).getInitiative()) {
+                        size = size - 1;
+                    }
                     if (isKillingBow(fighters.get(enemyToAttack), fighters)) {
                         return true;
                     } 
-                    //reajusts the curent fighter if the total amount of fighters has decreased
-                    if (fighters.size() == size - 1) {i = i - 1;}
+                    //reajusts the curent fighter if the total amount of fighters has decreased and the killed fighter had a higer initiative than the player
+                    if (fighters.size() == size - 1 ) {i = i - 1;}
                     //reajusts which fighter the player is
                     player = whoIsPlayer(fighters);
-
+                    System.out.println(fighters.size());
                 // else the curent fighter attacks the player 
                 }else{
                     fighters.get(i).attack(fighters.get(player), attackType);
@@ -115,8 +120,7 @@ public class CombatManager {
                         return true;
                     }
                 }
-            }
-            
+            }  
            
         }
 
