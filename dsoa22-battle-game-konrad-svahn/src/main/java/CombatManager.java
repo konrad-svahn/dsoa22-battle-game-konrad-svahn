@@ -11,6 +11,115 @@ public class CombatManager {
         return isGameOver;
     }
 
+    public static void runEncounter(Scanner scannAction ,ArrayList<GameCharacter> fighters) {
+
+        int actionP;
+        int player = 0;
+        int enemyToAttack = 0;
+
+        UserInterface.printGameStart();
+        sortCharacters(fighters);
+        initialiseHelth(fighters);
+        UserInterface.printBattleStart(fighters);
+
+        //Figures out the players place in the attack order and saves it as an int
+        for (int i = 0; i < fighters.size(); i++) {      
+            if (fighters.get(i).isPlayer) {
+                player = i;
+            } 
+        }
+                
+        // the main combat loop
+        while (true) {
+
+            //nullifies the last turns block by resetting armour to 0 
+            fighters.get(player).setArmour(0);
+
+            //promts a player input and reads that input
+            UserInterface.printActionPromt(fighters.get(player));
+            actionP = playerAction(scannAction, 5, 0); 
+
+            //performs the player actions that must ocur before the first attack of the turn
+            if (actionP == 1) {//run awway
+                break;
+            } else if (actionP == 5) {//acces inventory
+
+            }
+            
+            //asks what enimy to attack if the player decides to use an attack action
+            if (actionP == 3 || actionP == 4) {
+                 
+                UserInterface.printEnemySelecktionPromt(fighters,player);
+                enemyToAttack = fighters.size();
+
+                //makes it inposible for the player to attack self and helps to avoid an out of bounds error 
+                while (enemyToAttack == fighters.size()) {
+                enemyToAttack = playerAction(scannAction, fighters.size(), -1);
+                if (enemyToAttack == fighters.size()) {UserInterface.printWarning(fighters.size() - 1);}
+                }
+                
+                if (enemyToAttack <= player) {
+                    enemyToAttack = enemyToAttack - 1;
+                }
+            }
+
+            // starts loping through fighter and performs ecah charackters action for the turn 
+            if(actionLoop(actionP, fighters, player, enemyToAttack)){break;}   
+        }
+    } 
+
+    private static boolean actionLoop(int actionP, ArrayList<GameCharacter> fighters, int player, int enemyToAttack){
+       
+        int action;
+        Attacks attackType;
+        Random ran = new Random();
+
+        // loops through fighter and performs the charackters actions
+        for (int i = 0; i < fighters.size(); i++) {
+
+            // checks if the fighter is on fire and deals fire damage to them if they are
+            if (fighters.get(i).getTurnsOnFireLeft() > 0) {
+                UserInterface.printFireDamage(fighters.get(i), fighters.get(i).TakeFireDamage());
+            }
+                
+            // if the curent fighter is the player the next action is set to the players action, otherwise randomly seleckts an atack for the enemy to perform
+            if (fighters.get(i).isPlayer) { action = actionP;} 
+            else { action =  ran.nextInt(2) + 3;}
+
+            // if statements that check what the next action is and performs it 
+            if (action == 2) {
+                //block
+                fighters.get(player).setArmour(40);
+                UserInterface.printBlock(fighters.get(player));
+            } else if (action == 3 || action == 4) {
+                // performs attack1 or attack 2
+                
+                // sets attackType to be the wheapons first attack if action is the player chose to use the first attack, or the second if the player chose the second  
+                if (action == 3) {
+                    attackType = fighters.get(i).getWeapon().getAttack1();
+                } else {
+                    attackType = fighters.get(i).getWeapon().getAttack2();
+                }
+        
+                // if the curent fighter is the player they attack the enemy the player seleckted 
+                if(fighters.get(i).isPlayer){
+                    fighters.get(i).attack(fighters.get(enemyToAttack), attackType);
+                    if (isKillingBow(fighters.get(i), fighters.get(enemyToAttack))) {
+                        return true;
+                    }  
+                // else the curent fighter attacks the player 
+                }else{
+                    fighters.get(i).attack(fighters.get(player), attackType);
+                    if (isKillingBow(fighters.get(i), fighters.get(player))) {
+                        return true;
+                    }
+                }
+            }
+        }
+        // returns false if no one died during the round of combat
+        return false;
+    }
+
     public static ArrayList<GameCharacter> sortCharacters(ArrayList<GameCharacter> charackters) {
         for (int i = 0; i < charackters.size(); i++) {
             //System.out.println(charackters.get(0).getInitiative()+""+charackters.get(1).getInitiative()+""+charackters.get(2).getInitiative()+""+charackters.get(3).getInitiative());
@@ -25,55 +134,10 @@ public class CombatManager {
         }
         return charackters;
     }
-
-    public static void runEncounter(Scanner scannAction ,ArrayList<GameCharacter> fighters) {
-
-        int actionP;
-        int player = 0;
-        int enemyToAttack = 0;
-
-        UserInterface.printGameStart();
-        sortCharacters(fighters);
-        initialiseHelth(fighters);
-        UserInterface.printBattleStart(fighters);
-
-        for (int i = 0; i < fighters.size(); i++) {      
-            if (fighters.get(i).isPlayer) {
-                player = i;
-            } 
-        }
-                
-        while (true) {
-            //nullifies the last turns block by resetting armour to 0 
-            fighters.get(player).setArmour(0);
-
-            UserInterface.printActionPromt(fighters.get(player));
-            actionP = playerAction(scannAction, 5, 0); 
-            if (actionP == 1) {//run
-                break;
-            } else if (actionP == 5) {//inventory
-
-            }
-            
-            if (actionP == 3 || actionP == 4) {
-                 
-                UserInterface.printEnemySelecktionPromt(fighters,player);
-                enemyToAttack = fighters.size();
-
-                while (enemyToAttack == fighters.size()) {
-                enemyToAttack = playerAction(scannAction, fighters.size(), -1);
-                if (enemyToAttack == fighters.size()) {UserInterface.printWarning(fighters.size() - 1);}
-                }
-                
-                if (enemyToAttack <= player) {
-                    enemyToAttack = enemyToAttack - 1;
-                }
-            }
-
-            if(actionLoop(actionP, fighters, player, enemyToAttack)){break;}   
-        }
-    } 
      
+    // player action recives a player input and makes sure it is an int between 1 and length.
+    // promtMod modifies the error message, 
+    // so if you for example take the returned value of this method -2 after using it you can ajust what the metod prints by entering promtMod -2 
     private static int playerAction(Scanner scanAction, int length, int promtMod) {  
         boolean warning = false; 
         while (true){
@@ -114,48 +178,5 @@ public class CombatManager {
         } else {
             return false;
         }
-    }
-
-    private static boolean actionLoop(int actionP, ArrayList<GameCharacter> fighters, int player, int enemyToAttack){
-       
-        int action;
-        Random ran = new Random();
-
-        for (int i = 0; i < fighters.size(); i++) {
-
-            if (fighters.get(i).getTurnsOnFireLeft() > 0) {
-                UserInterface.printFireDamage(fighters.get(i), fighters.get(i).TakeFireDamage());
-            }
-                
-            if (fighters.get(i).isPlayer) { action = actionP;} 
-            else { action =  ran.nextInt(2) + 3;}
-
-            if (action == 2) {//block
-                fighters.get(player).setArmour(40);
-                UserInterface.printBlock(fighters.get(player));
-            } else if (action == 3 || action == 4) {//1
-                if (attackLoop(fighters, i, player, enemyToAttack, action)) {return true;}  
-            }
-        }
-        return false;
-    }
-
-    private static boolean attackLoop(ArrayList<GameCharacter> fighters, int current, int player, int enemyToAttack, int action){
-
-        Attacks attackType;
-
-        if (action == 3) {
-            attackType = fighters.get(current).getWeapon().getAttack1();
-        } else {
-            attackType = fighters.get(current).getWeapon().getAttack2();
-        }
-
-        if(fighters.get(current).isPlayer){
-            fighters.get(current).attack(fighters.get(enemyToAttack), attackType);
-            return isKillingBow(fighters.get(current), fighters.get(enemyToAttack));  
-        }else{
-            fighters.get(current).attack(fighters.get(player), attackType);
-            return isKillingBow(fighters.get(current), fighters.get(player));
-        }
-    }
+    }   
 }
