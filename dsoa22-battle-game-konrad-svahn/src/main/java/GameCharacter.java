@@ -7,6 +7,7 @@ public abstract class GameCharacter {
     private int maxHelth;
     private int initiative;
     private int turnsOnFireLeft;
+    private int chargeLevel;
     private int armour;
     private int regeneration;
     public boolean isPlayer;
@@ -27,40 +28,35 @@ public abstract class GameCharacter {
     public void attack(GameCharacter defender, Attacks attackType) {
         System.out.println(attackType);
 
-        if (attackType == Attacks.ATTACK) {
-
-        } else if (attackType == Attacks.FLAME_ATTACK) {
+        if (this.chargeLevel == 2) {
+            this.chargeLevel = 0;
             defender.turnsOnFireLeft = 2;
-        } else if (attackType == Attacks.CHARGE) {
+        } else if (this.chargeLevel == 1) {
+            this.chargeLevel = 0;
+        } else {
+            if (attackType == Attacks.ATTACK) {
 
-        }else if (attackType == Attacks.FLAME_CHARGE) {
-            defender.turnsOnFireLeft = 1;
-        }else if (attackType == Attacks.RAPID_STRIKES) {
-
-        }else if (attackType == Attacks.RAPID_FLAME_STRIKES) {
-            defender.turnsOnFireLeft = 2;
-        }else if (attackType == Attacks.LEECH) {
-
-        }else if (attackType == Attacks.REGENERATE) {
-
-        }else if (attackType == Attacks.THROW_GUNPOWDER) {
-
-        }else if (attackType == Attacks.DETONATE) {
-
+            } else if (attackType == Attacks.FLAME_ATTACK) {
+                defender.turnsOnFireLeft = 2;
+            } else if (attackType == Attacks.CHARGE) {
+                this.chargeLevel = 1;
+            }else if (attackType == Attacks.FLAME_CHARGE) {
+                this.chargeLevel = 2;
+            }else if (attackType == Attacks.RAPID_STRIKES) {
+    
+            }else if (attackType == Attacks.RAPID_FLAME_STRIKES) {
+                defender.turnsOnFireLeft = 1;
+            }else if (attackType == Attacks.LEECH) {
+    
+            }else if (attackType == Attacks.REGENERATE) {
+    
+            }else if (attackType == Attacks.THROW_GUNPOWDER) {
+    
+            }else if (attackType == Attacks.DETONATE) {
+    
+            }
         }
-        
         UserInterface.printDamage(GameCharacter.this, defender, defender.takeAttackDamage(this));
-    }
-
-    public void resetHelth() {
-        setHelth(getMaxHelth());
-    }
-
-    private int takeDamage(int damage){
-        if (damage < 0) {damage = 0;}
-            this.helth = this.helth - damage;
-            if (this.helth < 0) {this.setHelth(0);}
-            return damage;
     }
 
     private int takeAttackDamage(GameCharacter attacker) {
@@ -85,6 +81,13 @@ public abstract class GameCharacter {
         return 0;
     }
 
+    private int takeDamage(int damage){
+        if (damage < 0) {damage = 0;}
+            this.helth = this.helth - damage;
+            if (this.helth < 0) {this.setHelth(0);}
+            return damage;
+    }
+
     public boolean isDead() {
         if (this.helth <= 0) {
             return true;
@@ -96,6 +99,11 @@ public abstract class GameCharacter {
         return this.isPlayer;
     }
 
+    public void resetHelth() {
+        setHelth(getMaxHelth());
+    }
+
+    // only getters and setters dwell below this point
     public String getName() {
         return this.name;
     }
@@ -161,5 +169,13 @@ public abstract class GameCharacter {
 
     public void setRegeneration(int regeneration) {
         this.regeneration = regeneration;
+    }
+
+    public int getChargeLevel() {
+        return chargeLevel;
+    }
+
+    public void setChargeLevel(int chargeLevel) {
+        this.chargeLevel = chargeLevel;
     }
 }

@@ -12,12 +12,12 @@ public class Main {
             System.out.println("Enter your name");
             name = scanner.nextLine();
             
-            GameCharacter player = new Player(name, 1000, 5, 0, 35);
-            GameCharacter enemy1 = new Npc("the black knight", 150, 4, 50, 35);
-            GameCharacter enemy2 = new Npc("rapier wielding bandit", 50, 8, 0, 35);
-            GameCharacter enemy3 = new Npc("torch wielding bandit", 50, 2, 0, 35);
-            GameCharacter enemy4 = new Npc("weakling", 1, 1, 0, 0);
-            //GameCharacter enemy5 = new Npc("pyromancer", 1, 6, 0, 0);
+            Player player = new Player(name, 1000, 5, 0, 35);
+            Npc enemy1 = new Npc("the black knight", 150, 4, 50, 35);
+            Npc enemy2 = new Npc("rapier wielding bandit", 50, 8, 0, 35);
+            Npc enemy3 = new Npc("torch wielding bandit", 50, 2, 0, 35);
+            Npc enemy4 = new Npc("weakling", 1, 6, 0, 0);
+            //GameCharacter enemy5 = new Npc("pyromancer", 1, 1, 0, 0);
             player.setWeapon(new Weapon("wand", 25, 5, Attacks.FLAME_ATTACK, Attacks.REGENERATE));
             enemy1.setWeapon(new Weapon("black mace", 50, 30, Attacks.ATTACK, Attacks.CHARGE));
             enemy2.setWeapon(new Weapon("rapier", 30, 0, Attacks.ATTACK, Attacks.RAPID_STRIKES));
