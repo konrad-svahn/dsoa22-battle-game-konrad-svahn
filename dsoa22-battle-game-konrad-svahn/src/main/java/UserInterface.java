@@ -20,7 +20,9 @@ public class UserInterface {
     }
 
     public static void printFireDamage (GameCharacter character, int damage) {
-        System.out.println(character.getName() + " is burning and takes " + damage +" damage");
+        System.out.println(
+            character.getName() + " is burning and takes " + damage +" damage "+character.getName()+" now has "+character.getHelth()+" Health"
+        );
     }
 
     public static void printWarning (int max) {
@@ -31,8 +33,7 @@ public class UserInterface {
         System.out.println("troll");
     }
 
-    public static void printDeath (GameCharacter killer, GameCharacter victim) {
-        System.out.println(killer.getName() +" has won the battle");
+    public static void printDeath (GameCharacter victim) {
         System.out.println(victim.getName() + " has died");
     }
 

@@ -14,23 +14,19 @@ public class CombatManager {
     public static void runEncounter(Scanner scannAction ,ArrayList<GameCharacter> fighters) {
 
         int actionP;
-        int player = 0;
+        int player;
         int enemyToAttack = 0;
 
+        // sets all fighters health to be eqal to their max health 
+        initialiseHelth(fighters);
         UserInterface.printGameStart();
         sortCharacters(fighters);
-        initialiseHelth(fighters);
         UserInterface.printBattleStart(fighters);
-
-        //Figures out the players place in the attack order and saves it as an int
-        for (int i = 0; i < fighters.size(); i++) {      
-            if (fighters.get(i).isPlayer) {
-                player = i;
-            } 
-        }
                 
         // the main combat loop
         while (true) {
+
+            player = whoIsPlayer(fighters);
 
             //nullifies the last turns block by resetting armour to 0 
             fighters.get(player).setArmour(0);
@@ -80,6 +76,7 @@ public class CombatManager {
             // checks if the fighter is on fire and deals fire damage to them if they are
             if (fighters.get(i).getTurnsOnFireLeft() > 0) {
                 UserInterface.printFireDamage(fighters.get(i), fighters.get(i).TakeFireDamage());
+                if (isKillingBow(fighters.get(i), fighters)) {return true;}
             }
                 
             // if the curent fighter is the player the next action is set to the players action, otherwise randomly seleckts an atack for the enemy to perform
@@ -104,22 +101,23 @@ public class CombatManager {
                 // if the curent fighter is the player they attack the enemy the player seleckted 
                 if(fighters.get(i).isPlayer){
                     fighters.get(i).attack(fighters.get(enemyToAttack), attackType);
-                    if (isKillingBow(fighters.get(i), fighters.get(enemyToAttack))) {
+                    if (isKillingBow(fighters.get(enemyToAttack), fighters)) {
                         return true;
                     }  
                 // else the curent fighter attacks the player 
                 }else{
                     fighters.get(i).attack(fighters.get(player), attackType);
-                    if (isKillingBow(fighters.get(i), fighters.get(player))) {
+                    if (isKillingBow(fighters.get(player), fighters)) {
                         return true;
                     }
                 }
             }
         }
-        // returns false if no one died during the round of combat
+        // returns false if the batle did not end during the round of combat
         return false;
     }
 
+    //sorts by higest initiative
     public static ArrayList<GameCharacter> sortCharacters(ArrayList<GameCharacter> charackters) {
         for (int i = 0; i < charackters.size(); i++) {
             //System.out.println(charackters.get(0).getInitiative()+""+charackters.get(1).getInitiative()+""+charackters.get(2).getInitiative()+""+charackters.get(3).getInitiative());
@@ -170,13 +168,31 @@ public class CombatManager {
         }
     }
 
-    private static boolean isKillingBow(GameCharacter attacker, GameCharacter defender) {
+    private static boolean isKillingBow(GameCharacter defender, ArrayList<GameCharacter> fighters) {
         if (defender.isDead()) {
-            UserInterface.printDeath(attacker, defender);
-            if (defender.isPlayer) {isGameOver = true;}
-            return true;
-        } else {
-            return false;
+            UserInterface.printDeath(defender);
+
+            if (defender.isPlayer) {
+                isGameOver = true;
+                return true;
+            } else {
+                if (fighters.size() <= 2) {
+                    return true;
+                }
+                fighters.remove(defender);
+            }  
         }
+        return false;
     }   
+
+    private static int whoIsPlayer(ArrayList<GameCharacter> fighters){
+        int player = 0;
+        //Figures out the players place in the attack order and saves it as an int
+        for (int i = 0; i < fighters.size(); i++) {      
+            if (fighters.get(i).isPlayer) {
+                player = i;
+            } 
+        }
+        return player;
+    }
 }
