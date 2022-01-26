@@ -15,7 +15,7 @@ public class UserInterface {
 
     public static void printDamage (GameCharacter attacker, GameCharacter deffender, int damage) {
         System.out.println(
-            attacker.getName()+" hits "+deffender.getName()+" for "+damage+" damage. "+deffender.getName()+" now has "+deffender.getHelth()+" Health"
+            attacker.getName()+" hits "+deffender.getName()+" with "+ attacker.getWeapon().getName() +" for "+damage+" damage. "+deffender.getName()+" now has "+deffender.getHelth()+" Health"
         ); 
     }
 

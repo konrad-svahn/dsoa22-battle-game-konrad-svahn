@@ -23,7 +23,7 @@ public class CombatManager {
         sortCharacters(fighters);
         UserInterface.printBattleStart(fighters);
                 
-        // the main combat loop
+        // the main combat loop, one loop is one round of combat
         while (true) {
 
             player = whoIsPlayer(fighters);
@@ -64,20 +64,19 @@ public class CombatManager {
         }
     } 
 
+    // returns true if player is dead or if all enemies are dead
     private static boolean actionLoop(int actionP, ArrayList<GameCharacter> fighters, int player, int enemyToAttack){
        
         int action;
+        int size;
         Attacks attackType;
         Random ran = new Random();
 
         // loops through fighter and performs the charackters actions
         for (int i = 0; i < fighters.size(); i++) {
 
-            // checks if the fighter is on fire and deals fire damage to them if they are
-            if (fighters.get(i).getTurnsOnFireLeft() > 0) {
-                UserInterface.printFireDamage(fighters.get(i), fighters.get(i).TakeFireDamage());
-                if (isKillingBow(fighters.get(i), fighters)) {return true;}
-            }
+            //size is the amount of fighters att the begining of each characktes action we will compare this with the actual fighters.size() to se if anyone died
+            size = fighters.size();
                 
             // if the curent fighter is the player the next action is set to the players action, otherwise randomly seleckts an atack for the enemy to perform
             if (fighters.get(i).isPlayer) { action = actionP;} 
@@ -103,7 +102,12 @@ public class CombatManager {
                     fighters.get(i).attack(fighters.get(enemyToAttack), attackType);
                     if (isKillingBow(fighters.get(enemyToAttack), fighters)) {
                         return true;
-                    }  
+                    } 
+                    //reajusts the curent fighter if the total amount of fighters has decreased
+                    if (fighters.size() == size - 1) {i = i - 1;}
+                    //reajusts which fighter the player is
+                    player = whoIsPlayer(fighters);
+
                 // else the curent fighter attacks the player 
                 }else{
                     fighters.get(i).attack(fighters.get(player), attackType);
@@ -111,6 +115,17 @@ public class CombatManager {
                         return true;
                     }
                 }
+            }
+            
+           
+        }
+
+        for (int i = 0; i < fighters.size(); i++) {
+
+            // checks if the fighter is on fire and deals fire damage to them if they are
+            if (fighters.get(i).getTurnsOnFireLeft() > 0) {
+                UserInterface.printFireDamage(fighters.get(i), fighters.get(i).TakeFireDamage());
+                if (isKillingBow(fighters.get(i), fighters)) {return true;}
             }
         }
         // returns false if the batle did not end during the round of combat

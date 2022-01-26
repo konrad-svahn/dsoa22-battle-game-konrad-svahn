@@ -4,6 +4,5 @@ public class Npc extends GameCharacter{
         super(name, helth, initiative, armour, regeneration);
         this.isPlayer = false;
         setInitiative(initiative);
-        setAttackVariance(10);
     } 
 }

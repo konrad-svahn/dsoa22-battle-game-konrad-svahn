@@ -6,7 +6,6 @@ public abstract class GameCharacter {
     private int helth;
     private int maxHelth;
     private int initiative;
-    private int attackVariance;
     private int turnsOnFireLeft;
     private int armour;
     private int regeneration;
@@ -20,7 +19,7 @@ public abstract class GameCharacter {
         this.name = name;
         this.maxHelth = maxHelth;
         this.helth = maxHelth;
-        this.weapon = new Weapon("sword", 25, Attacks.ATTACK, Attacks.CHARGE);;
+        this.weapon = new Weapon("their own body", 5, 10,Attacks.ATTACK, Attacks.RAPID_STRIKES);;
         this.armour = armour;
         this.regeneration = regeneration;
     }
@@ -66,14 +65,20 @@ public abstract class GameCharacter {
 
     private int takeAttackDamage(GameCharacter attacker) {
 
-        int damage = attacker.getWeapon().getDamage() + ran.nextInt(this.attackVariance*2) - this.attackVariance;
+        int damage;
+
+        if (attacker.getWeapon().getAttackVariance() == 0) {
+            damage = attacker.getWeapon().getDamage(); 
+        } else {
+            damage = attacker.getWeapon().getDamage() + ran.nextInt(attacker.getWeapon().getAttackVariance()*2) - attacker.getWeapon().getAttackVariance();
+        }
         damage -=armour;
         return takeDamage(damage);
     }
 
     public int TakeFireDamage() {
         if (turnsOnFireLeft > 0) {
-            int damage = (10 + ran.nextInt(10) - 5) - armour;
+            int damage = (10 + ran.nextInt(10) - 5);
             turnsOnFireLeft -= 1;
             return takeDamage(damage);
         }
@@ -124,14 +129,6 @@ public abstract class GameCharacter {
 
     public void setWeapon(Weapon weapon) {
         this.weapon = weapon;
-    }
-
-    public int getAttackVariance() {
-        return attackVariance;
-    }
-
-    public void setAttackVariance(int attackVariance) {
-        this.attackVariance = attackVariance;
     }
 
     public int getMaxHelth() {
