@@ -16,6 +16,7 @@ public class CombatManager {
         int actionP;
         int player;
         int enemyToAttack = 0;
+        boolean addAndRemoveWheaponFromInventory = true;
 
         // sets all fighters health to be eqal to their max health 
         initialiseHelth(fighters);
@@ -24,22 +25,24 @@ public class CombatManager {
         UserInterface.printBattleStart(fighters);
                 
         // the main combat loop, one loop is one round of combat
-        while (true) {
+        mainCombatLoop: while (true) {
 
             player = whoIsPlayer(fighters);
 
             //nullifies the last turns block by resetting armour to 0 
             fighters.get(player).setArmour(0);
 
-            //promts a player input and reads that input
-            UserInterface.printActionPromt(fighters.get(player));
-            actionP = playerAction(scannAction, 5, 0); 
+            while (true) {
+                //promts a player input and reads that input
+                UserInterface.printActionPromt(fighters.get(player));
+                actionP = playerAction(scannAction, 5, 0); 
 
-            //performs the player actions that must ocur before the first attack of the turn
-            if (actionP == 1) {//run awway
-                break;
-            } else if (actionP == 5) {//acces inventory
-
+                //performs the player actions that must ocur before the first attack of the turn
+                if (actionP == 1) {//run awway
+                    break mainCombatLoop;
+                } else if (actionP == 5) {//acces inventory
+                    System.out.println(";)");
+                } else {break;}
             }
             
             //asks what enimy to attack if the player decides to use an attack action

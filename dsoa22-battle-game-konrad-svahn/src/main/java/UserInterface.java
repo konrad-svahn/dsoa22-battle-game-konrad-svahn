@@ -25,8 +25,8 @@ public class UserInterface {
         );
     }
 
-    public static void printWarning (int max) {
-        System.out.println("You must seleckt a number between 1 and "+max+" to continue");
+    public static void printBlock(GameCharacter character) {
+        System.out.println(character.getName() + " raises their sheild to block, reducing all inkomming damage by " + character.getArmour() +" for the rest of the turn");
     }
 
     public static void printRegen () {
@@ -37,7 +37,13 @@ public class UserInterface {
         System.out.println(victim.getName() + " has died");
     }
 
+    public static void printWarning (int max) {
+        System.out.println("You must seleckt a number between 1 and "+max+" to continue");
+    }
+
     public static void printActionPromt (GameCharacter player) {
+
+        
        
         System.out.println("press 1 to run away");
         System.out.println("press 2 to block");
@@ -46,10 +52,6 @@ public class UserInterface {
         System.out.println("press 5 to use your inventory");
     }
 
-    public static void printBlock(GameCharacter character) {
-        System.out.println(character.getName() + " raises their sheild to block, reducing all inkomming damage by " + character.getArmour() +" for the rest of the turn");
-    }
-    
     public static void printEnemySelecktionPromt(ArrayList<GameCharacter> fighters, int player) {
 
         System.out.println("what enemy do you attack?");
@@ -63,5 +65,47 @@ public class UserInterface {
 
     public static void printGameStart() {
         System.out.println("Two bandits block the bridge before you");
+    }
+
+    // Unsure if this is a good place for this method
+    public static String attackDescription(Attacks attackType, GameCharacter player){
+        String description = ""; 
+        if (attackType == Attacks.ATTACK) {
+            description = 
+            " (The attack move deals the damage of your weapons attack power("+
+            player.getWeapon().getDamage()+") which varies by "+player.getWeapon().getAttackVariance()+")";
+        } else if (attackType == Attacks.FLAME_ATTACK) {
+            description = 
+            "  (The flame attack move lights the target on fire and deals the damage of your weapons attack power("+
+            player.getWeapon().getDamage()+") which varies by "+player.getWeapon().getAttackVariance()+")";
+        } else if (attackType == Attacks.CHARGE) {
+            description = 
+            " (Using carge will cause you to perform an attack dealing 3x your wheapon damage("+
+            player.getWeapon().getDamage()+") which varies by "+player.getWeapon().getAttackVariance()+" on your next turn)";
+        }else if (attackType == Attacks.FLAME_CHARGE) {
+            description = 
+            " (Using flame carge will cause you to perform an attack dealing 3x your wheapon damage("+
+            player.getWeapon().getDamage()+") which varies by "+player.getWeapon().getAttackVariance()+" on your next turn and will set the target on fire)";
+        }else if (attackType == Attacks.RAPID_STRIKES) {
+            description = 
+            " (Using rapid strikes will preform 3 attacks in a row each of which wil deal half your weapons damage("+
+            player.getWeapon().getDamage()+") which varies by "+player.getWeapon().getAttackVariance()+")";
+        }else if (attackType == Attacks.RAPID_FLAME_STRIKES) {
+            description = 
+            " (Using rapid flame strikes will preform 3 attacks in a row each of which will deal half your weapons damage("+
+            player.getWeapon().getDamage()+") which varies by "+player.getWeapon().getAttackVariance()+" and will set the target on fire)";
+        }else if (attackType == Attacks.LEECH) {
+            description = 
+            " (Leech deals the damage of your weapons attack power("+player.getWeapon().getDamage()+") which varies "+
+            player.getWeapon().getAttackVariance()+" and regenerates "+player.getRegeneration()+"% of the damage delt)";
+        }else if (attackType == Attacks.REGENERATE) {
+            description = " (Regenerate recovers "+player.getRegeneration()+" helth)";
+        }else if (attackType == Attacks.THROW_GUNPOWDER) {
+            description = " (throw gunpowder deals 1 damage normaly but if the target is on fire it deals 4x wheapon damage("+
+            player.getWeapon().getDamage()+") which varies "+player.getWeapon().getAttackVariance()+")";
+        }else if (attackType == Attacks.DETONATE) {
+            description = " ( Detonate deals 500 damage to all enemies but destroys the wheapon you perform it with)";
+        }
+        return description;
     }
 }

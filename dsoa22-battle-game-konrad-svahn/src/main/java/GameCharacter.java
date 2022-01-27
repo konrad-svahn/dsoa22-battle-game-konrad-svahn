@@ -49,7 +49,7 @@ public abstract class GameCharacter {
             }else if (attackType == Attacks.LEECH) {
     
             }else if (attackType == Attacks.REGENERATE) {
-    
+                heal(this.getRegeneration());
             }else if (attackType == Attacks.THROW_GUNPOWDER) {
     
             }else if (attackType == Attacks.DETONATE) {
@@ -86,6 +86,13 @@ public abstract class GameCharacter {
             this.helth = this.helth - damage;
             if (this.helth < 0) {this.setHelth(0);}
             return damage;
+    }
+
+    public int heal(int amount){
+        if (amount < 0) { amount = 0;}
+        this.helth += amount;
+        if (this.helth > this.maxHelth) { this.helth = this.maxHelth;}
+        return amount;
     }
 
     public boolean isDead() {
