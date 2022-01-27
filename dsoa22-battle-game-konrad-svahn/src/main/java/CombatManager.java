@@ -4,6 +4,8 @@ import java.util.Scanner;
 
 public class CombatManager {
 
+    static boolean addAndRemoveWheaponFromInventory = true;
+
     //CombatManager contains methods needed for the games combat loop
     private static boolean isGameOver = false;
 
@@ -16,9 +18,6 @@ public class CombatManager {
         int actionP;
         int player;
         int enemyToAttack = 0;
-        int seleckted;
-        boolean deleteItems;
-        boolean addAndRemoveWheaponFromInventory = true;
 
         // sets all fighters health to be eqal to their max health 
         initialiseHelth(fighters);
@@ -44,31 +43,7 @@ public class CombatManager {
                 if (actionP == 1) {//run awway
                     break mainCombatLoop;
                 } else if (actionP == 5) {//acces inventory
-
-                    // if addAndRemoveWheaponFromInventory is inabled asks the player if they want too equip or delete whepons 
-                    if (addAndRemoveWheaponFromInventory) {
-                        UserInterface.equipOrDelete();
-                        seleckted = playerAction(scannAction, 2, 0);
-                        if (seleckted == 2) {
-                            deleteItems = true;
-                        } else {
-                            deleteItems = false;
-                        }
-                    } else {
-                        deleteItems = false; 
-                    }
-                   
-
-                    UserInterface.printInventory(fighters.get(player));   
-                    // loop that keaps you inside the inventory unless you press q to exit
-                    while (true) {
-                        seleckted = inventoryChoice(scannAction,playerP.inventory.size());
-
-                        if (seleckted > 0) {
-                            System.out.println(";)");
-                        // breaks the loop if you presed q
-                        } else if (seleckted == 0) {break;}
-                    }                  
+                    inventoryManager(playerP, scannAction);
                 } else {break;}
             }
             
@@ -150,10 +125,8 @@ public class CombatManager {
                         return true;
                     }
                 }
-            }  
-           
+            }    
         }
-
         for (int i = 0; i < fighters.size(); i++) {
 
             // checks if the fighter is on fire and deals fire damage to them if they are
@@ -164,6 +137,38 @@ public class CombatManager {
         }
         // returns false if the batle did not end during the round of combat
         return false;
+    }
+
+    public static void inventoryManager(Player playerP, Scanner scanAction) {
+
+        int seleckted;
+        boolean deleteItems;
+
+        // if addAndRemoveWheaponFromInventory is inabled asks the player if they want too equip or delete whepons 
+        if (addAndRemoveWheaponFromInventory) {
+            UserInterface.equipOrDelete();
+            seleckted = playerAction(scanAction, 2, 0);
+            if (seleckted == 2) {
+                deleteItems = true;
+            } else {
+                deleteItems = false;
+            }
+        } else {
+            deleteItems = false; 
+        }
+        UserInterface.printInventory(playerP);   
+        // loop that keaps you inside the inventory unless you press q to exit
+        while (true) {
+            seleckted = inventoryChoice(scanAction,playerP.inventory.size());
+
+            if (seleckted > 0) {
+                if (deleteItems == true) {
+
+                }
+                System.out.println(";)");
+            // breaks the loop if you presed q
+            } else if (seleckted == 0) {break;}
+        } 
     }
 
     //sorts by higest initiative
