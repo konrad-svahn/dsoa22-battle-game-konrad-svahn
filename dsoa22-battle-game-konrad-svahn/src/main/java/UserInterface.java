@@ -66,7 +66,6 @@ public class UserInterface {
             System.out.println();
             i++;
         } 
-        System.out.println("write the numer of the wheapon to seleckt or press q to exit the inventory");
     }
 
     public static void equipOrDelete() {
@@ -130,6 +129,13 @@ public class UserInterface {
         System.out.println("You must select a number between 1 and "+max+" to continue");
     }
 
+    public static void printInventoryActionPromt(boolean deleteItems) {
+        if (deleteItems == true) {
+            System.out.println("write the numer of the wheapon you want to delete or press q to exit");
+        } else {
+            System.out.println("write the numer of the wheapon to equip or press q to exit the inventory");
+        }
+    }
 
     // the methods bellow print miscellaneous messages
     public static void printGameStart() {
