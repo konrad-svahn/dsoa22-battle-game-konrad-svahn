@@ -38,7 +38,7 @@ public class UserInterface {
     }
 
     public static void printWarning (int max) {
-        System.out.println("You must seleckt a number between 1 and "+max+" to continue");
+        System.out.println("You must select a number between 1 and "+max+" to continue");
     }
 
     public static void printActionPromt (GameCharacter player) {
@@ -46,7 +46,7 @@ public class UserInterface {
         System.out.println("press 2 to block");
         System.out.println("press 3 to use " + player.getWeapon().getAttack1()+attackDescription(player.getWeapon().getAttack1(), player));
         System.out.println("press 4 to use " + player.getWeapon().getAttack2()+attackDescription(player.getWeapon().getAttack2(), player));
-        System.out.println("press 5 to use your inventory");
+        System.out.println("press 5 to open your inventory");
     }
 
     public static void printEnemySelecktionPromt(ArrayList<GameCharacter> fighters, int player) {
@@ -64,6 +64,10 @@ public class UserInterface {
         System.out.println("Two bandits block the bridge before you");
     }
 
+    public static void equipOrDelete() {
+        System.out.println("press 1 if you want to equip weapons or 2 if you want to delete weapons from your inventory");
+    }
+
     public static void printInventory(GameCharacter player){
         Player playerP = (Player) player;
         int i = 1;
@@ -73,6 +77,7 @@ public class UserInterface {
             System.out.println();
             i++;
         } 
+        System.out.println("write the numer of the wheapon to seleckt or press q to exit the inventory");
     }
 
     // Unsure if this is a good place for this method

@@ -16,6 +16,8 @@ public class CombatManager {
         int actionP;
         int player;
         int enemyToAttack = 0;
+        int seleckted;
+        boolean deleteItems;
         boolean addAndRemoveWheaponFromInventory = true;
 
         // sets all fighters health to be eqal to their max health 
@@ -28,6 +30,7 @@ public class CombatManager {
         mainCombatLoop: while (true) {
 
             player = whoIsPlayer(fighters);
+            Player playerP = (Player) fighters.get(player);
 
             //nullifies the last turns block by resetting armour to 0 
             fighters.get(player).setArmour(0);
@@ -41,7 +44,31 @@ public class CombatManager {
                 if (actionP == 1) {//run awway
                     break mainCombatLoop;
                 } else if (actionP == 5) {//acces inventory
-                    UserInterface.printInventory(fighters.get(player));
+
+                    // if addAndRemoveWheaponFromInventory is inabled asks the player if they want too equip or delete whepons 
+                    if (addAndRemoveWheaponFromInventory) {
+                        UserInterface.equipOrDelete();
+                        seleckted = playerAction(scannAction, 2, 0);
+                        if (seleckted == 2) {
+                            deleteItems = true;
+                        } else {
+                            deleteItems = false;
+                        }
+                    } else {
+                        deleteItems = false; 
+                    }
+                   
+
+                    UserInterface.printInventory(fighters.get(player));   
+                    // loop that keaps you inside the inventory unless you press q to exit
+                    while (true) {
+                        seleckted = inventoryChoice(scannAction,playerP.inventory.size());
+
+                        if (seleckted > 0) {
+                            System.out.println(";)");
+                        // breaks the loop if you presed q
+                        } else if (seleckted == 0) {break;}
+                    }                  
                 } else {break;}
             }
             
@@ -164,15 +191,38 @@ public class CombatManager {
             if (warning){UserInterface.printWarning(length + promtMod);}
             warning = true;
             if (scanAction.hasNext()){String input = scanAction.nextLine();
-                if (input.matches("-?\\d+")) {
-                    int intput = Integer.valueOf(input);
-                    if (intput <= length && intput > 0) {
-                        return intput;
-                    }
+                if (testInput(input, length) != 0) {
+                    return testInput(input, length);
                 }
             }
         }
     }
+
+    private static int inventoryChoice(Scanner scanAction, int length) {
+        boolean warning = false;
+        while (true) {
+            if (warning){UserInterface.printWarning(length);}
+            warning = true;
+            String input = scanAction.nextLine();
+            if (input.equals("q")) {
+                return 0;
+            } else {
+                if (testInput(input, length) != 0) {
+                    return testInput(input, length);
+                }
+            } 
+        }
+    }
+
+    private static int testInput(String input, int length){
+        if (input.matches("-?\\d+")) {
+            int intput = Integer.valueOf(input);
+            if (intput <= length && intput > 0) {
+                return intput;
+            }
+        } 
+        return 0;
+    } 
 
     public static boolean endOfBattleChoise(Scanner scanAction) {
         String input = scanAction.nextLine();
