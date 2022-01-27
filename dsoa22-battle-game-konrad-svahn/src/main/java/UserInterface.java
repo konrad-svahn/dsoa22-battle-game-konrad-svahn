@@ -61,7 +61,7 @@ public class UserInterface {
             } else {
                 equiped = "";
             }
-            System.out.println(i+": "+wheapon.getName()+equiped);
+            System.out.println(i+": "+wheapon.getName() + equiped);
             System.out.println("damage: "+wheapon.getDamage()+",   attack variance "+wheapon.getAttackVariance()+",   attack 1: "+wheapon.getAttack1()+",   attack 2: "+wheapon.getAttack2());
             System.out.println();
             i++;
