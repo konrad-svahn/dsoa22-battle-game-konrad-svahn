@@ -103,7 +103,7 @@ public class CombatManager {
                 if(fighters.get(i).isPlayer){
                     fighters.get(i).attack(fighters.get(enemyToAttack), attackType);   
                     if (fighters.get(enemyToAttack).isDead()) {
-                        UserInterface.printDeath(fighters.get(player));
+                        UserInterface.printDeath(fighters.get(enemyToAttack));
                     } 
                 // else the curent fighter attacks the player 
                 }else if (fighters.get(i).getHelth() > 0) {
@@ -116,7 +116,9 @@ public class CombatManager {
                 }
             }    
         }
-        removeDead(player, fighters);
+        if (removeDead(player, fighters)) {
+            return true;
+        }
         for (int i = 0; i < fighters.size(); i++) {
             // checks if the fighter is on fire and deals fire damage to them if they are
             if (fighters.get(i).getTurnsOnFireLeft() > 0) {
@@ -124,7 +126,9 @@ public class CombatManager {
                 if (fighters.get(i).isPlayer && fighters.get(i).isDead()) {return true;}
             }
         }
-        removeDead(player, fighters);
+        if (removeDead(player, fighters)) {
+            return true;
+        }
         // returns false if the batle did not end during the round of combat
         return false;
     }
@@ -255,7 +259,7 @@ public class CombatManager {
                 fighters.remove(fighters.get(i));
             }
         }
-        if (fighters.size() <= 2) {
+        if (fighters.size() < 2) {
             return true;
         } 
         return false;

@@ -22,7 +22,7 @@ public class UserInterface {
             player.getWeapon().getDamage()+") which varies by "+player.getWeapon().getAttackVariance()+" on your next turn)";
         } else if (attackType == Attacks.FLAME_CHARGE) {
             description = 
-            " (Using flame carge will cause you to perform an attack dealing 3x your wheapon damage("+
+            " (Using flame carge will cause you to perform an attack dealing 3x your weapon damage("+
             player.getWeapon().getDamage()+") which varies by "+player.getWeapon().getAttackVariance()+" on your next turn and will set the target on fire)";
         } else if (attackType == Attacks.RAPID_STRIKES) {
             description = 
