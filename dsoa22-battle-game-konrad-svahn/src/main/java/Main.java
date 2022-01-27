@@ -20,6 +20,12 @@ public class Main {
             //GameCharacter enemy5 = new Npc("pyromancer", 1, 1, 0, 0);
             //player.setWeapon(new Weapon("wand", 25, 5, Attacks.FLAME_ATTACK, Attacks.REGENERATE));
             player.addToInventory(new Weapon("wand", 25, 5, Attacks.FLAME_ATTACK, Attacks.REGENERATE));
+            player.addToInventory(new Weapon("rand1", 25, 5, Attacks.CHARGE, Attacks.FLAME_CHARGE));
+            player.addToInventory(new Weapon("rand2", 25, 5, Attacks.ATTACK, Attacks.FLAME_ATTACK));
+            player.addToInventory(new Weapon("rand3", 25, 5, Attacks.RAPID_STRIKES, Attacks.RAPID_FLAME_STRIKES));
+            player.addToInventory(new Weapon("rand4", 25, 5, Attacks.LEECH, Attacks.REGENERATE));
+            player.addToInventory(new Weapon("rand5", 25, 5, Attacks.THROW_GUNPOWDER, Attacks.DETONATE));
+
             enemy1.setWeapon(new Weapon("black mace", 50, 30, Attacks.ATTACK, Attacks.CHARGE));
             enemy2.setWeapon(new Weapon("rapier", 30, 0, Attacks.ATTACK, Attacks.RAPID_STRIKES));
             enemy3.setWeapon(new Weapon("torch", 10, 10, Attacks.FLAME_ATTACK, Attacks.RAPID_FLAME_STRIKES));

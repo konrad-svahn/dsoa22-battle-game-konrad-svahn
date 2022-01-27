@@ -41,7 +41,7 @@ public class CombatManager {
                 if (actionP == 1) {//run awway
                     break mainCombatLoop;
                 } else if (actionP == 5) {//acces inventory
-                    System.out.println(";)");
+                    UserInterface.printInventory(fighters.get(player));
                 } else {break;}
             }
             

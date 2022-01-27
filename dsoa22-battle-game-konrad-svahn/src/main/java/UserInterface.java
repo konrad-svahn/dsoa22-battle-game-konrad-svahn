@@ -42,13 +42,10 @@ public class UserInterface {
     }
 
     public static void printActionPromt (GameCharacter player) {
-
-        
-       
         System.out.println("press 1 to run away");
         System.out.println("press 2 to block");
-        System.out.println("press 3 to use " + player.getWeapon().getAttack1());
-        System.out.println("press 4 to use " + player.getWeapon().getAttack2());
+        System.out.println("press 3 to use " + player.getWeapon().getAttack1()+attackDescription(player.getWeapon().getAttack1(), player));
+        System.out.println("press 4 to use " + player.getWeapon().getAttack2()+attackDescription(player.getWeapon().getAttack2(), player));
         System.out.println("press 5 to use your inventory");
     }
 
@@ -65,6 +62,17 @@ public class UserInterface {
 
     public static void printGameStart() {
         System.out.println("Two bandits block the bridge before you");
+    }
+
+    public static void printInventory(GameCharacter player){
+        Player playerP = (Player) player;
+        int i = 1;
+        for (Weapon wheapon : playerP.getInventory()) {
+            System.out.println(i+": "+wheapon.getName());
+            System.out.println("damage: "+wheapon.getDamage()+",   attack variance "+wheapon.getAttackVariance()+",   attack 1: "+wheapon.getAttack1()+",   attack 2: "+wheapon.getAttack2());
+            System.out.println();
+            i++;
+        } 
     }
 
     // Unsure if this is a good place for this method
@@ -88,7 +96,7 @@ public class UserInterface {
             player.getWeapon().getDamage()+") which varies by "+player.getWeapon().getAttackVariance()+" on your next turn and will set the target on fire)";
         }else if (attackType == Attacks.RAPID_STRIKES) {
             description = 
-            " (Using rapid strikes will preform 3 attacks in a row each of which wil deal half your weapons damage("+
+            " (Using rapid strikes will preform 3 attacks in a row each of which will deal half your weapons damage("+
             player.getWeapon().getDamage()+") which varies by "+player.getWeapon().getAttackVariance()+")";
         }else if (attackType == Attacks.RAPID_FLAME_STRIKES) {
             description = 
@@ -101,7 +109,7 @@ public class UserInterface {
         }else if (attackType == Attacks.REGENERATE) {
             description = " (Regenerate recovers "+player.getRegeneration()+" helth)";
         }else if (attackType == Attacks.THROW_GUNPOWDER) {
-            description = " (throw gunpowder deals 1 damage normaly but if the target is on fire it deals 4x wheapon damage("+
+            description = " (throw gunpowder deals 1 damage normaly but if the target is on fire it deals 3x wheapon damage("+
             player.getWeapon().getDamage()+") which varies "+player.getWeapon().getAttackVariance()+")";
         }else if (attackType == Attacks.DETONATE) {
             description = " ( Detonate deals 500 damage to all enemies but destroys the wheapon you perform it with)";
