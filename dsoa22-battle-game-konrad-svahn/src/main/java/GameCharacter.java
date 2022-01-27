@@ -40,19 +40,21 @@ public abstract class GameCharacter {
                 defender.turnsOnFireLeft = 2;
             } else if (attackType == Attacks.CHARGE) {
                 this.chargeLevel = 1;
-            }else if (attackType == Attacks.FLAME_CHARGE) {
+            } else if (attackType == Attacks.FLAME_CHARGE) {
                 this.chargeLevel = 2;
-            }else if (attackType == Attacks.RAPID_STRIKES) {
+            } else if (attackType == Attacks.RAPID_STRIKES) {
     
-            }else if (attackType == Attacks.RAPID_FLAME_STRIKES) {
+            } else if (attackType == Attacks.RAPID_FLAME_STRIKES) {
                 defender.turnsOnFireLeft = 1;
-            }else if (attackType == Attacks.LEECH) {
+            } else if (attackType == Attacks.LEECH) {
     
-            }else if (attackType == Attacks.REGENERATE) {
+            } else if (attackType == Attacks.REGENERATE) {
                 heal(this.getRegeneration());
-            }else if (attackType == Attacks.THROW_GUNPOWDER) {
-    
-            }else if (attackType == Attacks.DETONATE) {
+            } else if (attackType == Attacks.WILD_ABANDON) {
+
+            } else if (attackType == Attacks.THROW_GUNPOWDER) {
+     
+            } else if (attackType == Attacks.DETONATE) {
     
             }
         }
@@ -143,7 +145,9 @@ public abstract class GameCharacter {
     }
 
     public void setWeapon(Weapon weapon) {
+        this.weapon.setEquiped(false);
         this.weapon = weapon;
+        this.weapon.setEquiped(true);
     }
 
     public int getMaxHelth() {

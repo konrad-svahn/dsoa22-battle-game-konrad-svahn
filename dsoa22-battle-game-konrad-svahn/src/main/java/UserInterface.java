@@ -68,11 +68,21 @@ public class UserInterface {
         System.out.println("press 1 if you want to equip weapons or 2 if you want to delete weapons from your inventory");
     }
 
+    public static void printEquipMessage(Weapon weapon) {
+        System.out.println("you equiped "+weapon.getName());
+    }
+
     public static void printInventory(GameCharacter player){
         Player playerP = (Player) player;
+        String equiped; 
         int i = 1;
         for (Weapon wheapon : playerP.getInventory()) {
-            System.out.println(i+": "+wheapon.getName());
+            if (wheapon.isEquiped()) {
+                equiped = " EQUIPED";
+            } else {
+                equiped = "";
+            }
+            System.out.println(i+": "+wheapon.getName()+equiped);
             System.out.println("damage: "+wheapon.getDamage()+",   attack variance "+wheapon.getAttackVariance()+",   attack 1: "+wheapon.getAttack1()+",   attack 2: "+wheapon.getAttack2());
             System.out.println();
             i++;
@@ -95,28 +105,31 @@ public class UserInterface {
             description = 
             " (Using carge will cause you to perform an attack dealing 3x your wheapon damage("+
             player.getWeapon().getDamage()+") which varies by "+player.getWeapon().getAttackVariance()+" on your next turn)";
-        }else if (attackType == Attacks.FLAME_CHARGE) {
+        } else if (attackType == Attacks.FLAME_CHARGE) {
             description = 
             " (Using flame carge will cause you to perform an attack dealing 3x your wheapon damage("+
             player.getWeapon().getDamage()+") which varies by "+player.getWeapon().getAttackVariance()+" on your next turn and will set the target on fire)";
-        }else if (attackType == Attacks.RAPID_STRIKES) {
+        } else if (attackType == Attacks.RAPID_STRIKES) {
             description = 
             " (Using rapid strikes will preform 3 attacks in a row each of which will deal half your weapons damage("+
             player.getWeapon().getDamage()+") which varies by "+player.getWeapon().getAttackVariance()+")";
-        }else if (attackType == Attacks.RAPID_FLAME_STRIKES) {
+        } else if (attackType == Attacks.RAPID_FLAME_STRIKES) {
             description = 
             " (Using rapid flame strikes will preform 3 attacks in a row each of which will deal half your weapons damage("+
             player.getWeapon().getDamage()+") which varies by "+player.getWeapon().getAttackVariance()+" and will set the target on fire)";
-        }else if (attackType == Attacks.LEECH) {
+        } else if (attackType == Attacks.LEECH) {
             description = 
             " (Leech deals the damage of your weapons attack power("+player.getWeapon().getDamage()+") which varies "+
             player.getWeapon().getAttackVariance()+" and regenerates "+player.getRegeneration()+"% of the damage delt)";
-        }else if (attackType == Attacks.REGENERATE) {
+        } else if (attackType == Attacks.REGENERATE) {
             description = " (Regenerate recovers "+player.getRegeneration()+" helth)";
-        }else if (attackType == Attacks.THROW_GUNPOWDER) {
-            description = " (throw gunpowder deals 1 damage normaly but if the target is on fire it deals 3x wheapon damage("+
+        } else if (attackType == Attacks.WILD_ABANDON) {
+            description = " (Wild abandon will deal 3x your weapons attack power("+player.getWeapon().getDamage()+") which varies "+
+            player.getWeapon().getAttackVariance()+", to you and the target. If the attack would have killed you you will survive with 1 health)";
+        } else if (attackType == Attacks.THROW_GUNPOWDER) {
+            description = " (Throw gunpowder deals 1 damage normaly but if the target is on fire it deals 3x weapon damage("+
             player.getWeapon().getDamage()+") which varies "+player.getWeapon().getAttackVariance()+")";
-        }else if (attackType == Attacks.DETONATE) {
+        } else if (attackType == Attacks.DETONATE) {
             description = " ( Detonate deals 500 damage to all enemies but destroys the wheapon you perform it with)";
         }
         return description;

@@ -27,4 +27,10 @@ public class Player extends GameCharacter{
     public void addToInventory(Weapon toAdd) {
         inventory.add(toAdd);
     }
+
+    public void removeFromInventory(int wheaponToRemove) {
+        if (getFromInventory(wheaponToRemove) == this.getWeapon()) {
+            System.out.println(";)");
+        }
+    }
 }

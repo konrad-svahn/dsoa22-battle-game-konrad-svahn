@@ -3,6 +3,7 @@ public class Weapon {
     private String name;
     private int damage;
     private int attackVariance;
+    private boolean equiped;
     private Attacks attack1;
     private Attacks attack2;
     
@@ -12,6 +13,14 @@ public class Weapon {
         setAttackVariance(attackVariance);
         this.attack1 = attack1;
         this.attack2 = attack2;
+    }
+
+    public boolean isEquiped() {
+        return equiped;
+    }
+
+    public void setEquiped(boolean equiped) {
+        this.equiped = equiped;
     }
 
     public String getName() {

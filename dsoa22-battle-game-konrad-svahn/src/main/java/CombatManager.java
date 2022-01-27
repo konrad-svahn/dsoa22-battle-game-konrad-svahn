@@ -18,6 +18,7 @@ public class CombatManager {
         int actionP;
         int player;
         int enemyToAttack = 0;
+        Player playerP;
 
         // sets all fighters health to be eqal to their max health 
         initialiseHelth(fighters);
@@ -29,8 +30,7 @@ public class CombatManager {
         mainCombatLoop: while (true) {
 
             player = whoIsPlayer(fighters);
-            Player playerP = (Player) fighters.get(player);
-
+        
             //nullifies the last turns block by resetting armour to 0 
             fighters.get(player).setArmour(0);
 
@@ -43,6 +43,7 @@ public class CombatManager {
                 if (actionP == 1) {//run awway
                     break mainCombatLoop;
                 } else if (actionP == 5) {//acces inventory
+                    playerP = (Player) fighters.get(player);
                     inventoryManager(playerP, scannAction);
                 } else {break;}
             }
@@ -139,7 +140,7 @@ public class CombatManager {
         return false;
     }
 
-    public static void inventoryManager(Player playerP, Scanner scanAction) {
+    public static void inventoryManager(Player player, Scanner scanAction) {
 
         int seleckted;
         boolean deleteItems;
@@ -156,16 +157,19 @@ public class CombatManager {
         } else {
             deleteItems = false; 
         }
-        UserInterface.printInventory(playerP);   
+        UserInterface.printInventory(player);   
         // loop that keaps you inside the inventory unless you press q to exit
         while (true) {
-            seleckted = inventoryChoice(scanAction,playerP.inventory.size());
-
+            seleckted = inventoryChoice(scanAction,player.inventory.size());
             if (seleckted > 0) {
                 if (deleteItems == true) {
-
+                    player.removeFromInventory(seleckted);
+                } else {
+                    //player.getWeapon().setEquiped(false);
+                    player.setWeapon(player.getFromInventory(seleckted - 1));
+                    UserInterface.printEquipMessage(player.getWeapon());
+                    break;
                 }
-                System.out.println(";)");
             // breaks the loop if you presed q
             } else if (seleckted == 0) {break;}
         } 
