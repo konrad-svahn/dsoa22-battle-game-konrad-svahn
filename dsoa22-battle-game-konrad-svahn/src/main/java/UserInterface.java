@@ -3,94 +3,9 @@ import java.util.ArrayList;
 public class UserInterface {
 
     // The class UserInterface is a class that writes out events in the terminal
-    public static void printBattleStart (ArrayList<GameCharacter>  charackters) {
-        System.out.println("A battle has begun");
-        for (int i = 0; i < charackters.size(); i++){
-            int j = i+1;
-            System.out.println(
-                charackters.get(i).getName()+" has "+charackters.get(i).getHelth()+" helth and is number "+j+" in the atack order"
-            );
-        }
-    } 
 
-    public static void printDamage (GameCharacter attacker, GameCharacter deffender, int damage) {
-        System.out.println(
-            attacker.getName()+" hits "+deffender.getName()+" with "+ attacker.getWeapon().getName() +" for "+damage+" damage. "+deffender.getName()+" now has "+deffender.getHelth()+" Health"
-        ); 
-    }
-
-    public static void printFireDamage (GameCharacter character, int damage) {
-        System.out.println(
-            character.getName() + " is burning and takes " + damage +" damage "+character.getName()+" now has "+character.getHelth()+" Health"
-        );
-    }
-
-    public static void printBlock(GameCharacter character) {
-        System.out.println(character.getName() + " raises their sheild to block, reducing all inkomming damage by " + character.getArmour() +" for the rest of the turn");
-    }
-
-    public static void printRegen () {
-        System.out.println("troll");
-    }
-
-    public static void printDeath (GameCharacter victim) {
-        System.out.println(victim.getName() + " has died");
-    }
-
-    public static void printWarning (int max) {
-        System.out.println("You must select a number between 1 and "+max+" to continue");
-    }
-
-    public static void printActionPromt (GameCharacter player) {
-        System.out.println("press 1 to run away");
-        System.out.println("press 2 to block");
-        System.out.println("press 3 to use " + player.getWeapon().getAttack1()+attackDescription(player.getWeapon().getAttack1(), player));
-        System.out.println("press 4 to use " + player.getWeapon().getAttack2()+attackDescription(player.getWeapon().getAttack2(), player));
-        System.out.println("press 5 to open your inventory");
-    }
-
-    public static void printEnemySelecktionPromt(ArrayList<GameCharacter> fighters, int player) {
-
-        System.out.println("what enemy do you attack?");
-        for (int i = 0; i < fighters.size() - 1; i++){
-            int j = i + 1;
-            if (i < player) {
-                System.out.println("press " + j + " to attack " + fighters.get(i).getName());
-            } else {System.out.println("press " + j + " to attack " + fighters.get(i + 1).getName());}
-        }
-    }
-
-    public static void printGameStart() {
-        System.out.println("Two bandits block the bridge before you");
-    }
-
-    public static void equipOrDelete() {
-        System.out.println("press 1 if you want to equip weapons or 2 if you want to delete weapons from your inventory");
-    }
-
-    public static void printEquipMessage(Weapon weapon) {
-        System.out.println("you equiped "+weapon.getName());
-    }
-
-    public static void printInventory(GameCharacter player){
-        Player playerP = (Player) player;
-        String equiped; 
-        int i = 1;
-        for (Weapon wheapon : playerP.getInventory()) {
-            if (wheapon.isEquiped()) {
-                equiped = " EQUIPED";
-            } else {
-                equiped = "";
-            }
-            System.out.println(i+": "+wheapon.getName()+equiped);
-            System.out.println("damage: "+wheapon.getDamage()+",   attack variance "+wheapon.getAttackVariance()+",   attack 1: "+wheapon.getAttack1()+",   attack 2: "+wheapon.getAttack2());
-            System.out.println();
-            i++;
-        } 
-        System.out.println("write the numer of the wheapon to seleckt or press q to exit the inventory");
-    }
-
-    // Unsure if this is a good place for this method
+    // Unsure if this is a good place for this method 
+    // this method retuns the descrption for the diferent atack types
     public static String attackDescription(Attacks attackType, GameCharacter player){
         String description = ""; 
         if (attackType == Attacks.ATTACK) {
@@ -134,4 +49,101 @@ public class UserInterface {
         }
         return description;
     }
+
+    // the folowing methods print information related to the inventory
+    public static void printInventory(GameCharacter player){
+        Player playerP = (Player) player;
+        String equiped; 
+        int i = 1;
+        for (Weapon wheapon : playerP.getInventory()) {
+            if (wheapon.isEquiped()) {
+                equiped = " EQUIPED";
+            } else {
+                equiped = "";
+            }
+            System.out.println(i+": "+wheapon.getName()+equiped);
+            System.out.println("damage: "+wheapon.getDamage()+",   attack variance "+wheapon.getAttackVariance()+",   attack 1: "+wheapon.getAttack1()+",   attack 2: "+wheapon.getAttack2());
+            System.out.println();
+            i++;
+        } 
+        System.out.println("write the numer of the wheapon to seleckt or press q to exit the inventory");
+    }
+
+    public static void equipOrDelete() {
+        System.out.println("press 1 if you want to equip weapons or 2 if you want to delete weapons from your inventory");
+    }
+
+    public static void printEquipMessage(Weapon weapon) {
+        System.out.println("you equiped "+weapon.getName());
+    }
+
+    public static void printItemRemoval(Weapon weapon) {
+        System.out.println("you threw away "+weapon.getName());
+    }
+
+    // the following methods print simple actions related to combat
+    public static void printDamage (GameCharacter attacker, GameCharacter deffender, int damage) {
+        System.out.println(
+            attacker.getName()+" hits "+deffender.getName()+" with "+ attacker.getWeapon().getName() +" for "+damage+" damage. "+deffender.getName()+" now has "+deffender.getHelth()+" Health"
+        ); 
+    }
+
+    public static void printFireDamage (GameCharacter character, int damage) {
+        System.out.println(
+            character.getName() + " is burning and takes " + damage +" damage "+character.getName()+" now has "+character.getHelth()+" Health"
+        );
+    }
+
+    public static void printBlock(GameCharacter character) {
+        System.out.println(character.getName() + " raises their sheild to block, reducing all inkomming damage by " + character.getArmour() +" for the rest of the turn");
+    }
+
+    public static void printRegen () {
+        System.out.println("troll");
+    }
+
+    public static void printDeath (GameCharacter victim) {
+        System.out.println(victim.getName() + " has died");
+    }
+
+    // the following methods print mesages that promt player input 
+    public static void printActionPromt (GameCharacter player) {
+        System.out.println("press 1 to run away");
+        System.out.println("press 2 to block");
+        System.out.println("press 3 to use " + player.getWeapon().getAttack1()+attackDescription(player.getWeapon().getAttack1(), player));
+        System.out.println("press 4 to use " + player.getWeapon().getAttack2()+attackDescription(player.getWeapon().getAttack2(), player));
+        System.out.println("press 5 to open your inventory");
+    }
+
+    public static void printEnemySelecktionPromt(ArrayList<GameCharacter> fighters, int player) {
+
+        System.out.println("what enemy do you attack?");
+        for (int i = 0; i < fighters.size() - 1; i++){
+            int j = i + 1;
+            if (i < player) {
+                System.out.println("press " + j + " to attack " + fighters.get(i).getName());
+            } else {System.out.println("press " + j + " to attack " + fighters.get(i + 1).getName());}
+        }
+    }
+
+    public static void printWarning (int max) {
+        System.out.println("You must select a number between 1 and "+max+" to continue");
+    }
+
+
+    // the methods bellow print miscellaneous messages
+    public static void printGameStart() {
+        System.out.println("Two bandits block the bridge before you");
+    }
+
+    public static void printBattleStart (ArrayList<GameCharacter>  charackters) {
+        System.out.println("A battle has begun");
+        for (int i = 0; i < charackters.size(); i++){
+            int j = i+1;
+            System.out.println(
+                charackters.get(i).getName()+" has "+charackters.get(i).getHelth()+" helth and is number "+j+" in the atack order"
+            );
+        }
+    } 
+
 }

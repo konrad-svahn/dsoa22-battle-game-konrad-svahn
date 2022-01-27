@@ -160,10 +160,10 @@ public class CombatManager {
         UserInterface.printInventory(player);   
         // loop that keaps you inside the inventory unless you press q to exit
         while (true) {
-            seleckted = inventoryChoice(scanAction,player.inventory.size());
+            seleckted = inventoryChoice(scanAction,player.getInventorySize());
             if (seleckted > 0) {
                 if (deleteItems == true) {
-                    player.removeFromInventory(seleckted);
+                    player.removeFromInventory(seleckted - 1);
                 } else {
                     //player.getWeapon().setEquiped(false);
                     player.setWeapon(player.getFromInventory(seleckted - 1));

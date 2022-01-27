@@ -2,7 +2,7 @@ import java.util.ArrayList;
 
 public class Player extends GameCharacter{
 
-    ArrayList<Weapon> inventory = new ArrayList<>();
+    private ArrayList<Weapon> inventory = new ArrayList<>();
 
     public Player(String name, int helth, int initiative, int armour, int regeneration) {
         super(name, helth, initiative, armour, regeneration);
@@ -29,8 +29,14 @@ public class Player extends GameCharacter{
     }
 
     public void removeFromInventory(int wheaponToRemove) {
-        if (getFromInventory(wheaponToRemove) == this.getWeapon()) {
-            System.out.println(";)");
+        if (getFromInventory(wheaponToRemove).isEquiped()) {
+            this.setWeapon(this.getDefaultWeapon());
         }
+        UserInterface.printItemRemoval(getFromInventory(wheaponToRemove));
+        inventory.remove(wheaponToRemove);
+    }
+
+    public int getInventorySize(){
+        return inventory.size();
     }
 }

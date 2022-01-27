@@ -12,6 +12,7 @@ public abstract class GameCharacter {
     private int regeneration;
     public boolean isPlayer;
     private Weapon weapon;
+    private Weapon defaultWeapon;
     Random ran = new Random();
     
 
@@ -20,7 +21,8 @@ public abstract class GameCharacter {
         this.name = name;
         this.maxHelth = maxHelth;
         this.helth = maxHelth;
-        this.weapon = new Weapon("their own body", 5, 10,Attacks.ATTACK, Attacks.RAPID_STRIKES);;
+        this.defaultWeapon = new Weapon("their own body", 5, 10,Attacks.ATTACK, Attacks.RAPID_STRIKES);
+        this.weapon = this.defaultWeapon;
         this.armour = armour;
         this.regeneration = regeneration;
     }
@@ -188,5 +190,9 @@ public abstract class GameCharacter {
 
     public void setChargeLevel(int chargeLevel) {
         this.chargeLevel = chargeLevel;
+    }
+
+    public Weapon getDefaultWeapon() {
+        return defaultWeapon;
     }
 }
