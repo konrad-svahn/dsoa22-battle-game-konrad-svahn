@@ -74,15 +74,11 @@ public class CombatManager {
     private static boolean actionLoop(int actionP, ArrayList<GameCharacter> fighters, int player, int enemyToAttack){
        
         int action;
-        int size;
         Attacks attackType;
         Random ran = new Random();
 
         // loops through fighter and performs the charackters actions
         for (int i = 0; i < fighters.size(); i++) {
-
-            //size is the amount of fighters att the begining of each characktes action we will compare this with the actual fighters.size() to se if anyone died
-            size = fighters.size();
                 
             // if the curent fighter is the player the next action is set to the players action, otherwise randomly seleckts an atack for the enemy to perform
             if (fighters.get(i).isPlayer) { action = actionP;} 
@@ -102,40 +98,33 @@ public class CombatManager {
                 } else {
                     attackType = fighters.get(i).getWeapon().getAttack2();
                 }
-        
+
                 // if the curent fighter is the player they attack the enemy the player seleckted 
                 if(fighters.get(i).isPlayer){
-                    fighters.get(i).attack(fighters.get(enemyToAttack), attackType);
-
-                    // this if statement fixes a bug but i have no idea why it works
-                    if (fighters.get(enemyToAttack).isDead() && fighters.get(enemyToAttack).getInitiative() < fighters.get(player).getInitiative()) {
-                        size = size - 1;
-                    }
-                    if (isKillingBow(fighters.get(enemyToAttack), fighters)) {
-                        return true;
+                    fighters.get(i).attack(fighters.get(enemyToAttack), attackType);   
+                    if (fighters.get(enemyToAttack).isDead()) {
+                        UserInterface.printDeath(fighters.get(player));
                     } 
-                    //reajusts the curent fighter if the total amount of fighters has decreased and the killed fighter had a higer initiative than the player
-                    if (fighters.size() == size - 1 ) {i = i - 1;}
-                    //reajusts which fighter the player is
-                    player = whoIsPlayer(fighters);
-                    System.out.println(fighters.size());
                 // else the curent fighter attacks the player 
-                }else{
+                }else if (fighters.get(i).getHelth() > 0) {
                     fighters.get(i).attack(fighters.get(player), attackType);
-                    if (isKillingBow(fighters.get(player), fighters)) {
+                    if (fighters.get(player).isDead()) {
+                        UserInterface.printDeath(fighters.get(player));
+                        isGameOver = true;
                         return true;
                     }
                 }
             }    
         }
+        removeDead(player, fighters);
         for (int i = 0; i < fighters.size(); i++) {
-
             // checks if the fighter is on fire and deals fire damage to them if they are
             if (fighters.get(i).getTurnsOnFireLeft() > 0) {
                 UserInterface.printFireDamage(fighters.get(i), fighters.get(i).TakeFireDamage());
-                if (isKillingBow(fighters.get(i), fighters)) {return true;}
+                if (fighters.get(i).isPlayer && fighters.get(i).isDead()) {return true;}
             }
         }
+        removeDead(player, fighters);
         // returns false if the batle did not end during the round of combat
         return false;
     }
@@ -247,24 +236,7 @@ public class CombatManager {
         for (int i = 0; i < fighters.size(); i++) {
             fighters.get(i).resetHelth();
         }
-    }
-
-    private static boolean isKillingBow(GameCharacter defender, ArrayList<GameCharacter> fighters) {
-        if (defender.isDead()) {
-            UserInterface.printDeath(defender);
-
-            if (defender.isPlayer) {
-                isGameOver = true;
-                return true;
-            } else {
-                if (fighters.size() <= 2) {
-                    return true;
-                }
-                fighters.remove(defender);
-            }  
-        }
-        return false;
-    }   
+    }  
 
     private static int whoIsPlayer(ArrayList<GameCharacter> fighters){
         int player = 0;
@@ -275,5 +247,17 @@ public class CombatManager {
             } 
         }
         return player;
+    }
+
+    private static boolean removeDead(int player, ArrayList<GameCharacter> fighters) {   
+        for (int i = 0; i < fighters.size(); i++){
+            if (fighters.get(i).isDead()){
+                fighters.remove(fighters.get(i));
+            }
+        }
+        if (fighters.size() <= 2) {
+            return true;
+        } 
+        return false;
     }
 }
