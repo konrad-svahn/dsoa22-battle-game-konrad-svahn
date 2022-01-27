@@ -57,7 +57,7 @@ public class UserInterface {
         int i = 1;
         for (Weapon wheapon : playerP.getInventory()) {
             if (wheapon.isEquiped()) {
-                equiped = " EQUIPED";
+                equiped = Ansi.RED + " EQUIPED" + Ansi.RESET;
             } else {
                 equiped = "";
             }

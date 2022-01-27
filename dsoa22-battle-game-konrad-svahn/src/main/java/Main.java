@@ -5,7 +5,11 @@ public class Main {
     
     public static void main(String[] args) {
 
-        if (System.getProperty("os.name").startsWith("Windows")) {System.out.println("windows");}
+        // this is here for when Im going to try to make the ansi codes work in windows
+        // which will probably be the last work i ever do on this game because it seems kind of hard
+        if (System.getProperty("os.name").startsWith("Windows")) {
+            System.out.println("Windows");
+        }
         
         try (Scanner scanner = new Scanner(System.in)) {
             
