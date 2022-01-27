@@ -12,56 +12,56 @@ public class UserInterface {
             description = 
             " (The attack move deals the damage of your weapons attack power("+
             Ansi.YELLOW + player.getWeapon().getDamage() + Ansi.RESET + 
-            ") which varies by " +
-            Ansi.YELLOW + player.getWeapon().getAttackVariance() + Ansi.RESET+")";
+            ") which varies by (" +
+            Ansi.YELLOW + player.getWeapon().getAttackVariance() + Ansi.RESET+"))";
         
         } else if (attackType == Attacks.FLAME_ATTACK) {
             description = 
             "  (The flame attack move lights the target on fire and deals the damage of your weapons attack power("+
             Ansi.YELLOW + player.getWeapon().getDamage() + Ansi.RESET + 
-            ") which varies by " + 
-            Ansi.YELLOW + player.getWeapon().getAttackVariance() + Ansi.RESET+")";
+            ") which varies by (" + 
+            Ansi.YELLOW + player.getWeapon().getAttackVariance() + Ansi.RESET+"))";
         
         } else if (attackType == Attacks.CHARGE) {
             description = 
-            " (Using carge will cause you to perform an attack dealing 3x your wheapon damage("+
+            " (Using carge will cause you to perform an attack dealing "+Ansi.YELLOW+"3x"+Ansi.RESET+" your wheapon damage("+
             Ansi.YELLOW + player.getWeapon().getDamage() + Ansi.RESET +
-            ") which varies by "+
+            ") which varies by ("+
             Ansi.YELLOW + player.getWeapon().getAttackVariance() + Ansi.RESET + 
-            " on your next turn)";
+            "), on your next turn)";
         
         } else if (attackType == Attacks.FLAME_CHARGE) {
             description = 
-            " (Using flame carge will cause you to perform an attack dealing 3x your weapon damage("
+            " (Using flame carge will cause you to perform an attack dealing "+Ansi.YELLOW+"3x"+Ansi.RESET+" your weapon damage("
             +Ansi.YELLOW + player.getWeapon().getDamage() + Ansi.RESET +
-            ") which varies by "+
+            ") which varies by ("+
             Ansi.YELLOW + player.getWeapon().getAttackVariance() + Ansi.RESET+
-            " on your next turn and will set the target on fire)";
+            "), on your next turn and will set the target on fire)";
         
         } else if (attackType == Attacks.RAPID_STRIKES) {
             description = 
-            " (Using rapid strikes will preform 3 attacks in a row each of which will deal half your weapons damage("+
+            " (Using rapid strikes will preform "+Ansi.YELLOW+"3 attacks"+Ansi.RESET+" in a row each of which will deal "+Ansi.YELLOW+"half"+Ansi.RESET+" your weapons damage("+
             Ansi.YELLOW + player.getWeapon().getDamage() + Ansi.RESET +
-            ") which varies by "+
-            Ansi.YELLOW + player.getWeapon().getAttackVariance() + Ansi.RESET +")";
+            ") which varies by ("+
+            Ansi.YELLOW + player.getWeapon().getAttackVariance() + Ansi.RESET +"))";
         
         } else if (attackType == Attacks.RAPID_FLAME_STRIKES) {
             description = 
-            " (Using rapid flame strikes will preform 3 attacks in a row each of which will deal half your weapons damage("+
+            " (Using rapid flame strikes will preform "+Ansi.YELLOW+"3 attacks "+Ansi.RESET+"in a row each of which will deal "+Ansi.YELLOW+"half "+Ansi.RESET+"your weapons damage("+
             Ansi.YELLOW + player.getWeapon().getDamage() + Ansi.RESET +
-            ") which varies by "+
+            ") which varies by ("+
             Ansi.YELLOW + player.getWeapon().getAttackVariance() + Ansi.RESET +
-            " and will set the target on fire)";
+            ") and will set the target on fire)";
         
         } else if (attackType == Attacks.LEECH) {
             description = 
             " (Leech deals the damage of your weapons attack power("+
             Ansi.YELLOW + player.getWeapon().getDamage() + Ansi.RESET +
-            ") which varies "+
+            ") which varies by ("+
             Ansi.YELLOW + player.getWeapon().getAttackVariance() + Ansi.RESET +
-            " and regenerates "+
-            Ansi.YELLOW + player.getRegeneration() + Ansi.RESET +
-            "% of the damage delt)";
+            ") and regenerates "+
+            Ansi.YELLOW + player.getRegeneration() + 
+            "%"+ Ansi.RESET +" of the damage delt)";
         
         } else if (attackType == Attacks.REGENERATE) {
             description = 
@@ -70,20 +70,20 @@ public class UserInterface {
         
         } else if (attackType == Attacks.WILD_ABANDON) {
             description = 
-            " (Wild abandon will deal 3x your weapons attack power("+
+            " (Wild abandon will deal "+Ansi.YELLOW+"3x"+Ansi.RESET+" your weapons attack power("+
             Ansi.YELLOW + player.getWeapon().getDamage() + Ansi.RESET+
-            ") which varies "+
+            ") which varies by ("+
             Ansi.YELLOW + player.getWeapon().getAttackVariance() + Ansi.RESET +
-            ", to you and the target. If the attack would have killed you you will survive with 1 health)";
+            "), to you and the target. If the attack would have killed you, you will survive with"+Ansi.YELLOW+" 1 "+Ansi.RESET+"health)";
         
         } else if (attackType == Attacks.THROW_GUNPOWDER) {
-            description = " (Throw gunpowder deals 1 damage normaly but if the target is on fire it deals 3x weapon damage("+
+            description = " (Throw gunpowder deals"+Ansi.YELLOW+" 1 "+Ansi.RESET+"damage normaly but if the target is on fire it deals "+Ansi.YELLOW+"3x"+Ansi.RESET+" weapon damage("+
             Ansi.YELLOW + player.getWeapon().getDamage() + Ansi.RESET+
-            ") which varies "+
+            ") which varies by "+
             Ansi.YELLOW + player.getWeapon().getAttackVariance() + Ansi.RESET +")";
         
         } else if (attackType == Attacks.DETONATE) {
-            description = " ( Detonate deals"+ Ansi.YELLOW + "500" + Ansi.RESET + " damage to all enemies but destroys the wheapon you perform it with)";
+            description = " ( Detonate deals "+ Ansi.YELLOW + "500" + Ansi.RESET + " damage to all enemies but destroys the wheapon you perform it with)";
         }
         return description;
     }

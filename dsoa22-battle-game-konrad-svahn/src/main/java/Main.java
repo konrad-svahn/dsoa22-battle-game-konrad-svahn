@@ -30,7 +30,7 @@ public class Main {
             player.addToInventory(new Weapon("rand3", 25, 5, Attacks.RAPID_STRIKES, Attacks.RAPID_FLAME_STRIKES));
             player.addToInventory(new Weapon("rand4", 25, 5, Attacks.LEECH, Attacks.REGENERATE));
             player.addToInventory(new Weapon("rand5", 25, 5, Attacks.THROW_GUNPOWDER, Attacks.DETONATE));
-            player.setWeapon(player.getFromInventory(1));
+            player.setWeapon(player.getFromInventory(0));
 
             enemy1.setWeapon(new Weapon("black mace", 50, 30, Attacks.ATTACK, Attacks.CHARGE));
             enemy2.setWeapon(new Weapon("rapier", 30, 0, Attacks.ATTACK, Attacks.RAPID_STRIKES));
