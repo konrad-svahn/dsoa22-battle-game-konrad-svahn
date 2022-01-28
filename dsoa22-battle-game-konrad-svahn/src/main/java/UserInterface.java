@@ -93,6 +93,16 @@ public class UserInterface {
         } 
     }
 
+    public static void printAddOrNot(int trowAway) {
+        if (trowAway == 1) {
+            System.out.println("you "+Ansi.YELLOW+"added" + Ansi.RESET + " the wepon to your inventory");
+            System.out.println();
+        } else {
+            System.out.println("you " + Ansi.RED + "discarded" + Ansi.RESET + " the weapon");
+            System.out.println();
+        }
+    }
+
     public static void equipOrDelete() {
         System.out.println("press "+ Ansi.YELLOW +"1"+Ansi.RESET+" if you want to "+ Ansi.YELLOW +"equip"+Ansi.RESET+" weapons or "+
          Ansi.RED +"2"+Ansi.RESET+" if you want to "+ Ansi.RED +"delete"+Ansi.RESET+" weapons from your inventory"

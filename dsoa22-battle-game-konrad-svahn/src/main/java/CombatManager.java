@@ -107,10 +107,12 @@ public class CombatManager {
                         //if adding and removing weapons is enabled, asks the player if they want to pick up the dead enemys weapon
                         if (addAndRemoveWheaponFromInventory && fighters.get(enemyToAttack).getWeapon().getName() != "their own body") {
                             UserInterface.printPickUppEnimyWeaponPromt(fighters.get(enemyToAttack).getWeapon());
-                            if (playerAction(scanAction, 2, 0) == 1){
+                            int addOrNot = playerAction(scanAction, 2, 0);
+                            if (addOrNot == 1){
+                                fighters.get(enemyToAttack).getWeapon().setEquiped(false);
                                 playerP.addToInventory(fighters.get(enemyToAttack).getWeapon());
-                                System.out.println("(;");
                             }
+                            UserInterface.printAddOrNot(addOrNot);
                         }
                     } 
                 // else the curent fighter attacks the player 
