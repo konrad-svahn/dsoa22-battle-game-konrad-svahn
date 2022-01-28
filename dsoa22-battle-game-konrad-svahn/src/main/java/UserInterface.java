@@ -130,7 +130,11 @@ public class UserInterface {
     }
 
     public static void printBlock(GameCharacter character) {
-        System.out.println(character.getName() + " raises their sheild to block, reducing all inkomming damage by " + character.getArmour() +" for the rest of the turn");
+        System.out.println( 
+        Ansi.PURPLE + character.getName() + Ansi.RESET + " raises their sheild to block, reducing all inkomming damage by " + 
+        Ansi.BLUE + character.getArmour() + Ansi.RESET +" for the rest of the turn"
+        );
+        System.out.println();
     }
 
     public static void printRegen () {
@@ -138,7 +142,8 @@ public class UserInterface {
     }
 
     public static void printDeath (GameCharacter victim) {
-        System.out.println(victim.getName() + " has died");
+        System.out.println(Ansi.PURPLE + victim.getName() + Ansi.RESET + " has died");
+        System.out.println();
     }
 
     // the following methods print mesages that promt player input 
@@ -156,8 +161,8 @@ public class UserInterface {
         for (int i = 0; i < fighters.size() - 1; i++){
             int j = i + 1;
             if (i < player) {
-                System.out.println("press " + j + " to attack " + fighters.get(i).getName());
-            } else {System.out.println("press " + j + " to attack " + fighters.get(i + 1).getName());}
+                System.out.println("press " + j + " to attack " + Ansi.PURPLE + fighters.get(i).getName() + Ansi.RESET);
+            } else {System.out.println("press " + j + " to attack " + Ansi.PURPLE + fighters.get(i + 1).getName()+ Ansi.RESET);}
         }
     }
 
@@ -180,11 +185,17 @@ public class UserInterface {
 
     public static void printBattleStart (ArrayList<GameCharacter>  charackters) {
         System.out.println("A battle has begun");
+        System.out.println();
         for (int i = 0; i < charackters.size(); i++){
             int j = i+1;
             System.out.println(
-                charackters.get(i).getName()+" has "+charackters.get(i).getHelth()+" helth and is number "+j+" in the atack order"
+                Ansi.PURPLE + charackters.get(i).getName() + Ansi.RESET + " has " + Ansi.GREEN + charackters.get(i).getHelth() + Ansi.RESET + 
+                " helth, " + Ansi.BLUE + charackters.get(i).getArmour() + Ansi.RESET + " armour, is number " + Ansi.PURPLE + j + Ansi.RESET +
+                " in the atack order and uses " + charackters.get(i).getWeapon().getName()+
+                " (damage(" + Ansi.YELLOW + charackters.get(i).getWeapon().getDamage() + Ansi.RESET + "), variance(" + 
+                Ansi.YELLOW + charackters.get(i).getWeapon().getAttackVariance() + Ansi.RESET + ")) to attack"
             );
+            System.out.println();
         }
     } 
 

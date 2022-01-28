@@ -22,8 +22,8 @@ public class Main {
             Npc enemy1 = new Npc("the black knight", 150, 4, 50, 35);
             Npc enemy2 = new Npc("rapier wielding bandit", 50, 8, 0, 35);
             Npc enemy3 = new Npc("torch wielding bandit", 50, 2, 0, 35);
-            Npc enemy4 = new Npc("weakling", 1, 6, 0, 0);
-            //GameCharacter enemy5 = new Npc("pyromancer", 1, 1, 0, 0);
+            Npc enemy4 = new Npc("weakling", 1, 1, 0, 0);
+            //GameCharacter enemy5 = new Npc("pyromancer", 20, 1, 0, 0);
             player.addToInventory(new Weapon("wand", 25, 5, Attacks.WILD_ABANDON, Attacks.FLAME_ATTACK));
             player.addToInventory(new Weapon("rand1", 25, 5, Attacks.CHARGE, Attacks.FLAME_CHARGE));
             player.addToInventory(new Weapon("rand2", 25, 5, Attacks.ATTACK, Attacks.FLAME_ATTACK));
