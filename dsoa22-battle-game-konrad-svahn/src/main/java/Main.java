@@ -47,7 +47,7 @@ public class Main {
             while (true) {
                 CombatManager.runEncounter(scanner, battleParticipants);
                 if (CombatManager.isGameOver()) {break;}
-                System.out.println("Press q to quit pres another buton to continue");
+                System.out.println("Press"+Ansi.CYAN+" q "+Ansi.RESET+" to quit or pres another buton to continue");
                 if (CombatManager.endOfBattleChoise(scanner)) {break;}
             }
             System.out.println("The game has ended");

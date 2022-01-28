@@ -80,19 +80,23 @@ public class UserInterface {
         int i = 1;
         for (Weapon wheapon : playerP.getInventory()) {
             if (wheapon.isEquiped()) {
-                equiped = Ansi.RED + " EQUIPED" + Ansi.RESET;
+                equiped = Ansi.YELLOW + " EQUIPED" + Ansi.RESET;
             } else {
                 equiped = "";
             }
             System.out.println(i+": "+wheapon.getName() + equiped);
-            System.out.println("damage: "+wheapon.getDamage()+",   attack variance "+wheapon.getAttackVariance()+",   attack 1: "+wheapon.getAttack1()+",   attack 2: "+wheapon.getAttack2());
+            System.out.println("damage: " + Ansi.YELLOW + wheapon.getDamage() + Ansi.RESET + ",   attack variance " + Ansi.YELLOW + wheapon.getAttackVariance() + 
+            Ansi.RESET + ",   attack 1: " + Ansi.CYAN + wheapon.getAttack1() + Ansi.RESET + ",   attack 2: " + Ansi.CYAN + wheapon.getAttack2() + Ansi.RESET
+            );
             System.out.println();
             i++;
         } 
     }
 
     public static void equipOrDelete() {
-        System.out.println("press 1 if you want to equip weapons or 2 if you want to delete weapons from your inventory");
+        System.out.println("press "+ Ansi.YELLOW +"1"+Ansi.RESET+" if you want to "+ Ansi.YELLOW +"equip"+Ansi.RESET+" weapons or "+
+         Ansi.RED +"2"+Ansi.RESET+" if you want to "+ Ansi.RED +"delete"+Ansi.RESET+" weapons from your inventory"
+         );
     }
 
     public static void printEquipMessage(Weapon weapon) {
@@ -132,8 +136,8 @@ public class UserInterface {
     public static void printActionPromt (GameCharacter player) {
         System.out.println("press 1 to run away");
         System.out.println("press 2 to block");
-        System.out.println("press 3 to use " + player.getWeapon().getAttack1()+attackDescription(player.getWeapon().getAttack1(), player));
-        System.out.println("press 4 to use " + player.getWeapon().getAttack2()+attackDescription(player.getWeapon().getAttack2(), player));
+        System.out.println("press 3 to use " + Ansi.CYAN +player.getWeapon().getAttack1()+Ansi.RESET+attackDescription(player.getWeapon().getAttack1(), player));
+        System.out.println("press 4 to use " + Ansi.CYAN +player.getWeapon().getAttack2()+Ansi.RESET+attackDescription(player.getWeapon().getAttack2(), player));
         System.out.println("press 5 to open your inventory");
     }
 
@@ -154,9 +158,9 @@ public class UserInterface {
 
     public static void printInventoryActionPromt(boolean deleteItems) {
         if (deleteItems == true) {
-            System.out.println("write the numer of the wheapon you want to delete or press q to exit");
+            System.out.println("write the numer of the wheapon you want to "+ Ansi.RED +"delete "+ Ansi.RESET +"or press"+Ansi.CYAN+" q "+Ansi.RESET+"to exit");
         } else {
-            System.out.println("write the numer of the wheapon to equip or press q to exit the inventory");
+            System.out.println("write the numer of the wheapon to "+ Ansi.YELLOW +"equip "+ Ansi.RESET +" or press"+Ansi.CYAN+" q "+Ansi.RESET+"to exit the inventory");
         }
     }
 
