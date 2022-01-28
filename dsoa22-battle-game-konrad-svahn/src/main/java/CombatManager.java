@@ -16,7 +16,7 @@ public class CombatManager {
     public static void runEncounter(Scanner scannAction ,ArrayList<GameCharacter> fighters) {
 
         int actionP;
-        int player;
+        int playerNum;
         int enemyToAttack = 0;
         Player playerP;
 
@@ -29,21 +29,21 @@ public class CombatManager {
         // the main combat loop, one loop is one round of combat
         mainCombatLoop: while (true) {
 
-            player = whoIsPlayer(fighters);
-        
+            playerNum = whoIsPlayer(fighters);
+            playerP = (Player) fighters.get(playerNum);
+
             //nullifies the last turns block by resetting armour to 0 
-            fighters.get(player).setArmour(0);
+            fighters.get(playerNum).setArmour(0);
 
             while (true) {
                 //promts a player input and reads that input
-                UserInterface.printActionPromt(fighters.get(player));
+                UserInterface.printActionPromt(fighters.get(playerNum));
                 actionP = playerAction(scannAction, 5, 0); 
 
                 //performs the player actions that must ocur before the first attack of the turn
                 if (actionP == 1) {//run awway
                     break mainCombatLoop;
-                } else if (actionP == 5) {//acces inventory
-                    playerP = (Player) fighters.get(player);
+                } else if (actionP == 5) {//acces inventory  
                     inventoryManager(playerP, scannAction);
                 } else {break;}
             }
@@ -51,7 +51,7 @@ public class CombatManager {
             //asks what enimy to attack if the player decides to use an attack action
             if (actionP == 3 || actionP == 4) {
                  
-                UserInterface.printEnemySelecktionPromt(fighters,player);
+                UserInterface.printEnemySelecktionPromt(fighters,playerNum);
                 enemyToAttack = fighters.size();
 
                 //makes it inposible for the player to attack self and helps to avoid an out of bounds error 
@@ -60,18 +60,18 @@ public class CombatManager {
                 if (enemyToAttack == fighters.size()) {UserInterface.printWarning(fighters.size() - 1);}
                 }
                 
-                if (enemyToAttack <= player) {
+                if (enemyToAttack <= playerNum) {
                     enemyToAttack = enemyToAttack - 1;
                 }
             }
 
             // starts loping through fighter and performs ecah charackters action for the turn 
-            if(actionLoop(actionP, fighters, player, enemyToAttack)){break;}   
+            if(actionLoop(actionP, fighters, playerP, playerNum, enemyToAttack, scannAction)){break;}   
         }
     } 
 
     // returns true if player is dead or if all enemies are dead
-    private static boolean actionLoop(int actionP, ArrayList<GameCharacter> fighters, int player, int enemyToAttack){
+    private static boolean actionLoop(int actionP, ArrayList<GameCharacter> fighters, Player playerP, int playerNum, int enemyToAttack, Scanner scanAction){
        
         int action;
         Attacks attackType;
@@ -87,8 +87,8 @@ public class CombatManager {
             // if statements that check what the next action is and performs it 
             if (action == 2) {
                 //block
-                fighters.get(player).setArmour(40);
-                UserInterface.printBlock(fighters.get(player));
+                fighters.get(playerNum).setArmour(40);
+                UserInterface.printBlock(fighters.get(playerNum));
             } else if (action == 3 || action == 4) {
                 // performs attack1 or attack 2
                 
@@ -104,19 +104,27 @@ public class CombatManager {
                     fighters.get(i).attack(fighters.get(enemyToAttack), attackType);   
                     if (fighters.get(enemyToAttack).isDead()) {
                         UserInterface.printDeath(fighters.get(enemyToAttack));
+                        //if adding and removing weapons is enabled, asks the player if they want to pick up the dead enemys weapon
+                        if (addAndRemoveWheaponFromInventory && fighters.get(enemyToAttack).getWeapon().getName() != "their own body") {
+                            UserInterface.printPickUppEnimyWeaponPromt(fighters.get(enemyToAttack).getWeapon());
+                            if (playerAction(scanAction, 2, 0) == 1){
+                                playerP.addToInventory(fighters.get(enemyToAttack).getWeapon());
+                                System.out.println("(;");
+                            }
+                        }
                     } 
                 // else the curent fighter attacks the player 
                 }else if (fighters.get(i).getHelth() > 0) {
-                    fighters.get(i).attack(fighters.get(player), attackType);
-                    if (fighters.get(player).isDead()) {
-                        UserInterface.printDeath(fighters.get(player));
+                    fighters.get(i).attack(fighters.get(playerNum), attackType);
+                    if (fighters.get(playerNum).isDead()) {
+                        UserInterface.printDeath(fighters.get(playerNum));
                         isGameOver = true;
                         return true;
                     }
                 }
             }    
         }
-        if (removeDead(player, fighters)) {
+        if (removeDead(fighters)) {
             return true;
         }
         for (int i = 0; i < fighters.size(); i++) {
@@ -126,7 +134,7 @@ public class CombatManager {
                 if (fighters.get(i).isPlayer && fighters.get(i).isDead()) {return true;}
             }
         }
-        if (removeDead(player, fighters)) {
+        if (removeDead(fighters)) {
             return true;
         }
         // returns false if the batle did not end during the round of combat
@@ -243,17 +251,17 @@ public class CombatManager {
     }  
 
     private static int whoIsPlayer(ArrayList<GameCharacter> fighters){
-        int player = 0;
+        int playerNum = 0;
         //Figures out the players place in the attack order and saves it as an int
         for (int i = 0; i < fighters.size(); i++) {      
             if (fighters.get(i).isPlayer) {
-                player = i;
+                playerNum = i;
             } 
         }
-        return player;
+        return playerNum;
     }
 
-    private static boolean removeDead(int player, ArrayList<GameCharacter> fighters) {   
+    private static boolean removeDead(ArrayList<GameCharacter> fighters) {   
         for (int i = 0; i < fighters.size(); i++){
             if (fighters.get(i).isDead()){
                 fighters.remove(fighters.get(i));

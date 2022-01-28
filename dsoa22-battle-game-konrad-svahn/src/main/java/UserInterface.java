@@ -170,12 +170,24 @@ public class UserInterface {
         System.out.println("You must select a number between 1 and "+max+" to continue");
     }
 
-    public static void printInventoryActionPromt(boolean deleteItems) {
+    public static void printInventoryActionPromt (boolean deleteItems) {
         if (deleteItems == true) {
             System.out.println("write the numer of the wheapon you want to "+ Ansi.RED +"delete "+ Ansi.RESET +"or press"+Ansi.CYAN+" q "+Ansi.RESET+"to exit");
         } else {
             System.out.println("write the numer of the wheapon to "+ Ansi.YELLOW +"equip "+ Ansi.RESET +" or press"+Ansi.CYAN+" q "+Ansi.RESET+"to exit the inventory");
         }
+    }
+
+    public static void printPickUppEnimyWeaponPromt (Weapon weapon) {
+        System.out.println(
+            "Do you want to add " + weapon.getName() + " (damage(" + Ansi.YELLOW + weapon.getDamage() + Ansi.RESET + "), variation("+
+            Ansi.YELLOW + weapon.getAttackVariance() + Ansi.RESET + ")), " + Ansi.CYAN + weapon.getAttack1() + Ansi.RESET + ", "+
+            Ansi.CYAN + weapon.getAttack2() + Ansi.RESET + " to your inventory?"
+        );
+        System.out.println(
+            "press " + Ansi.YELLOW + "1 " + Ansi.RESET + "to " + Ansi.YELLOW + "add " + Ansi.RESET + "press "+ 
+            Ansi.RED + "2 " + Ansi.RESET + "to " + Ansi.RED + "discard " + Ansi.RESET
+        );
     }
 
     // the methods bellow print miscellaneous messages
