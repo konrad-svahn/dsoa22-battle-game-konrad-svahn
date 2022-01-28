@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 
-public class Player extends GameCharacter{
+public class Player extends GameCharacter {
 
     private ArrayList<Weapon> inventory = new ArrayList<>();
 

@@ -1,6 +1,7 @@
+import java.io.Serializable;
 import java.util.Random;
 
-public abstract class GameCharacter {
+public abstract class GameCharacter implements Serializable{
     
     private String name; 
     private int helth;
