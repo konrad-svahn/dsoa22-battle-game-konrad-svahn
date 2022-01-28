@@ -28,7 +28,6 @@ public abstract class GameCharacter {
     }
 
     public void attack(GameCharacter defender, Attacks attackType) {
-        System.out.println(attackType);
 
         if (this.chargeLevel == 2) {
             this.chargeLevel = 0;

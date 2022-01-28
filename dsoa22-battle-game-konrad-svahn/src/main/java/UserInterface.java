@@ -110,14 +110,23 @@ public class UserInterface {
     // the following methods print simple actions related to combat
     public static void printDamage (GameCharacter attacker, GameCharacter deffender, int damage) {
         System.out.println(
-            attacker.getName()+" hits "+deffender.getName()+" with "+ attacker.getWeapon().getName() +" for "+damage+" damage. "+deffender.getName()+" now has "+deffender.getHelth()+" Health"
+            Ansi.PURPLE + attacker.getName() + Ansi.RESET + " uses "+ attacker.getWeapon().getName() + " to attack " + Ansi.PURPLE + deffender.getName() + Ansi.RESET + 
+            " dealing " + Ansi.YELLOW + damage + Ansi.RESET +" damage. " 
         ); 
+        System.out.println(
+            Ansi.PURPLE + deffender.getName() + Ansi.RESET + " now has " + Ansi.GREEN + deffender.getHelth() + Ansi.RESET + " Health remaining"
+        );
+        System.out.println();
     }
 
     public static void printFireDamage (GameCharacter character, int damage) {
         System.out.println(
-            character.getName() + " is burning and takes " + damage +" damage "+character.getName()+" now has "+character.getHelth()+" Health"
+            Ansi.PURPLE + character.getName() + Ansi.RESET + " is burning and takes " + Ansi.RED + damage + Ansi.RESET +" damage "
         );
+        System.out.println(
+            Ansi.PURPLE + character.getName() + Ansi.RESET + " now has " + Ansi.GREEN + character.getHelth() + Ansi.RESET + " Health  remaining"
+        );
+        System.out.println();
     }
 
     public static void printBlock(GameCharacter character) {
