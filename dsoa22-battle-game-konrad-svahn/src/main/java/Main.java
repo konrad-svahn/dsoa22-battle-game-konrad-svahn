@@ -42,8 +42,6 @@ public class Main {
             player.addToInventory(new Weapon("testWeapon4", 3, 0, Attacks.LEECH, Attacks.REGENERATE));
             player.addToInventory(new Weapon("testWeapon5", 3, 0, Attacks.WILD_ABANDON, Attacks.DO_NOTHING));
             player.addToInventory(new Weapon("testWeapon6", 3, 0, Attacks.THROW_GUNPOWDER, Attacks.DETONATE));*/
-            
-            player.setWeapon(player.getFromInventory(0));
 
             enemy1.setWeapon(new Weapon("black mace", 50, 30, Attacks.ATTACK, Attacks.CHARGE));
             enemy2.setWeapon(new Weapon("rapier", 30, 0, Attacks.ATTACK, Attacks.RAPID_STRIKES));
