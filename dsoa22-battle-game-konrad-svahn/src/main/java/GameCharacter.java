@@ -22,7 +22,7 @@ public abstract class GameCharacter implements Serializable{
         this.name = name;
         this.maxHelth = maxHelth;
         this.helth = maxHelth;
-        this.defaultWeapon = new Weapon("their own body", 5, 10,Attacks.ATTACK, Attacks.RAPID_STRIKES);
+        this.defaultWeapon = new Weapon("their own body", 5, 10, Attacks.ATTACK, Attacks.DO_NOTHING);
         this.weapon = this.defaultWeapon;
         this.armour = armour;
         this.regeneration = regeneration;

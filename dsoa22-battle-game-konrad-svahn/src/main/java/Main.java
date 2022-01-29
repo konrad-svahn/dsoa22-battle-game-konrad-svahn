@@ -34,7 +34,6 @@ public class Main {
             Npc enemy4 = new Npc("weakling", 1, 6, 0, 0);
             Npc enemy5 = new Npc("pyromancer", 20, 1, 0, 35);
             /*
-            player.addToInventory(new Weapon("burning sword", 25, 5, Attacks.WILD_ABANDON, Attacks.FLAME_ATTACK));
             player.addToInventory(new Weapon("testWeapon1", 3, 0, Attacks.ATTACK, Attacks.FLAME_ATTACK));
             player.addToInventory(new Weapon("testWeapon2", 3, 0, Attacks.CHARGE, Attacks.FLAME_CHARGE));
             player.addToInventory(new Weapon("testWeapon3", 3, 0, Attacks.RAPID_STRIKES, Attacks.RAPID_FLAME_STRIKES));
