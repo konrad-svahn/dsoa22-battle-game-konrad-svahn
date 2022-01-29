@@ -197,7 +197,7 @@ public class CombatManager {
     // player action recives a player input and makes sure it is an int between 1 and length.
     // promtMod modifies the error message, 
     // so if you for example take the returned value of this method -2 after using it you can ajust what the metod prints by entering promtMod -2 
-    private static int playerAction(Scanner scanAction, int length, int promtMod) {  
+    public static int playerAction(Scanner scanAction, int length, int promtMod) {  
         boolean warning = false; 
         while (true){
             if (warning){UserInterface.printWarning(length + promtMod);}

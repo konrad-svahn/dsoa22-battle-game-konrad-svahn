@@ -12,8 +12,8 @@ public class SaveAndLoad {
             objIn.close();
 
         } catch (FileNotFoundException e) {
-            System.out.println("error1: file not found");
-            e.printStackTrace();
+            System.out.println("You do not have a saved charakter");
+            //e.printStackTrace();
         } catch (IOException e) {
             System.out.println("error2: IOExeption");
             e.printStackTrace();

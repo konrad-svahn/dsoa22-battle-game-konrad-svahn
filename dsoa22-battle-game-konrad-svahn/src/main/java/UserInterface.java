@@ -6,7 +6,7 @@ public class UserInterface {
 
     // Unsure if this is a good place for this method 
     // this method retuns the descrption for the diferent atack types
-    public static String attackDescription(Attacks attackType, GameCharacter player){
+    public static String attackDescription (Attacks attackType, GameCharacter player){
         String description = ""; 
         if (attackType == Attacks.ATTACK) {
             description = 
@@ -61,7 +61,7 @@ public class UserInterface {
             Ansi.YELLOW+" 1 "+Ansi.RESET+"health)";
         
         } else if (attackType == Attacks.DO_NOTHING) {
-            description = "Using do nothing does nothing";
+            description = " (Using do nothing does nothing)";
         } else if (attackType == Attacks.THROW_GUNPOWDER) {
             description = 
             " (Throw gunpowder deals"+Ansi.YELLOW+" 1 "+Ansi.RESET+"damage normaly but if the target is on fire it deals "+Ansi.YELLOW+"3x"+Ansi.RESET+" weapon damage("+
@@ -76,7 +76,7 @@ public class UserInterface {
     }
 
     // the folowing methods print information related to the inventory
-    public static void printInventory(GameCharacter player){
+    public static void printInventory (GameCharacter player){
         Player playerP = (Player) player;
         String equiped; 
         int i = 1;
@@ -95,7 +95,7 @@ public class UserInterface {
         } 
     }
 
-    public static void printAddOrNot(int trowAway) {
+    public static void printAddOrNot (int trowAway) {
         if (trowAway == 1) {
             System.out.println("you "+Ansi.YELLOW+"added" + Ansi.RESET + " the wepon to your inventory");
             System.out.println();
@@ -105,17 +105,17 @@ public class UserInterface {
         }
     }
 
-    public static void equipOrDelete() {
+    public static void equipOrDelete () {
         System.out.println("press "+ Ansi.YELLOW +"1"+Ansi.RESET+" if you want to "+ Ansi.YELLOW +"equip"+Ansi.RESET+" weapons or "+
          Ansi.RED +"2"+Ansi.RESET+" if you want to "+ Ansi.RED +"delete"+Ansi.RESET+" weapons from your inventory"
          );
     }
 
-    public static void printEquipMessage(Weapon weapon) {
+    public static void printEquipMessage (Weapon weapon) {
         System.out.println("you equiped "+weapon.getName());
     }
 
-    public static void printItemRemoval(Weapon weapon) {
+    public static void printItemRemoval (Weapon weapon) {
         System.out.println("you threw away "+weapon.getName());
     }
 
@@ -141,7 +141,7 @@ public class UserInterface {
         System.out.println();
     }
 
-    public static void printBlock(GameCharacter character) {
+    public static void printBlock (GameCharacter character) {
         System.out.println( 
         Ansi.PURPLE + character.getName() + Ansi.RESET + " raises their sheild to block, reducing all inkomming damage by " + 
         Ansi.BLUE + character.getArmour() + Ansi.RESET +" for the rest of the turn"
@@ -167,7 +167,12 @@ public class UserInterface {
         System.out.println("press 5 to open your inventory");
     }
 
-    public static void printEnemySelecktionPromt(ArrayList<GameCharacter> fighters, int player) {
+    public static void enterYourName () {
+        // not being able to print from method is usualy a good idea but the fackt that i had to make this its own method is stupid
+        System.out.println("Enter your name");
+    }
+
+    public static void printEnemySelecktionPromt (ArrayList<GameCharacter> fighters, int player) {
 
         System.out.println("what enemy do you attack?");
         for (int i = 0; i < fighters.size() - 1; i++){
@@ -202,32 +207,41 @@ public class UserInterface {
         );
     }
 
-    public static void printSaveChoise() {  
+    // methodes dedicated to printing mesages about saving and loading
+    public static void printSaveChoise () {  
         System.out.println(
             "Press " + Ansi.YELLOW + "s" + Ansi.RESET + " to " + Ansi.YELLOW + "save" + Ansi.RESET + 
             " or "+Ansi.CYAN+"q" + Ansi.RESET + " to "+Ansi.CYAN+"quit" + Ansi.RESET + " without saveing"
         );
     }
 
-    public static void printSaveChoisePromt() {
+    public static void printSaveChoisePromt () {
         System.out.println(
             "Do you want to " + Ansi.YELLOW + "save" + Ansi.RESET + 
             " your game? Doing so will "+ Ansi.RED +"write over your previous save" + Ansi.RESET + " if there is one."
             );
     }
 
-    // the methods bellow print miscellaneous messages
-    public static void printGameStart() {
-        System.out.println("Two bandits block the bridge before you");
-    }
-
-    public static void printSaveMessage(Boolean hasSaved) {
+    public static void printSaveMessage (Boolean hasSaved) {
 
         if (hasSaved) {
             System.out.println("your game was " + Ansi.YELLOW + "saved" + Ansi.RESET);
         } else {
             System.out.println("you exited the game");
         }
+    }
+
+    public static void printLoadPromt () {
+        System.out.println("Do you want to start with a " + Ansi.BLUE + "new charackter" + Ansi.RESET + " or continue with your " + Ansi.YELLOW + "previous" + Ansi.RESET + " one?");
+        System.out.println(
+            "To Create a " + Ansi.BLUE + "new charakter" + Ansi.RESET + " pres " + Ansi.BLUE + "1" + Ansi.RESET +
+            " to load the " + Ansi.YELLOW + "previous" + Ansi.RESET + " one pres " + Ansi.YELLOW + "2" + Ansi.RESET
+        );
+    }
+
+    // the methods bellow print miscellaneous messages
+    public static void printGameStart () {
+        System.out.println("some foes block the bridge before you");
     }
 
     public static void printBattleStart (ArrayList<GameCharacter>  charackters) {

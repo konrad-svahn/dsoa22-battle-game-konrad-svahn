@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Player extends GameCharacter {
 
@@ -38,5 +39,11 @@ public class Player extends GameCharacter {
 
     public int getInventorySize(){
         return inventory.size();
+    }
+
+    public static Player create(Scanner scanner) {
+        UserInterface.enterYourName();
+        String name = scanner.nextLine();
+        return new Player(name, 1000, 5, 0, 35);
     }
 }
