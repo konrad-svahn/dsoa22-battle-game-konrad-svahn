@@ -50,6 +50,9 @@ public class UserInterface {
             Ansi.YELLOW + player.getWeapon().getDamage() + Ansi.RESET +") which varies by ("+
             Ansi.YELLOW + player.getWeapon().getAttackVariance() + Ansi.RESET + ") and regenerates "+ Ansi.YELLOW + player.getRegeneration() + "%"+ Ansi.RESET +" of the damage delt)";
         
+        }  else if (attackType == Attacks.REGENERATE) {
+            description = 
+            " (Regenerate recovers "+Ansi.YELLOW + player.getRegeneration() + Ansi.RESET + " helth)";
         } else if (attackType == Attacks.WILD_ABANDON) {
             description = 
             " (Wild abandon will deal "+Ansi.YELLOW+"3x"+Ansi.RESET+" your weapons attack power("+
@@ -57,14 +60,13 @@ public class UserInterface {
             Ansi.YELLOW + player.getWeapon().getAttackVariance() + Ansi.RESET + "), to you and the target. If the attack would have killed you, you will survive with"+
             Ansi.YELLOW+" 1 "+Ansi.RESET+"health)";
         
+        } else if (attackType == Attacks.DO_NOTHING) {
+            description = "Using do nothing does nothing";
         } else if (attackType == Attacks.THROW_GUNPOWDER) {
-            description = " (Throw gunpowder deals"+Ansi.YELLOW+" 1 "+Ansi.RESET+"damage normaly but if the target is on fire it deals "+Ansi.YELLOW+"3x"+Ansi.RESET+" weapon damage("+
+            description = 
+            " (Throw gunpowder deals"+Ansi.YELLOW+" 1 "+Ansi.RESET+"damage normaly but if the target is on fire it deals "+Ansi.YELLOW+"3x"+Ansi.RESET+" weapon damage("+
             Ansi.YELLOW + player.getWeapon().getDamage() + Ansi.RESET+") which varies by "+
             Ansi.YELLOW + player.getWeapon().getAttackVariance() + Ansi.RESET +")";
-        
-        } else if (attackType == Attacks.REGENERATE) {
-            description = 
-            " (Regenerate recovers "+Ansi.YELLOW + player.getRegeneration() + Ansi.RESET + " helth)";
         
         } else if (attackType == Attacks.DETONATE) {
             description = 
