@@ -200,9 +200,32 @@ public class UserInterface {
         );
     }
 
+    public static void printSaveChoise() {  
+        System.out.println(
+            "Press " + Ansi.YELLOW + "s" + Ansi.RESET + " to " + Ansi.YELLOW + "save" + Ansi.RESET + 
+            " or "+Ansi.CYAN+"q" + Ansi.RESET + " to "+Ansi.CYAN+"quit" + Ansi.RESET + " without saveing"
+        );
+    }
+
+    public static void printSaveChoisePromt() {
+        System.out.println(
+            "Do you want to " + Ansi.YELLOW + "save" + Ansi.RESET + 
+            " your game? Doing so will "+ Ansi.RED +"write over your previous save" + Ansi.RESET + " if there is one."
+            );
+    }
+
     // the methods bellow print miscellaneous messages
     public static void printGameStart() {
         System.out.println("Two bandits block the bridge before you");
+    }
+
+    public static void printSaveMessage(Boolean hasSaved) {
+
+        if (hasSaved) {
+            System.out.println("your game was " + Ansi.YELLOW + "saved" + Ansi.RESET);
+        } else {
+            System.out.println("you exited the game");
+        }
     }
 
     public static void printBattleStart (ArrayList<GameCharacter>  charackters) {
@@ -220,5 +243,4 @@ public class UserInterface {
             System.out.println();
         }
     } 
-
 }

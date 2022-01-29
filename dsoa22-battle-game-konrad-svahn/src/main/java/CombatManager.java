@@ -240,6 +240,18 @@ public class CombatManager {
         String input = scanAction.nextLine();
     
         if (input.equals("q")) {
+            UserInterface.printSaveChoisePromt();
+            while (true) {
+                UserInterface.printSaveChoise();
+                input = scanAction.nextLine();
+                if (input.equals("q")) {
+                    UserInterface.printSaveMessage(false);
+                    break;
+                } else if (input.equals("s")) {
+                    
+                    break;   
+                } 
+            }
             return true;
         } else {
             return false;
