@@ -1,13 +1,13 @@
 public class Npc extends GameCharacter{
 
-    public Npc(String name, int helth, int initiative ,int armour ,int regeneration) {
+    public Npc(String name, int helth, int initiative ,int armour ,int regeneration, Attacks achillesHeel) {
         super(name, helth, initiative, armour, regeneration);
         this.isPlayer = false;
         setInitiative(initiative);
     } 
 
     static GameCharacter spawnEnemy () {
-        return new Npc("the black knight", 150, 4, 50, 35);
+        return new Npc("the black knight", 150, 4, 50, 35, Attacks.DO_NOTHING);
     }
 
     public static Weapon[] initialiseEnemyWeapons () {

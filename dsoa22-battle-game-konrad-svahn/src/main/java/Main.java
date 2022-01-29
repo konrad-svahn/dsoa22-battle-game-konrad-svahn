@@ -4,7 +4,6 @@ import java.util.Scanner;
 public class Main {
     
     public static void main(String[] args) {
-
         // this is here for when Im going to try to make the ansi codes work in windows
         // which will probably be the last work i ever do on this game because it seems kind of hard
         if (System.getProperty("os.name").startsWith("Windows")) {
@@ -15,6 +14,8 @@ public class Main {
             
             int inputP;
             Player player;
+            Weapon[] posibleEnemyWeapons = Npc.initialiseEnemyWeapons();
+            ArrayList<GameCharacter> battleParticipants = new ArrayList<>();
             System.out.println("Game start");
 
             UserInterface.printLoadPromt();
@@ -27,12 +28,14 @@ public class Main {
             } else {
                 player = Player.create(scanner);
             }
+            battleParticipants.add(player);
+            System.out.println(player.getAchillesHeel());
 
-            Npc enemy1 = new Npc("the black knight", 150, 4, 50, 35);
-            Npc enemy2 = new Npc("rapier wielding bandit", 50, 8, 0, 35);
-            Npc enemy3 = new Npc("torch wielding bandit", 50, 2, 0, 35);
-            Npc enemy4 = new Npc("weakling", 1, 6, 0, 0);
-            Npc enemy5 = new Npc("pyromancer", 20, 1, 0, 35);
+            Npc enemy1 = new Npc("the black knight", 150, 4, 50, 35, Attacks.DO_NOTHING);
+            Npc enemy2 = new Npc("rapier wielding bandit", 50, 8, 0, 35, Attacks.DO_NOTHING);
+            Npc enemy3 = new Npc("torch wielding bandit", 50, 2, 0, 35, Attacks.DO_NOTHING);
+            Npc enemy4 = new Npc("weakling", 1, 6, 0, 0, Attacks.DO_NOTHING);
+            Npc enemy5 = new Npc("pyromancer", 20, 1, 0, 35, Attacks.DO_NOTHING);
             /*
             player.addToInventory(new Weapon("testWeapon1", 3, 0, Attacks.ATTACK, Attacks.FLAME_ATTACK));
             player.addToInventory(new Weapon("testWeapon2", 3, 0, Attacks.CHARGE, Attacks.FLAME_CHARGE));
@@ -47,13 +50,11 @@ public class Main {
             enemy3.setWeapon(new Weapon("torch", 10, 10, Attacks.FLAME_ATTACK, Attacks.RAPID_FLAME_STRIKES));
             enemy5.setWeapon(new Weapon("Pyromancy kit", 20, 20, Attacks.FLAME_CHARGE, Attacks.THROW_GUNPOWDER));
 
-            ArrayList<GameCharacter> battleParticipants = new ArrayList<>();
-            battleParticipants.add(player);
-            //battleParticipants.add(enemy1);
+            battleParticipants.add(enemy1);
             battleParticipants.add(enemy2);
             battleParticipants.add(enemy3);
             battleParticipants.add(enemy4);
-            //battleParticipants.add(enemy5);
+            battleParticipants.add(enemy5);
 
             while (true) {
                 CombatManager.runEncounter(scanner, battleParticipants);

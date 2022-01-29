@@ -14,6 +14,7 @@ public abstract class GameCharacter implements Serializable{
     public boolean isPlayer;
     private Weapon weapon;
     private Weapon defaultWeapon;
+    private Attacks achillesHeel;
     Random ran = new Random();
     
 
@@ -194,5 +195,13 @@ public abstract class GameCharacter implements Serializable{
 
     public Weapon getDefaultWeapon() {
         return defaultWeapon;
+    }
+
+    public Attacks getAchillesHeel() {
+        return achillesHeel;
+    }
+
+    public void setAchillesHeel(Attacks achillesHeel) {
+        this.achillesHeel = achillesHeel;
     }
 }
