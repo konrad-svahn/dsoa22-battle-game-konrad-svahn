@@ -5,7 +5,7 @@ public class Player extends GameCharacter {
 
     private ArrayList<Weapon> inventory = new ArrayList<>();
 
-    public Player(String name, int helth, int initiative, int armour, int regeneration) {
+    public Player(String name, int helth, int initiative, int armour, int regeneration, Attacks achillesHeel) {
         super(name, helth, initiative, armour, regeneration);
         this.isPlayer = true;
         setArmour(0);
@@ -44,6 +44,6 @@ public class Player extends GameCharacter {
     public static Player create(Scanner scanner) {
         UserInterface.enterYourName();
         String name = scanner.nextLine();
-        return new Player(name, 1000, 5, 0, 35);
+        return new Player(name, 1000, 5, 0, 35, Attacks.DO_NOTHING);
     }
 }
