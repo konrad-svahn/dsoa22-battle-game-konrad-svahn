@@ -236,7 +236,7 @@ public class CombatManager {
         return 0;
     } 
 
-    public static boolean endOfBattleChoise(Scanner scanAction) {
+    public static boolean endOfBattleChoise(Player player,Scanner scanAction) {
         String input = scanAction.nextLine();
     
         if (input.equals("q")) {
@@ -248,7 +248,7 @@ public class CombatManager {
                     UserInterface.printSaveMessage(false);
                     break;
                 } else if (input.equals("s")) {
-                    
+                    SaveAndLoad.saveObject("saveFile.save", player);
                     break;   
                 } 
             }

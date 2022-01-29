@@ -48,7 +48,7 @@ public class Main {
                 CombatManager.runEncounter(scanner, battleParticipants);
                 if (CombatManager.isGameOver()) {break;}
                 System.out.println("Press"+Ansi.CYAN+" q "+Ansi.RESET+" to "+Ansi.CYAN+"quit" + Ansi.RESET + " or pres another buton to continue");
-                if (CombatManager.endOfBattleChoise(scanner)) {break;}
+                if (CombatManager.endOfBattleChoise(player, scanner)) {break;}
             }
             System.out.println("The game has ended");
 

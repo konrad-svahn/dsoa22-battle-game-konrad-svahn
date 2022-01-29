@@ -32,6 +32,7 @@ public class SaveAndLoad {
             objOutS.writeObject(objektToSave);
 
             objOutS.close();
+            UserInterface.printSaveMessage(true);
 
         } catch (FileNotFoundException e) {
             System.out.println("error4: file not found");
