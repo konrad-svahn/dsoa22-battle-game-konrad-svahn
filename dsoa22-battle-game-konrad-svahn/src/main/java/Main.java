@@ -31,11 +31,11 @@ public class Main {
             battleParticipants.add(player);
             System.out.println(player.getAchillesHeel());
 
-            Npc enemy1 = new Npc("the black knight", 150, 4, 50, 35, Attacks.REGENERATE);
-            Npc enemy2 = new Npc("rapier wielding bandit", 50, 8, 0, 35, Attacks.DO_NOTHING);
-            Npc enemy3 = new Npc("torch wielding bandit", 50, 2, 0, 35, Attacks.DO_NOTHING);
-            Npc enemy4 = new Npc("weakling", 1, 6, 0, 0, Attacks.DO_NOTHING);
-            Npc enemy5 = new Npc("pyromancer", 20, 1, 0, 35, Attacks.DO_NOTHING);
+            Npc enemy1 = new Npc("the black knight", 150, 4, 50, 35, Attacks.DO_NOTHING);
+            Npc enemy2 = new Npc("rapier wielding bandit", 50, 8, 0, 35, Attacks.REGENERATE);
+            Npc enemy3 = new Npc("torch wielding bandit", 50, 2, 0, 35, Attacks.FLAME_ATTACK);
+            Npc enemy4 = new Npc("weakling", 1, 6, 0, 0, Attacks.CHARGE);
+            Npc enemy5 = new Npc("pyromancer", 20, 1, 0, 35, Attacks.FLAME_CHARGE);
 
             enemy1.setWeapon(new Weapon("black mace", 50, 30, Attacks.ATTACK, Attacks.CHARGE));
             enemy2.setWeapon(new Weapon("rapier", 30, 0, Attacks.ATTACK, Attacks.RAPID_STRIKES));

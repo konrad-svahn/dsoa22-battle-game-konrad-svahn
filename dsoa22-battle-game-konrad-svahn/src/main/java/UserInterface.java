@@ -150,7 +150,10 @@ public class UserInterface {
                 attacker.getHelth() + Ansi.RESET
             );
         }  else if (attackType == Attacks.WILD_ABANDON) {
-
+            System.out.println(
+                Ansi.PURPLE + attacker.getName() + Ansi.RESET + " swings wildly dealing " + Ansi.YELLOW + damage + Ansi.RESET +" damage to themselves and " + 
+                Ansi.PURPLE + deffender.getName() + Ansi.RESET
+            );
         }  else if (attackType == Attacks.THROW_GUNPOWDER) {
             if (deffender.getTurnsOnFireLeft() > 0) {
                 aditionalInfo = " who is burnig, the gunpowder explodes dealing ";
@@ -174,14 +177,14 @@ public class UserInterface {
                 " dealing " + Ansi.YELLOW + damage + Ansi.RESET +" damage" + aditionalInfo 
             ); 
         }
-        if (attackType != Attacks.RAPID_STRIKES && attackType != Attacks.RAPID_FLAME_STRIKES && attackType != Attacks.DETONATE) {
+        if (attackType != Attacks.RAPID_STRIKES && attackType != Attacks.RAPID_FLAME_STRIKES && attackType != Attacks.DETONATE && attackType != Attacks.WILD_ABANDON) {
             printRemainingHelth(deffender);
+            System.out.println();
         }
     }
     
     public static void printRemainingHelth (GameCharacter deffender) {
-        System.out.println(Ansi.PURPLE + deffender.getName() + Ansi.RESET + " now has " + Ansi.GREEN + deffender.getHelth() + Ansi.RESET + " Health remaining");
-        System.out.println();
+        System.out.println(Ansi.PURPLE + deffender.getName() + Ansi.RESET + " now has " + Ansi.GREEN + deffender.getHelth() + Ansi.RESET + " Health remaining"); 
     }
 
     public static void printRapidStarter (GameCharacter attacker, GameCharacter defender) {

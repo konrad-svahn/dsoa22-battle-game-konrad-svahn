@@ -76,6 +76,7 @@ public abstract class GameCharacter implements Serializable{
                         UserInterface.printDamage(GameCharacter.this, defender, defender.takeDamage(defender.AttackDamageTaken(this, 0.5)), 0, false, Attacks.RAPID_STRIKES);
                     }
                     UserInterface.printRemainingHelth(defender);
+                    System.out.println();
 
                 } else if (attackType == Attacks.RAPID_FLAME_STRIKES) {
                     UserInterface.printRapidStarter(this, defender);
@@ -84,6 +85,7 @@ public abstract class GameCharacter implements Serializable{
                         UserInterface.printDamage(GameCharacter.this, defender, defender.takeDamage(defender.AttackDamageTaken(this, 0.5)), 0, true, Attacks.RAPID_FLAME_STRIKES);
                     }  
                     UserInterface.printRemainingHelth(defender);
+                    System.out.println();
 
                 } else if (attackType == Attacks.LEECH) {
                     tempDam = defender.AttackDamageTaken(this, 1d);
@@ -93,7 +95,12 @@ public abstract class GameCharacter implements Serializable{
                     UserInterface.printRegen(heal(this.getRegeneration()), this);
 
                 } else if (attackType == Attacks.WILD_ABANDON) {
-                    UserInterface.printDamage(GameCharacter.this, defender, defender.takeDamage(defender.AttackDamageTaken(this, 1d)), 0, false, Attacks.WILD_ABANDON);//nnnnnnnnnnnneds 
+                    tempDam = defender.AttackDamageTaken(this, 3d);
+                    this.takeDamage(tempDam);
+                    UserInterface.printDamage(GameCharacter.this, defender, defender.takeDamage(tempDam), 0, false, Attacks.WILD_ABANDON);
+                    UserInterface.printRemainingHelth(this);
+                    UserInterface.printRemainingHelth(defender);
+                    System.out.println();
 
                 } else if (attackType == Attacks.DO_NOTHING) {
                     UserInterface.printDoesNothing(this);
