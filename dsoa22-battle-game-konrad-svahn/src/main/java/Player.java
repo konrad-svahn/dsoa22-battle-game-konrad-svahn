@@ -57,15 +57,15 @@ public class Player extends GameCharacter {
         String name = scanner.nextLine();
 
         // will be changed to: return new Player(name, 1000, 5, 0, 35, Attacks.DO_NOTHING);
-        Player player = new Player(name, 1000, 5, 0, 35);
-
+        Player player = new Player(name, 100, 5, 0, 35);
+        /*
         player.addToInventory(new Weapon("testWeapon1", 3, 0, Attacks.ATTACK, Attacks.FLAME_ATTACK));
         player.addToInventory(new Weapon("testWeapon2", 3, 0, Attacks.CHARGE, Attacks.FLAME_CHARGE));
         player.addToInventory(new Weapon("testWeapon3", 3, 0, Attacks.RAPID_STRIKES, Attacks.RAPID_FLAME_STRIKES));
         player.addToInventory(new Weapon("testWeapon4", 3, 0, Attacks.LEECH, Attacks.REGENERATE));
         player.addToInventory(new Weapon("testWeapon5", 3, 0, Attacks.WILD_ABANDON, Attacks.DO_NOTHING));
         player.addToInventory(new Weapon("testWeapon6", 3, 0, Attacks.THROW_GUNPOWDER, Attacks.DETONATE));
-
+        */
         return player;
     }
 }

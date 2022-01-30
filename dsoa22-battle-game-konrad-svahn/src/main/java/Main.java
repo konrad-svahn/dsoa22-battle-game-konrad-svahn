@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.Scanner;
 
 public class Main {
@@ -14,7 +15,7 @@ public class Main {
             
             int inputP;
             Player player;
-            Weapon[] posibleEnemyWeapons = Npc.initialiseEnemyWeapons();
+            Random ran = new Random();
             ArrayList<GameCharacter> battleParticipants = new ArrayList<>();
             System.out.println("Game start");
 
@@ -28,28 +29,21 @@ public class Main {
             } else {
                 player = Player.create(scanner);
             }
-            battleParticipants.add(player);
+            
             System.out.println(player.getAchillesHeel());
 
-            Npc enemy1 = new Npc("the black knight", 150, 4, 50, 35, Attacks.DO_NOTHING);
-            Npc enemy2 = new Npc("rapier wielding bandit", 50, 8, 0, 35, Attacks.REGENERATE);
-            Npc enemy3 = new Npc("torch wielding bandit", 50, 2, 0, 35, Attacks.FLAME_ATTACK);
-            Npc enemy4 = new Npc("weakling", 1, 6, 0, 0, Attacks.CHARGE);
-            Npc enemy5 = new Npc("pyromancer", 20, 1, 0, 35, Attacks.FLAME_CHARGE);
-
-            enemy1.setWeapon(new Weapon("black mace", 50, 30, Attacks.ATTACK, Attacks.CHARGE));
-            enemy2.setWeapon(new Weapon("rapier", 30, 0, Attacks.ATTACK, Attacks.RAPID_STRIKES));
-            enemy3.setWeapon(new Weapon("torch", 10, 10, Attacks.FLAME_ATTACK, Attacks.RAPID_FLAME_STRIKES));
-            enemy4.setWeapon(new Weapon("bomb", 0, 0, Attacks.DETONATE, Attacks.DETONATE));
-            enemy5.setWeapon(new Weapon("Pyromancy kit", 20, 20, Attacks.FLAME_CHARGE, Attacks.THROW_GUNPOWDER));
-
+            
+            
+            Npc enemy1 = new Npc("weakling", 5, 6, 0, 0, Attacks.CHARGE);
+            enemy1.setWeapon(new Weapon("torch", 7, 3, Attacks.FLAME_ATTACK, Attacks.DO_NOTHING));
             battleParticipants.add(enemy1);
-            battleParticipants.add(enemy2);
-            battleParticipants.add(enemy3);
-            battleParticipants.add(enemy4);
-            battleParticipants.add(enemy5);
-
+            
+           
             while (true) {
+                battleParticipants.add(player);
+                for (int i = 0; i <= ran.nextInt(3); i++) {
+                    battleParticipants.add(Npc.spawNpc(battleParticipants));
+                } 
                 CombatManager.runEncounter(scanner, battleParticipants);
                 if (CombatManager.isGameOver()) {
                     System.out.println(Ansi.RED + "YOU HAVE DIED" + Ansi.RESET);
@@ -57,6 +51,7 @@ public class Main {
                 }
                 System.out.println("Press"+Ansi.CYAN+" q "+Ansi.RESET+" to "+Ansi.CYAN+"quit" + Ansi.RESET + " or pres another buton to continue");
                 if (CombatManager.endOfBattleChoise(player, scanner)) {break;}
+                battleParticipants.clear();;
             }
             System.out.println("The game has ended");
 
