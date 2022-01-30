@@ -157,15 +157,15 @@ public class UserInterface {
                 Ansi.RESET + aditionalInfo + Ansi.YELLOW + damage + Ansi.RESET +" damage"
                 );
         } else if (attackType == Attacks.DETONATE) {
-
-        } // print the stuff that needs to bi printed for many attack types
+            System.out.println( Ansi.PURPLE + deffender.getName() + Ansi.RESET + " takes " + Ansi.YELLOW + damage + Ansi.RESET +" damage");
+        } // print the stuff that needs to be printed for many attack types
         if (attackType == Attacks.FLAME_CHARGE || attackType == Attacks.CHARGE || attackType == Attacks.ATTACK || attackType == Attacks.FLAME_ATTACK) {
             System.out.println(
                 Ansi.PURPLE + attacker.getName() + Ansi.RESET + " uses "+ attacker.getWeapon().getName() + " to attack " + Ansi.PURPLE + deffender.getName() + Ansi.RESET + 
                 " dealing " + Ansi.YELLOW + damage + Ansi.RESET +" damage" + aditionalInfo 
             ); 
         }
-        if (attackType != Attacks.RAPID_STRIKES && attackType != Attacks.RAPID_FLAME_STRIKES) {
+        if (attackType != Attacks.RAPID_STRIKES && attackType != Attacks.RAPID_FLAME_STRIKES && attackType != Attacks.DETONATE) {
             printRemainingHelth(deffender);
         }
     }

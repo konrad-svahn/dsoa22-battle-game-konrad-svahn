@@ -35,19 +35,19 @@ public abstract class GameCharacter implements Serializable{
         if (this.chargeLevel == 2) {
             this.chargeLevel = 0;
             defender.turnsOnFireLeft = 2;
-            UserInterface.printDamage(GameCharacter.this, defender, takeDamage(defender.AttackDamageTaken(this, 3d)), 0, true, Attacks.FLAME_CHARGE);
+            UserInterface.printDamage(GameCharacter.this, defender, defender.takeDamage(defender.AttackDamageTaken(this, 3d)), 0, true, Attacks.FLAME_CHARGE);
 
         } else if (this.chargeLevel == 1) {
             this.chargeLevel = 0;
-            UserInterface.printDamage(GameCharacter.this, defender, takeDamage(defender.AttackDamageTaken(this, 3d)), 0, false, Attacks.CHARGE);
+            UserInterface.printDamage(GameCharacter.this, defender, defender.takeDamage(defender.AttackDamageTaken(this, 3d)), 0, false, Attacks.CHARGE);
 
         } else {
             if (attackType == Attacks.ATTACK) {
-                UserInterface.printDamage(GameCharacter.this, defender, takeDamage(defender.AttackDamageTaken(this, 1d)), 0, false, Attacks.ATTACK);
+                UserInterface.printDamage(GameCharacter.this, defender, defender.takeDamage(defender.AttackDamageTaken(this, 1d)), 0, false, Attacks.ATTACK);
 
             } else if (attackType == Attacks.FLAME_ATTACK) {
                 defender.turnsOnFireLeft = 3;
-                UserInterface.printDamage(GameCharacter.this, defender, takeDamage(defender.AttackDamageTaken(this, 1d)), 0, true, Attacks.FLAME_ATTACK);
+                UserInterface.printDamage(GameCharacter.this, defender, defender.takeDamage(defender.AttackDamageTaken(this, 1d)), 0, true, Attacks.FLAME_ATTACK);
 
             } else if (attackType == Attacks.CHARGE) {
                 this.chargeLevel = 1;
@@ -60,7 +60,7 @@ public abstract class GameCharacter implements Serializable{
             } else if (attackType == Attacks.RAPID_STRIKES) {
                 UserInterface.printRapidStarter(this, defender);
                 for (int i = 0; i < 3 ; i++) {
-                    UserInterface.printDamage(GameCharacter.this, defender, takeDamage(defender.AttackDamageTaken(this, 0.5)), 0, false, Attacks.RAPID_STRIKES);
+                    UserInterface.printDamage(GameCharacter.this, defender, defender.takeDamage(defender.AttackDamageTaken(this, 0.5)), 0, false, Attacks.RAPID_STRIKES);
                 }
                 UserInterface.printRemainingHelth(defender);
 
@@ -68,7 +68,7 @@ public abstract class GameCharacter implements Serializable{
                 UserInterface.printRapidStarter(this, defender);
                 defender.turnsOnFireLeft = 2;
                 for (int i = 0; i < 3 ; i++) {   
-                    UserInterface.printDamage(GameCharacter.this, defender, takeDamage(defender.AttackDamageTaken(this, 0.5)), 0, true, Attacks.RAPID_FLAME_STRIKES);
+                    UserInterface.printDamage(GameCharacter.this, defender, defender.takeDamage(defender.AttackDamageTaken(this, 0.5)), 0, true, Attacks.RAPID_FLAME_STRIKES);
                 }  
                 UserInterface.printRemainingHelth(defender);
 
@@ -80,14 +80,14 @@ public abstract class GameCharacter implements Serializable{
                 UserInterface.printRegen(heal(this.getRegeneration()), this);
 
             } else if (attackType == Attacks.WILD_ABANDON) {
-                UserInterface.printDamage(GameCharacter.this, defender, takeDamage(defender.AttackDamageTaken(this, 1d)), 0, false, Attacks.WILD_ABANDON);//nnnnnnnnnnnnnnnnnnnnnnneds 
+                UserInterface.printDamage(GameCharacter.this, defender, defender.takeDamage(defender.AttackDamageTaken(this, 1d)), 0, false, Attacks.WILD_ABANDON);//nnnnnnnnnnnnnnnnnnnnnnneds 
 
             } else if (attackType == Attacks.DO_NOTHING) {
                 UserInterface.printDoesNothing(this);
 
             } else if (attackType == Attacks.THROW_GUNPOWDER) {
                 if (defender.getTurnsOnFireLeft() > 0) {
-                    UserInterface.printDamage(GameCharacter.this, defender, takeDamage(defender.AttackDamageTaken(this, 3d)), 0, false, Attacks.THROW_GUNPOWDER);
+                    UserInterface.printDamage(GameCharacter.this, defender, defender.takeDamage(defender.AttackDamageTaken(this, 3d)), 0, false, Attacks.THROW_GUNPOWDER);
                 } else {
                     UserInterface.printDamage(GameCharacter.this, defender, defender.takeDamage(1 - defender.getArmour()), 0, false, Attacks.THROW_GUNPOWDER);
                 }
@@ -102,18 +102,22 @@ public abstract class GameCharacter implements Serializable{
         int damageToDeffender;
         int damageToOthers;
         if (attackType == Attacks.DETONATE) {
-
+            damageToDeffender = 500;
+            damageToOthers = 500;
         } else {
             damageToDeffender = defender.AttackDamageTaken(this, 1d);
+            damageToOthers  = defender.AttackDamageTaken(this, 0.5);
         }
         for (GameCharacter gameCharacter : allBatleParticipants) {
             if (gameCharacter == this) {
             } else if (gameCharacter == defender) {
-                
+                UserInterface.printDamage(this, gameCharacter, gameCharacter.takeDamage(damageToDeffender), 0, false, Attacks.DETONATE);
             } else {
-
+                UserInterface.printDamage(this, gameCharacter, gameCharacter.takeDamage(damageToOthers), 0, false, Attacks.DETONATE);
             }
+            UserInterface.printRemainingHelth(gameCharacter);
         }
+        System.out.println();
     }
 
     private int AttackDamageTaken (GameCharacter attacker, Double modifier) {
