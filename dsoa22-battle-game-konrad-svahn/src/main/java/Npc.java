@@ -37,7 +37,9 @@ public class Npc extends GameCharacter{
                 achillesHeel = Attacks.ATTACK;
             }
             returned = new Npc(randomizedEnemyNames()[ran.nextInt(randomizedEnemyNames().length)], ran.nextInt(111) + 40 , ran.nextInt(11), ran.nextInt(11), ran.nextInt(111), achillesHeel);
-            returned .setWeapon(initialiseEnemyWeapons()[ran.nextInt(initialiseEnemyWeapons().length)]);
+            returned.setWeapon(initialiseEnemyWeapons()[ran.nextInt(initialiseEnemyWeapons().length)]);
+            returned.getWeapon().setDamage(ran.nextInt(41)+5);
+            returned.getWeapon().setAttackVariance(ran.nextInt(31));
         }
         return returned;
     }
