@@ -18,6 +18,7 @@ public class CombatManager {
         int actionP;
         int playerNum;
         int enemyToAttack = 0;
+        int turn = 0;
         Player playerP;
 
         // sets all fighters health to be eqal to their max health 
@@ -28,6 +29,8 @@ public class CombatManager {
                 
         // the main combat loop, one loop is one round of combat
         mainCombatLoop: while (true) {
+            turn++;
+            UserInterface.printTurnStart(turn);
 
             playerNum = whoIsPlayer(fighters);
             playerP = (Player) fighters.get(playerNum);
@@ -109,15 +112,7 @@ public class CombatManager {
                     if (fighters.get(enemyToAttack).isDead()) {
                         UserInterface.printDeath(fighters.get(enemyToAttack));
                         //if adding and removing weapons is enabled, asks the player if they want to pick up the dead enemys weapon
-                        if (addAndRemoveWheaponFromInventory && fighters.get(enemyToAttack).getWeapon().getName() != "their own body") {
-                            UserInterface.printPickUppEnimyWeaponPromt(fighters.get(enemyToAttack).getWeapon());
-                            int addOrNot = playerAction(scanAction, 2, 0);
-                            if (addOrNot == 1){
-                                fighters.get(enemyToAttack).getWeapon().setEquiped(false);
-                                playerP.addToInventory(fighters.get(enemyToAttack).getWeapon());
-                            }
-                            UserInterface.printAddOrNot(addOrNot);
-                        }
+                        addToInventory(fighters, enemyToAttack, playerP, scanAction);
                     } 
                 // else the curent fighter attacks the player 
                 }else if (fighters.get(i).getHelth() > 0) {
@@ -137,7 +132,12 @@ public class CombatManager {
             // checks if the fighter is on fire and deals fire damage to them if they are
             if (fighters.get(i).getTurnsOnFireLeft() > 0) {
                 UserInterface.printFireDamage(fighters.get(i), fighters.get(i).TakeFireDamage());
-                if (fighters.get(i).isPlayer && fighters.get(i).isDead()) {return true;}
+                if (fighters.get(i).isPlayer && fighters.get(i).isDead()) {
+                    isGameOver = true;
+                    return true;
+                } else if (fighters.get(i).isDead()) {
+                    addToInventory(fighters, enemyToAttack, playerP, scanAction);
+                }
             }
         }
         if (removeDead(fighters)) {
@@ -299,5 +299,17 @@ public class CombatManager {
             attackType = actor.getWeapon().getAttack2();
         }
         return attackType;
+    }
+
+    private static void addToInventory (ArrayList<GameCharacter> fighters, int enemyToAttack, Player playerP, Scanner scanAction) {
+        if (addAndRemoveWheaponFromInventory && fighters.get(enemyToAttack).getWeapon().getName() != "their own body") {
+            UserInterface.printPickUppEnimyWeaponPromt(fighters.get(enemyToAttack).getWeapon());
+            int addOrNot = playerAction(scanAction, 2, 0);
+            if (addOrNot == 1){
+                fighters.get(enemyToAttack).getWeapon().setEquiped(false);
+                playerP.addToInventory(fighters.get(enemyToAttack).getWeapon());
+            }
+            UserInterface.printAddOrNot(addOrNot);
+        }
     }
 }

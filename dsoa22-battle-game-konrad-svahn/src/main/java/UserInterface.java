@@ -277,4 +277,9 @@ public class UserInterface {
             System.out.println();
         }
     } 
+
+    public static void printTurnStart (int turn) {
+        System.out.println(Ansi.YELLOW + "TURN " + turn + " START" + Ansi.RESET);
+        System.out.println();
+    }
 }
