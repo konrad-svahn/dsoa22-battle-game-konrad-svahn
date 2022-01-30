@@ -36,14 +36,6 @@ public class Main {
             Npc enemy3 = new Npc("torch wielding bandit", 50, 2, 0, 35, Attacks.DO_NOTHING);
             Npc enemy4 = new Npc("weakling", 1, 6, 0, 0, Attacks.DO_NOTHING);
             Npc enemy5 = new Npc("pyromancer", 20, 1, 0, 35, Attacks.DO_NOTHING);
-            /*
-            player.addToInventory(new Weapon("testWeapon1", 3, 0, Attacks.ATTACK, Attacks.FLAME_ATTACK));
-            player.addToInventory(new Weapon("testWeapon2", 3, 0, Attacks.CHARGE, Attacks.FLAME_CHARGE));
-            player.addToInventory(new Weapon("testWeapon3", 3, 0, Attacks.RAPID_STRIKES, Attacks.RAPID_FLAME_STRIKES));
-            player.addToInventory(new Weapon("testWeapon4", 3, 0, Attacks.LEECH, Attacks.REGENERATE));
-            player.addToInventory(new Weapon("testWeapon5", 3, 0, Attacks.WILD_ABANDON, Attacks.DO_NOTHING));
-            player.addToInventory(new Weapon("testWeapon6", 3, 0, Attacks.THROW_GUNPOWDER, Attacks.DETONATE));
-            */
 
             enemy1.setWeapon(new Weapon("black mace", 50, 30, Attacks.ATTACK, Attacks.CHARGE));
             enemy2.setWeapon(new Weapon("rapier", 30, 0, Attacks.ATTACK, Attacks.RAPID_STRIKES));

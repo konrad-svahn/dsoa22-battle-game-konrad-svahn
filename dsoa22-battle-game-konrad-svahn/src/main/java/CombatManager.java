@@ -108,7 +108,7 @@ public class CombatManager {
 
                 // if the curent fighter is the player they attack the enemy the player seleckted 
                 if(fighters.get(i).isPlayer){
-                    fighters.get(i).attack(fighters.get(enemyToAttack), attackType);   
+                    fighters.get(i).attack(fighters.get(enemyToAttack), fighters, attackType);   
                     if (fighters.get(enemyToAttack).isDead()) {
                         UserInterface.printDeath(fighters.get(enemyToAttack));
                         //if adding and removing weapons is enabled, asks the player if they want to pick up the dead enemys weapon
@@ -116,7 +116,7 @@ public class CombatManager {
                     } 
                 // else the curent fighter attacks the player 
                 }else if (fighters.get(i).getHelth() > 0) {
-                    fighters.get(i).attack(fighters.get(playerNum), attackType);
+                    fighters.get(i).attack(fighters.get(playerNum), fighters, attackType);
                     if (fighters.get(playerNum).isDead()) {
                         UserInterface.printDeath(fighters.get(playerNum));
                         isGameOver = true;
