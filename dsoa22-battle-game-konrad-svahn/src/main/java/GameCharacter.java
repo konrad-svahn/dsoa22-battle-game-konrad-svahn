@@ -34,18 +34,19 @@ public abstract class GameCharacter implements Serializable{
         if (this.chargeLevel == 2) {
             this.chargeLevel = 0;
             defender.turnsOnFireLeft = 2;
-            UserInterface.printDamage(GameCharacter.this, defender, defender.takeAttackDamage(this), true);
+            UserInterface.printDamage(GameCharacter.this, defender, defender.takeAttackDamage(this, 3d), true);
+
         } else if (this.chargeLevel == 1) {
             this.chargeLevel = 0;
-            UserInterface.printDamage(GameCharacter.this, defender, defender.takeAttackDamage(this), false);
+            UserInterface.printDamage(GameCharacter.this, defender, defender.takeAttackDamage(this, 3d), false);
 
         } else {
             if (attackType == Attacks.ATTACK) {
-                UserInterface.printDamage(GameCharacter.this, defender, defender.takeAttackDamage(this), false);
+                UserInterface.printDamage(GameCharacter.this, defender, defender.takeAttackDamage(this, 1d), false);
 
             } else if (attackType == Attacks.FLAME_ATTACK) {
                 defender.turnsOnFireLeft = 2;
-                UserInterface.printDamage(GameCharacter.this, defender, defender.takeAttackDamage(this), true);
+                UserInterface.printDamage(GameCharacter.this, defender, defender.takeAttackDamage(this, 1d), true);
 
             } else if (attackType == Attacks.CHARGE) {
                 this.chargeLevel = 1;
@@ -56,11 +57,11 @@ public abstract class GameCharacter implements Serializable{
                 UserInterface.printCharge(this);
 
             } else if (attackType == Attacks.RAPID_STRIKES) {
-                UserInterface.printDamage(GameCharacter.this, defender, defender.takeAttackDamage(this), false);
+                UserInterface.printDamage(GameCharacter.this, defender, defender.takeAttackDamage(this, 0.5), false);
 
             } else if (attackType == Attacks.RAPID_FLAME_STRIKES) {
                 defender.turnsOnFireLeft = 1;
-                UserInterface.printDamage(GameCharacter.this, defender, defender.takeAttackDamage(this), true);
+                UserInterface.printDamage(GameCharacter.this, defender, defender.takeAttackDamage(this, 0.5), true);
 
             } else if (attackType == Attacks.LEECH) {
     
@@ -68,32 +69,34 @@ public abstract class GameCharacter implements Serializable{
                 UserInterface.printRegen(heal(this.getRegeneration()), this);
                 
             } else if (attackType == Attacks.WILD_ABANDON) {
-                UserInterface.printDamage(GameCharacter.this, defender, defender.takeAttackDamage(this), false);
+                UserInterface.printDamage(GameCharacter.this, defender, defender.takeAttackDamage(this, 1d), false);
 
             } else if (attackType == Attacks.DO_NOTHING) {
                 UserInterface.printDoesNothing(this);
 
             } else if (attackType == Attacks.THROW_GUNPOWDER) {
-                UserInterface.printDamage(GameCharacter.this, defender, defender.takeAttackDamage(this), false);
+                UserInterface.printDamage(GameCharacter.this, defender, defender.takeAttackDamage(this, 1d), false);
      
             } else if (attackType == Attacks.DETONATE) {
-                UserInterface.printDamage(GameCharacter.this, defender, defender.takeAttackDamage(this), false);
+                UserInterface.printDamage(GameCharacter.this, defender, defender.takeAttackDamage(this, 1d), false);
             }
         }
         
     }
 
-    private int takeAttackDamage(GameCharacter attacker) {
+    private int takeAttackDamage(GameCharacter attacker, Double modifier) {
 
-        int damage;
+        double damage;
 
         if (attacker.getWeapon().getAttackVariance() == 0) {
             damage = attacker.getWeapon().getDamage(); 
         } else {
             damage = attacker.getWeapon().getDamage() + ran.nextInt(attacker.getWeapon().getAttackVariance()*2) - attacker.getWeapon().getAttackVariance();
         }
-        damage -=armour;
-        return takeDamage(damage);
+        damage *= modifier ;
+        int damageInt = (int) damage;
+        damageInt -= armour;
+        return takeDamage(damageInt);
     }
 
     public int TakeFireDamage() {

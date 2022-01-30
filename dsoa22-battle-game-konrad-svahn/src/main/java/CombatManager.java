@@ -34,39 +34,43 @@ public class CombatManager {
 
             //nullifies the last turns block by resetting armour to 0 
             fighters.get(playerNum).setArmour(0);
-
-            while (true) {
-                //promts a player input and reads that input
-                UserInterface.printActionPromt(fighters.get(playerNum));
-                actionP = playerAction(scannAction, 5, 0); 
-
-                //performs the player actions that must ocur before the first attack of the turn
-                if (actionP == 1) {//run awway
-                    break mainCombatLoop;
-                } else if (actionP == 5) {//acces inventory  
-                    inventoryManager(playerP, scannAction);
-                } else {break;}
-            }
-            
-            //asks what enimy to attack if the player decides to use an attack action
-            if (actionP == 3 || actionP == 4) {
-
-                Attacks attackType = getAttackType(actionP, fighters.get(playerNum));
-                if (attackType != Attacks.DO_NOTHING || attackType != Attacks.REGENERATE ) {
-                 
-                    UserInterface.printEnemySelecktionPromt(fighters,playerNum);
-                    enemyToAttack = fighters.size();
-
-                    //makes it inposible for the player to attack self and helps to avoid an out of bounds error 
-                    while (enemyToAttack == fighters.size()) {
-                    enemyToAttack = playerAction(scannAction, fighters.size(), -1);
-                    if (enemyToAttack == fighters.size()) {UserInterface.printWarning(fighters.size() - 1);}
-                    }
-                    
-                    if (enemyToAttack <= playerNum) {
-                        enemyToAttack = enemyToAttack - 1;
-                    }
+            if (playerP.getChargeLevel() <= 0) {
+                while (true) {
+                    //promts a player input and reads that input
+                    UserInterface.printActionPromt(fighters.get(playerNum));
+                    actionP = playerAction(scannAction, 5, 0); 
+    
+                    //performs the player actions that must ocur before the first attack of the turn
+                    if (actionP == 1) {//run awway
+                        break mainCombatLoop;
+                    } else if (actionP == 5) {//acces inventory  
+                        inventoryManager(playerP, scannAction);
+                    } else {break;}
                 }
+           
+           
+                //asks what enimy to attack if the player decides to use an attack action
+                if (actionP == 3 || actionP == 4) {
+
+                    Attacks attackType = getAttackType(actionP, fighters.get(playerNum));
+                    if (attackType != Attacks.DO_NOTHING && attackType != Attacks.REGENERATE ) {
+                    
+                        UserInterface.printEnemySelecktionPromt(fighters,playerNum);
+                        enemyToAttack = fighters.size();
+
+                        //makes it inposible for the player to attack self and helps to avoid an out of bounds error 
+                        while (enemyToAttack == fighters.size()) {
+                        enemyToAttack = playerAction(scannAction, fighters.size(), -1);
+                        if (enemyToAttack == fighters.size()) {UserInterface.printWarning(fighters.size() - 1);}
+                        }
+                        
+                        if (enemyToAttack <= playerNum) {
+                            enemyToAttack = enemyToAttack - 1;
+                        }
+                    }
+                } 
+            } else {
+                actionP = 3;
             }
 
             // starts loping through fighter and performs ecah charackters action for the turn 
