@@ -85,8 +85,11 @@ public abstract class GameCharacter implements Serializable{
                 UserInterface.printDoesNothing(this);
 
             } else if (attackType == Attacks.THROW_GUNPOWDER) {
-                UserInterface.printDamage(GameCharacter.this, defender, defender.takeAttackDamage(this, 1d), 0, false, Attacks.THROW_GUNPOWDER);//nnnnnnnnnnnnnnnnnnnnnnnnnnnneds more work
-
+                if (defender.getTurnsOnFireLeft() > 0) {
+                    UserInterface.printDamage(GameCharacter.this, defender, defender.takeAttackDamage(this, 3d), 0, false, Attacks.THROW_GUNPOWDER);
+                } else {
+                    UserInterface.printDamage(GameCharacter.this, defender, defender.takeDamage(1 - defender.getArmour()), 0, false, Attacks.THROW_GUNPOWDER);
+                }
             } else if (attackType == Attacks.DETONATE) {
                 UserInterface.printDamage(GameCharacter.this, defender, defender.takeAttackDamage(this, 1d), 0, false, Attacks.DETONATE);//nnnnnnnnnnnnnnnnnnnnnnnnnnnnneds more work
             }

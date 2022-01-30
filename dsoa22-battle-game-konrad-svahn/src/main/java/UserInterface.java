@@ -122,8 +122,8 @@ public class UserInterface {
     // the following methods print simple actions related to combat
     // print damage takes kare of knowing what to print for which attack types, it has a lot of parameters that are only ysed for certan attacks so the method is very messy to use
     public static void printDamage (GameCharacter attacker, GameCharacter deffender, int damage, int amountOfHelthReginedByUsingLeech, boolean lightsDefenderOnfire, Attacks attackType) {
-        String fire = ".";
-        if (lightsDefenderOnfire) { fire = " and " + Ansi.RED + "lighting them on fire" + Ansi.RESET + " for " + Ansi.RED + deffender.getTurnsOnFireLeft() + Ansi.RESET +" turns";}
+        String aditionalInfo = ".";
+        if (lightsDefenderOnfire) { aditionalInfo = " and " + Ansi.RED + "lighting them on fire" + Ansi.RESET + " for " + Ansi.RED + deffender.getTurnsOnFireLeft() + Ansi.RESET +" turns";}
 
         if (attackType == Attacks.FLAME_CHARGE) {
             System.out.println(Ansi.PURPLE + attacker.getName() + Ansi.RESET + " releases the fire ball");
@@ -135,7 +135,7 @@ public class UserInterface {
             );
         } else if (attackType == Attacks.RAPID_FLAME_STRIKES) {
             System.out.println(
-                Ansi.PURPLE + attacker.getName() + Ansi.RESET + " lights " + Ansi.PURPLE + deffender.getName() + Ansi.RED + " on fire" + Ansi.RESET + 
+                Ansi.PURPLE + attacker.getName() + Ansi.RESET + " lights " + Ansi.PURPLE + deffender.getName() + Ansi.RED + " on fire " + Ansi.RESET + 
                 " and deals " + Ansi.YELLOW + damage + Ansi.RESET + " damage"
             );
         }  else if (attackType == Attacks.LEECH) {
@@ -147,15 +147,22 @@ public class UserInterface {
         }  else if (attackType == Attacks.WILD_ABANDON) {
 
         }  else if (attackType == Attacks.THROW_GUNPOWDER) {
-            System.out.println(Attacks.THROW_GUNPOWDER);
-
+            if (deffender.getTurnsOnFireLeft() > 0) {
+                aditionalInfo = " who is burnig, the gunpowder explodes dealing ";
+            } else {
+                aditionalInfo = ", it does not have much of an effeckt dealing no more than ";
+            }
+            System.out.println(
+                Ansi.PURPLE + attacker.getName() + Ansi.RESET + " throws gunpowder att "+ Ansi.PURPLE + deffender.getName() +
+                Ansi.RESET + aditionalInfo + Ansi.YELLOW + damage + Ansi.RESET +" damage"
+                );
         } else if (attackType == Attacks.DETONATE) {
 
         } // print the stuff that needs to bi printed for many attack types
         if (attackType == Attacks.FLAME_CHARGE || attackType == Attacks.CHARGE || attackType == Attacks.ATTACK || attackType == Attacks.FLAME_ATTACK) {
             System.out.println(
                 Ansi.PURPLE + attacker.getName() + Ansi.RESET + " uses "+ attacker.getWeapon().getName() + " to attack " + Ansi.PURPLE + deffender.getName() + Ansi.RESET + 
-                " dealing " + Ansi.YELLOW + damage + Ansi.RESET +" damage" + fire 
+                " dealing " + Ansi.YELLOW + damage + Ansi.RESET +" damage" + aditionalInfo 
             ); 
         }
         if (attackType != Attacks.RAPID_STRIKES && attackType != Attacks.RAPID_FLAME_STRIKES) {
