@@ -193,6 +193,10 @@ public class UserInterface {
         System.out.println();
     }
 
+    public static void printRunAway () {
+        System.out.println(Ansi.YELLOW + "YOU RAN AWAY FROM THE BATTLE" + Ansi.RESET);
+    }
+
     public static void printBlock (GameCharacter character) {
         System.out.println( 
         Ansi.PURPLE + character.getName() + Ansi.RESET + " raises their sheild to block, reducing all inkomming damage by " + 

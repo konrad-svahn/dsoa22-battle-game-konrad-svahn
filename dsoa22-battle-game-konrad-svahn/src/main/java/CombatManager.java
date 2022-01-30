@@ -45,6 +45,7 @@ public class CombatManager {
     
                     //performs the player actions that must ocur before the first attack of the turn
                     if (actionP == 1) {//run awway
+                        UserInterface.printRunAway();
                         break mainCombatLoop;
                     } else if (actionP == 5) {//acces inventory  
                         inventoryManager(playerP, scannAction);

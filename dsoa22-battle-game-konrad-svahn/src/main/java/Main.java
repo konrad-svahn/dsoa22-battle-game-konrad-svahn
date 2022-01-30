@@ -50,7 +50,10 @@ public class Main {
 
             while (true) {
                 CombatManager.runEncounter(scanner, battleParticipants);
-                if (CombatManager.isGameOver()) {break;}
+                if (CombatManager.isGameOver()) {
+                    System.out.println(Ansi.RED + "YOU HAVE DIED" + Ansi.RESET);
+                    break;
+                }
                 System.out.println("Press"+Ansi.CYAN+" q "+Ansi.RESET+" to "+Ansi.CYAN+"quit" + Ansi.RESET + " or pres another buton to continue");
                 if (CombatManager.endOfBattleChoise(player, scanner)) {break;}
             }
