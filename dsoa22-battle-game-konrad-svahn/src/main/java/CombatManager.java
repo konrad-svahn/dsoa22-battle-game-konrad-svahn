@@ -108,12 +108,13 @@ public class CombatManager {
 
                 // if the curent fighter is the player they attack the enemy the player seleckted 
                 if(fighters.get(i).isPlayer){
-                    fighters.get(i).attack(fighters.get(enemyToAttack), fighters, attackType);   
-                    if (fighters.get(enemyToAttack).isDead()) {
-                        UserInterface.printDeath(fighters.get(enemyToAttack));
-                        //if adding and removing weapons is enabled, asks the player if they want to pick up the dead enemys weapon
-                        addToInventory(fighters, enemyToAttack, playerP, scanAction);
-                    } 
+                    fighters.get(i).attack(fighters.get(enemyToAttack), fighters, attackType); 
+                    for (int j = 0; j < fighters.size(); j++) {
+                        if (fighters.get(j).isDead()) {
+                            UserInterface.printDeath(fighters.get(j));
+                            addToInventory(fighters, j, playerP, scanAction);
+                        } 
+                    }
                 // else the curent fighter attacks the player 
                 }else if (fighters.get(i).getHelth() > 0) {
                     fighters.get(i).attack(fighters.get(playerNum), fighters, attackType);
@@ -136,6 +137,7 @@ public class CombatManager {
                     isGameOver = true;
                     return true;
                 } else if (fighters.get(i).isDead()) {
+                    UserInterface.printDeath(fighters.get(i));
                     addToInventory(fighters, enemyToAttack, playerP, scanAction);
                 }
             }
@@ -301,6 +303,7 @@ public class CombatManager {
         return attackType;
     }
 
+    //if adding and removing weapons is enabled, asks the player if they want to pick up the dead enemys weapon
     private static void addToInventory (ArrayList<GameCharacter> fighters, int enemyToAttack, Player playerP, Scanner scanAction) {
         if (addAndRemoveWheaponFromInventory && fighters.get(enemyToAttack).getWeapon().getName() != "their own body") {
             UserInterface.printPickUppEnimyWeaponPromt(fighters.get(enemyToAttack).getWeapon());

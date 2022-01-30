@@ -117,12 +117,12 @@ public abstract class GameCharacter implements Serializable{
                 } else {
                     UserInterface.printDamage(this, gameCharacter, gameCharacter.takeDamage(damageToOthers), 0, false, Attacks.DETONATE);
                 }
-                UserInterface.printRemainingHelth(gameCharacter);
             }
-            System.out.println();
         } else {
             UserInterface.printDamage(this,defender, defender.takeDamage(damageToDeffender), 0, false, Attacks.DETONATE);
-        }
+            
+        } 
+        System.out.println();           
     }
 
     private int AttackDamageTaken (GameCharacter attacker, Double modifier) {

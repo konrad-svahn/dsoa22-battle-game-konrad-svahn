@@ -40,7 +40,7 @@ public class Main {
             enemy1.setWeapon(new Weapon("black mace", 50, 30, Attacks.ATTACK, Attacks.CHARGE));
             enemy2.setWeapon(new Weapon("rapier", 30, 0, Attacks.ATTACK, Attacks.RAPID_STRIKES));
             enemy3.setWeapon(new Weapon("torch", 10, 10, Attacks.FLAME_ATTACK, Attacks.RAPID_FLAME_STRIKES));
-            enemy5.setWeapon(new Weapon("Pyromancy kit", 20, 20, Attacks.FLAME_CHARGE, Attacks.THROW_GUNPOWDER));
+            enemy5.setWeapon(new Weapon("Pyromancy kit", 20, 20, Attacks.DETONATE, Attacks.THROW_GUNPOWDER));
 
             battleParticipants.add(enemy1);
             battleParticipants.add(enemy2);

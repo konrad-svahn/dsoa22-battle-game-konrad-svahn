@@ -155,9 +155,13 @@ public class UserInterface {
             System.out.println(
                 Ansi.PURPLE + attacker.getName() + Ansi.RESET + " throws gunpowder att "+ Ansi.PURPLE + deffender.getName() +
                 Ansi.RESET + aditionalInfo + Ansi.YELLOW + damage + Ansi.RESET +" damage"
-                );
+            );
+        // IMPORTANT THE TEXT WRITEN OUT WHEN ATTACK TYPE IS DETONATE IS THE DAMAGE TEXT FOR ALL ATTACKS THAT HIT MULTIPLE TARGETS 
         } else if (attackType == Attacks.DETONATE) {
-            System.out.println( Ansi.PURPLE + deffender.getName() + Ansi.RESET + " takes " + Ansi.YELLOW + damage + Ansi.RESET +" damage");
+            System.out.println( 
+                Ansi.PURPLE + deffender.getName() + Ansi.RESET + " takes " + Ansi.YELLOW + damage + Ansi.RESET +" damage and now has " +
+                Ansi.GREEN + deffender.getHelth() + Ansi.RESET + " Health"
+            );
         } // print the stuff that needs to be printed for many attack types
         if (attackType == Attacks.FLAME_CHARGE || attackType == Attacks.CHARGE || attackType == Attacks.ATTACK || attackType == Attacks.FLAME_ATTACK) {
             System.out.println(
