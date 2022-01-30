@@ -58,7 +58,7 @@ public class UserInterface {
             " (Wild abandon will deal "+Ansi.YELLOW+"3x"+Ansi.RESET+" your weapons attack power("+
             Ansi.YELLOW + player.getWeapon().getDamage() + Ansi.RESET+") which varies by ("+
             Ansi.YELLOW + player.getWeapon().getAttackVariance() + Ansi.RESET + "), to you and the target. If the attack would have killed you, you will survive with"+
-            Ansi.YELLOW+" 1 "+Ansi.RESET+"health)";
+            Ansi.YELLOW+" 1 "+Ansi.RESET+"health (ignores enemy defence))";
         
         } else if (attackType == Attacks.DO_NOTHING) {
             description = " (Using do nothing does nothing)";

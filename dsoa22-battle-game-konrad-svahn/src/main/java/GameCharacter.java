@@ -95,9 +95,10 @@ public abstract class GameCharacter implements Serializable{
                     UserInterface.printRegen(heal(this.getRegeneration()), this);
 
                 } else if (attackType == Attacks.WILD_ABANDON) {
-                    tempDam = defender.AttackDamageTaken(this, 3d);
+                    tempDam = this.AttackDamageTaken(this, 3d);
                     this.takeDamage(tempDam);
                     UserInterface.printDamage(GameCharacter.this, defender, defender.takeDamage(tempDam), 0, false, Attacks.WILD_ABANDON);
+                    if (this.isDead()) {this.setHelth(1);}
                     UserInterface.printRemainingHelth(this);
                     UserInterface.printRemainingHelth(defender);
                     System.out.println();
