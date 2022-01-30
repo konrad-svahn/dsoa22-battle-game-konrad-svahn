@@ -135,7 +135,7 @@ public class UserInterface {
             );
         } else if (attackType == Attacks.RAPID_FLAME_STRIKES) {
             System.out.println(
-                Ansi.PURPLE + attacker.getName() + Ansi.RESET + " lights " + Ansi.PURPLE + deffender.getName() + Ansi.RED + " on fire " + Ansi.RESET + 
+                Ansi.PURPLE + attacker.getName() + Ansi.RESET + " lights " + Ansi.PURPLE + deffender.getName() + Ansi.RED + " on fire" + Ansi.RESET + 
                 " and deals " + Ansi.YELLOW + damage + Ansi.RESET + " damage"
             );
         }  else if (attackType == Attacks.LEECH) {
