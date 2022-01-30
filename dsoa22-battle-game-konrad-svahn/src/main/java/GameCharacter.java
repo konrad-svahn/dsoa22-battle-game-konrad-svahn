@@ -4,7 +4,8 @@ import java.util.Random;
 
 public abstract class GameCharacter implements Serializable{
     
-    private String name; 
+    private String name;
+    private String instantDeathMesage; 
     private int helth;
     private int maxHelth;
     private int initiative;
@@ -32,78 +33,89 @@ public abstract class GameCharacter implements Serializable{
 
     public void attack(GameCharacter defender, ArrayList<GameCharacter> allBatleParticipants, Attacks attackType) {
         int tempDam;
-        //System.out.println(defender.getAchillesHeel());
-        if (this.chargeLevel == 2) {
-            this.chargeLevel = 0;
-            defender.turnsOnFireLeft = 2;
-            UserInterface.printDamage(GameCharacter.this, defender, defender.takeDamage(defender.AttackDamageTaken(this, 3d)), 0, true, Attacks.FLAME_CHARGE);
-
-        } else if (this.chargeLevel == 1) {
-            this.chargeLevel = 0;
-            UserInterface.printDamage(GameCharacter.this, defender, defender.takeDamage(defender.AttackDamageTaken(this, 3d)), 0, false, Attacks.CHARGE);
-
+       
+        if (
+            defender.getAchillesHeel() == attackType &&
+            this.chargeLevel <= 0 &&
+            defender.getAchillesHeel() != Attacks.DO_NOTHING && 
+            defender.getAchillesHeel() != Attacks.REGENERATE &&
+            defender.getAchillesHeel() != Attacks.CHARGE &&
+            defender.getAchillesHeel() != Attacks.FLAME_CHARGE){
+            // instantly kills an enemy if the attack used is their Achilles Heel does not work for certan attacks
+            defender.setHelth(0);
+            System.out.println(defender.getInstantDeathMesage());
         } else {
-            if (attackType == Attacks.ATTACK) {
-                UserInterface.printDamage(GameCharacter.this, defender, defender.takeDamage(defender.AttackDamageTaken(this, 1d)), 0, false, Attacks.ATTACK);
-
-            } else if (attackType == Attacks.FLAME_ATTACK) {
-                defender.turnsOnFireLeft = 3;
-                UserInterface.printDamage(GameCharacter.this, defender, defender.takeDamage(defender.AttackDamageTaken(this, 1d)), 0, true, Attacks.FLAME_ATTACK);
-
-            } else if (attackType == Attacks.CHARGE) {
-                this.chargeLevel = 1;
-                UserInterface.printCharge(this);
-
-            } else if (attackType == Attacks.FLAME_CHARGE) {
-                this.chargeLevel = 2;
-                UserInterface.printCharge(this);
-
-            } else if (attackType == Attacks.RAPID_STRIKES) {
-                UserInterface.printRapidStarter(this, defender);
-                for (int i = 0; i < 3 ; i++) {
-                    UserInterface.printDamage(GameCharacter.this, defender, defender.takeDamage(defender.AttackDamageTaken(this, 0.5)), 0, false, Attacks.RAPID_STRIKES);
-                }
-                UserInterface.printRemainingHelth(defender);
-
-            } else if (attackType == Attacks.RAPID_FLAME_STRIKES) {
-                UserInterface.printRapidStarter(this, defender);
+            if (this.chargeLevel == 2) {
+                this.chargeLevel = 0;
                 defender.turnsOnFireLeft = 2;
-                for (int i = 0; i < 3 ; i++) {   
-                    UserInterface.printDamage(GameCharacter.this, defender, defender.takeDamage(defender.AttackDamageTaken(this, 0.5)), 0, true, Attacks.RAPID_FLAME_STRIKES);
-                }  
-                UserInterface.printRemainingHelth(defender);
+                UserInterface.printDamage(GameCharacter.this, defender, defender.takeDamage(defender.AttackDamageTaken(this, 3d)), 0, true, Attacks.FLAME_CHARGE);
 
-            } else if (attackType == Attacks.LEECH) {
-                tempDam = defender.AttackDamageTaken(this, 1d);
-                UserInterface.printDamage(GameCharacter.this, defender, tempDam, heal(leechCalk(tempDam)), false, Attacks.LEECH);  
+            } else if (this.chargeLevel == 1) {
+                this.chargeLevel = 0;
+                UserInterface.printDamage(GameCharacter.this, defender, defender.takeDamage(defender.AttackDamageTaken(this, 3d)), 0, false, Attacks.CHARGE);
 
-            } else if (attackType == Attacks.REGENERATE) {
-                UserInterface.printRegen(heal(this.getRegeneration()), this);
+            } else {
+                if (attackType == Attacks.ATTACK) {
+                    UserInterface.printDamage(GameCharacter.this, defender, defender.takeDamage(defender.AttackDamageTaken(this, 1d)), 0, false, Attacks.ATTACK);
 
-            } else if (attackType == Attacks.WILD_ABANDON) {
-                UserInterface.printDamage(GameCharacter.this, defender, defender.takeDamage(defender.AttackDamageTaken(this, 1d)), 0, false, Attacks.WILD_ABANDON);//nnnnnnnnnnnnnnnnnnnnnnneds 
+                } else if (attackType == Attacks.FLAME_ATTACK) {
+                    defender.turnsOnFireLeft = 3;
+                    UserInterface.printDamage(GameCharacter.this, defender, defender.takeDamage(defender.AttackDamageTaken(this, 1d)), 0, true, Attacks.FLAME_ATTACK);
 
-            } else if (attackType == Attacks.DO_NOTHING) {
-                UserInterface.printDoesNothing(this);
+                } else if (attackType == Attacks.CHARGE) {
+                    this.chargeLevel = 1;
+                    UserInterface.printCharge(this);
 
-            } else if (attackType == Attacks.THROW_GUNPOWDER) {
-                if (defender.getTurnsOnFireLeft() > 0) {
-                    UserInterface.printDamage(GameCharacter.this, defender, defender.takeDamage(defender.AttackDamageTaken(this, 3d)), 0, false, Attacks.THROW_GUNPOWDER);
-                } else {
-                    UserInterface.printDamage(GameCharacter.this, defender, defender.takeDamage(1 - defender.getArmour()), 0, false, Attacks.THROW_GUNPOWDER);
-                }
-            } else if (attackType == Attacks.DETONATE) {
-                UserInterface.printDetonationMessage(this);
-                this.attackAll(defender, allBatleParticipants, Attacks.DETONATE);
-                if (this.isPlayer) {
-                    Player P = (Player) this;
-                    P.delleteEquiped();
-                } else {
-                    this.setWeapon(this.getDefaultWeapon());
+                } else if (attackType == Attacks.FLAME_CHARGE) {
+                    this.chargeLevel = 2;
+                    UserInterface.printCharge(this);
+
+                } else if (attackType == Attacks.RAPID_STRIKES) {
+                    UserInterface.printRapidStarter(this, defender);
+                    for (int i = 0; i < 3 ; i++) {
+                        UserInterface.printDamage(GameCharacter.this, defender, defender.takeDamage(defender.AttackDamageTaken(this, 0.5)), 0, false, Attacks.RAPID_STRIKES);
+                    }
+                    UserInterface.printRemainingHelth(defender);
+
+                } else if (attackType == Attacks.RAPID_FLAME_STRIKES) {
+                    UserInterface.printRapidStarter(this, defender);
+                    defender.turnsOnFireLeft = 2;
+                    for (int i = 0; i < 3 ; i++) {   
+                        UserInterface.printDamage(GameCharacter.this, defender, defender.takeDamage(defender.AttackDamageTaken(this, 0.5)), 0, true, Attacks.RAPID_FLAME_STRIKES);
+                    }  
+                    UserInterface.printRemainingHelth(defender);
+
+                } else if (attackType == Attacks.LEECH) {
+                    tempDam = defender.AttackDamageTaken(this, 1d);
+                    UserInterface.printDamage(GameCharacter.this, defender, tempDam, heal(leechCalk(tempDam)), false, Attacks.LEECH);  
+
+                } else if (attackType == Attacks.REGENERATE) {
+                    UserInterface.printRegen(heal(this.getRegeneration()), this);
+
+                } else if (attackType == Attacks.WILD_ABANDON) {
+                    UserInterface.printDamage(GameCharacter.this, defender, defender.takeDamage(defender.AttackDamageTaken(this, 1d)), 0, false, Attacks.WILD_ABANDON);//nnnnnnnnnnnneds 
+
+                } else if (attackType == Attacks.DO_NOTHING) {
+                    UserInterface.printDoesNothing(this);
+
+                } else if (attackType == Attacks.THROW_GUNPOWDER) {
+                    if (defender.getTurnsOnFireLeft() > 0) {
+                        UserInterface.printDamage(GameCharacter.this, defender, defender.takeDamage(defender.AttackDamageTaken(this, 3d)), 0, false, Attacks.THROW_GUNPOWDER);
+                    } else {
+                        UserInterface.printDamage(GameCharacter.this, defender, defender.takeDamage(1 - defender.getArmour()), 0, false, Attacks.THROW_GUNPOWDER);
+                    }
+                } else if (attackType == Attacks.DETONATE) {
+                    UserInterface.printDetonationMessage(this);
+                    this.attackAll(defender, allBatleParticipants, Attacks.DETONATE);
+                    if (this.isPlayer) {
+                        Player P = (Player) this;
+                        P.delleteEquiped();
+                    } else {
+                        this.setWeapon(this.getDefaultWeapon());
+                    }
                 }
             }
         }
-        
     }
 
     private void attackAll (GameCharacter defender, ArrayList<GameCharacter> allBatleParticipants, Attacks attackType) {
@@ -281,5 +293,14 @@ public abstract class GameCharacter implements Serializable{
 
     public void setAchillesHeel(Attacks achillesHeel) {
         this.achillesHeel = achillesHeel;
+    }
+
+    
+    public String getInstantDeathMesage() {
+        return instantDeathMesage;
+    }
+
+    public void setInstantDeathMesage(String instantDeathMesage) {
+        this.instantDeathMesage = instantDeathMesage;
     }
 }

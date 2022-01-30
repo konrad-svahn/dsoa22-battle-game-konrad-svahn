@@ -9,6 +9,7 @@ public class Player extends GameCharacter {
         super(name, helth, initiative, armour, regeneration);
         this.isPlayer = true;
         this.setAchillesHeel(Attacks.DO_NOTHING);
+        this.setInstantDeathMesage("you where killed instantly");
         setArmour(0);
         setInitiative(initiative);
     } 

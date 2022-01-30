@@ -4,6 +4,7 @@ public class Npc extends GameCharacter{
         super(name, helth, initiative, armour, regeneration);
         this.isPlayer = false;
         this.setAchillesHeel(achillesHeel);
+        this.setInstantDeathMesage(Ansi.PURPLE + this.getName()+ Ansi.RESET + " died instantly");
         setInitiative(initiative);
     } 
 
