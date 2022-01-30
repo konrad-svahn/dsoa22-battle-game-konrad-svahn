@@ -108,16 +108,21 @@ public abstract class GameCharacter implements Serializable{
             damageToDeffender = defender.AttackDamageTaken(this, 1d);
             damageToOthers  = defender.AttackDamageTaken(this, 0.5);
         }
-        for (GameCharacter gameCharacter : allBatleParticipants) {
-            if (gameCharacter == this) {
-            } else if (gameCharacter == defender) {
-                UserInterface.printDamage(this, gameCharacter, gameCharacter.takeDamage(damageToDeffender), 0, false, Attacks.DETONATE);
-            } else {
-                UserInterface.printDamage(this, gameCharacter, gameCharacter.takeDamage(damageToOthers), 0, false, Attacks.DETONATE);
+
+        if (this.isPlayer) {
+            for (GameCharacter gameCharacter : allBatleParticipants) {
+                if (gameCharacter == this) {
+                } else if (gameCharacter == defender) {
+                    UserInterface.printDamage(this, gameCharacter, gameCharacter.takeDamage(damageToDeffender), 0, false, Attacks.DETONATE);
+                } else {
+                    UserInterface.printDamage(this, gameCharacter, gameCharacter.takeDamage(damageToOthers), 0, false, Attacks.DETONATE);
+                }
+                UserInterface.printRemainingHelth(gameCharacter);
             }
-            UserInterface.printRemainingHelth(gameCharacter);
+            System.out.println();
+        } else {
+            UserInterface.printDamage(this,defender, defender.takeDamage(damageToDeffender), 0, false, Attacks.DETONATE);
         }
-        System.out.println();
     }
 
     private int AttackDamageTaken (GameCharacter attacker, Double modifier) {
