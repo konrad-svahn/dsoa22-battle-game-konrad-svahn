@@ -130,9 +130,14 @@ public class UserInterface {
         } else if (attackType == Attacks.CHARGE) {
             System.out.println(Ansi.PURPLE + attacker.getName() + Ansi.RESET + " releases a powerful strike");
         } else if (attackType == Attacks.RAPID_STRIKES) {
-
+            System.out.println(
+                Ansi.PURPLE + attacker.getName() + Ansi.RESET + " strikes " + Ansi.PURPLE + deffender.getName() + Ansi.RESET + " and deals " + Ansi.YELLOW + damage + Ansi.RESET +" damage"
+            );
         } else if (attackType == Attacks.RAPID_FLAME_STRIKES) {
-
+            System.out.println(
+                Ansi.PURPLE + attacker.getName() + Ansi.RESET + " lights " + Ansi.PURPLE + deffender.getName() + Ansi.RED + " on fire " + Ansi.RESET + 
+                " and deals " + Ansi.YELLOW + damage + Ansi.RESET + " damage"
+            );
         }  else if (attackType == Attacks.LEECH) {
             System.out.println(
                 Ansi.PURPLE + attacker.getName() + Ansi.RESET + " drains " + Ansi.YELLOW + damage + Ansi.RESET +" health from " + Ansi.PURPLE + deffender.getName() +
@@ -143,19 +148,28 @@ public class UserInterface {
 
         }  else if (attackType == Attacks.THROW_GUNPOWDER) {
             System.out.println(Attacks.THROW_GUNPOWDER);
+
         } else if (attackType == Attacks.DETONATE) {
 
-        }
+        } // print the stuff that needs to bi printed for many attack types
         if (attackType == Attacks.FLAME_CHARGE || attackType == Attacks.CHARGE || attackType == Attacks.ATTACK || attackType == Attacks.FLAME_ATTACK) {
             System.out.println(
                 Ansi.PURPLE + attacker.getName() + Ansi.RESET + " uses "+ attacker.getWeapon().getName() + " to attack " + Ansi.PURPLE + deffender.getName() + Ansi.RESET + 
                 " dealing " + Ansi.YELLOW + damage + Ansi.RESET +" damage" + fire 
             ); 
         }
-        System.out.println(
-            Ansi.PURPLE + deffender.getName() + Ansi.RESET + " now has " + Ansi.GREEN + deffender.getHelth() + Ansi.RESET + " Health remaining"
-        );
+        if (attackType != Attacks.RAPID_STRIKES && attackType != Attacks.RAPID_FLAME_STRIKES) {
+            printRemainingHelth(deffender);
+        }
+    }
+    
+    public static void printRemainingHelth (GameCharacter deffender) {
+        System.out.println(Ansi.PURPLE + deffender.getName() + Ansi.RESET + " now has " + Ansi.GREEN + deffender.getHelth() + Ansi.RESET + " Health remaining");
         System.out.println();
+    }
+
+    public static void printRapidStarter (GameCharacter attacker, GameCharacter defender) {
+        System.out.println(Ansi.PURPLE + attacker.getName() + Ansi.RESET + " makes 3 quick jabs att " + Ansi.PURPLE + defender.getName() + Ansi.RESET);
     }
 
     public static void printFireDamage (GameCharacter character, int damage) {
