@@ -50,18 +50,22 @@ public class CombatManager {
             
             //asks what enimy to attack if the player decides to use an attack action
             if (actionP == 3 || actionP == 4) {
-                 
-                UserInterface.printEnemySelecktionPromt(fighters,playerNum);
-                enemyToAttack = fighters.size();
 
-                //makes it inposible for the player to attack self and helps to avoid an out of bounds error 
-                while (enemyToAttack == fighters.size()) {
-                enemyToAttack = playerAction(scannAction, fighters.size(), -1);
-                if (enemyToAttack == fighters.size()) {UserInterface.printWarning(fighters.size() - 1);}
-                }
-                
-                if (enemyToAttack <= playerNum) {
-                    enemyToAttack = enemyToAttack - 1;
+                Attacks attackType = getAttackType(actionP, fighters.get(playerNum));
+                if (attackType != Attacks.DO_NOTHING || attackType != Attacks.REGENERATE ) {
+                 
+                    UserInterface.printEnemySelecktionPromt(fighters,playerNum);
+                    enemyToAttack = fighters.size();
+
+                    //makes it inposible for the player to attack self and helps to avoid an out of bounds error 
+                    while (enemyToAttack == fighters.size()) {
+                    enemyToAttack = playerAction(scannAction, fighters.size(), -1);
+                    if (enemyToAttack == fighters.size()) {UserInterface.printWarning(fighters.size() - 1);}
+                    }
+                    
+                    if (enemyToAttack <= playerNum) {
+                        enemyToAttack = enemyToAttack - 1;
+                    }
                 }
             }
 
@@ -93,11 +97,7 @@ public class CombatManager {
                 // performs attack1 or attack 2
                 
                 // sets attackType to be the wheapons first attack if action is the player chose to use the first attack, or the second if the player chose the second  
-                if (action == 3) {
-                    attackType = fighters.get(i).getWeapon().getAttack1();
-                } else {
-                    attackType = fighters.get(i).getWeapon().getAttack2();
-                }
+                attackType = getAttackType(action, fighters.get(i));
 
                 // if the curent fighter is the player they attack the enemy the player seleckted 
                 if(fighters.get(i).isPlayer){
@@ -285,5 +285,15 @@ public class CombatManager {
             return true;
         } 
         return false;
+    }
+
+    private static Attacks getAttackType(int action, GameCharacter actor) {
+        Attacks attackType;
+        if (action == 3) {
+            attackType = actor.getWeapon().getAttack1();
+        } else {
+            attackType = actor.getWeapon().getAttack2();
+        }
+        return attackType;
     }
 }

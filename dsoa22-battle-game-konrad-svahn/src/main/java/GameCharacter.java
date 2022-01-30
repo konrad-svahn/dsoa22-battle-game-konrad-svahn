@@ -34,34 +34,53 @@ public abstract class GameCharacter implements Serializable{
         if (this.chargeLevel == 2) {
             this.chargeLevel = 0;
             defender.turnsOnFireLeft = 2;
+            UserInterface.printDamage(GameCharacter.this, defender, defender.takeAttackDamage(this), true);
         } else if (this.chargeLevel == 1) {
             this.chargeLevel = 0;
+            UserInterface.printDamage(GameCharacter.this, defender, defender.takeAttackDamage(this), false);
+
         } else {
             if (attackType == Attacks.ATTACK) {
+                UserInterface.printDamage(GameCharacter.this, defender, defender.takeAttackDamage(this), false);
 
             } else if (attackType == Attacks.FLAME_ATTACK) {
                 defender.turnsOnFireLeft = 2;
+                UserInterface.printDamage(GameCharacter.this, defender, defender.takeAttackDamage(this), true);
+
             } else if (attackType == Attacks.CHARGE) {
                 this.chargeLevel = 1;
+                UserInterface.printCharge(this);
+
             } else if (attackType == Attacks.FLAME_CHARGE) {
                 this.chargeLevel = 2;
+                UserInterface.printCharge(this);
+
             } else if (attackType == Attacks.RAPID_STRIKES) {
-    
+                UserInterface.printDamage(GameCharacter.this, defender, defender.takeAttackDamage(this), false);
+
             } else if (attackType == Attacks.RAPID_FLAME_STRIKES) {
                 defender.turnsOnFireLeft = 1;
+                UserInterface.printDamage(GameCharacter.this, defender, defender.takeAttackDamage(this), true);
+
             } else if (attackType == Attacks.LEECH) {
     
             } else if (attackType == Attacks.REGENERATE) {
-                heal(this.getRegeneration());
+                UserInterface.printRegen(heal(this.getRegeneration()), this);
+                
             } else if (attackType == Attacks.WILD_ABANDON) {
+                UserInterface.printDamage(GameCharacter.this, defender, defender.takeAttackDamage(this), false);
+
+            } else if (attackType == Attacks.DO_NOTHING) {
+                UserInterface.printDoesNothing(this);
 
             } else if (attackType == Attacks.THROW_GUNPOWDER) {
+                UserInterface.printDamage(GameCharacter.this, defender, defender.takeAttackDamage(this), false);
      
             } else if (attackType == Attacks.DETONATE) {
-    
+                UserInterface.printDamage(GameCharacter.this, defender, defender.takeAttackDamage(this), false);
             }
         }
-        UserInterface.printDamage(GameCharacter.this, defender, defender.takeAttackDamage(this));
+        
     }
 
     private int takeAttackDamage(GameCharacter attacker) {

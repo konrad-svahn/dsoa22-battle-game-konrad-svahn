@@ -120,10 +120,12 @@ public class UserInterface {
     }
 
     // the following methods print simple actions related to combat
-    public static void printDamage (GameCharacter attacker, GameCharacter deffender, int damage) {
+    public static void printDamage (GameCharacter attacker, GameCharacter deffender, int damage, boolean lightsOnfire) {
+        String fire = ".";
+        if (lightsOnfire) { fire = " and " + Ansi.RED + "lighting them on fire" + Ansi.RESET + " for " + Ansi.RED + deffender.getTurnsOnFireLeft() + Ansi.RESET +" turns";}
         System.out.println(
             Ansi.PURPLE + attacker.getName() + Ansi.RESET + " uses "+ attacker.getWeapon().getName() + " to attack " + Ansi.PURPLE + deffender.getName() + Ansi.RESET + 
-            " dealing " + Ansi.YELLOW + damage + Ansi.RESET +" damage. " 
+            " dealing " + Ansi.YELLOW + damage + Ansi.RESET +" damage" + fire 
         ); 
         System.out.println(
             Ansi.PURPLE + deffender.getName() + Ansi.RESET + " now has " + Ansi.GREEN + deffender.getHelth() + Ansi.RESET + " Health remaining"
@@ -149,8 +151,24 @@ public class UserInterface {
         System.out.println();
     }
 
-    public static void printRegen () {
-        System.out.println("troll");
+    public static void printRegen (int amount, GameCharacter character) {
+        System.out.println(Ansi.PURPLE + character.getName() + Ansi.RESET +" recovered " + Ansi.GREEN + amount + Ansi.RESET + " helth, and now has " +
+         Ansi.GREEN + character.getHelth() + Ansi.RESET + " Health remaining");
+        System.out.println();
+    }
+
+    public static void printCharge (GameCharacter character) {
+        if (character.getChargeLevel() == 2) {
+            System.out.println(Ansi.PURPLE + character.getName() + Ansi.RESET + " is prepareing to use a fire ball");
+        } else if (character.getChargeLevel() == 1) {
+            System.out.println(Ansi.PURPLE + character.getName() + Ansi.RESET + " prepares for a powerful strike");
+        }
+        System.out.println();
+    }
+
+    public static void printDoesNothing (GameCharacter character) {
+        System.out.println(Ansi.PURPLE + character.getName() + Ansi.RESET + " does nothing");
+        System.out.println();
     }
 
     public static void printDeath (GameCharacter victim) {
