@@ -120,13 +120,38 @@ public class UserInterface {
     }
 
     // the following methods print simple actions related to combat
-    public static void printDamage (GameCharacter attacker, GameCharacter deffender, int damage, boolean lightsOnfire) {
+    // print damage takes kare of knowing what to print for which attack types, it has a lot of parameters that are only ysed for certan attacks so the method is very messy to use
+    public static void printDamage (GameCharacter attacker, GameCharacter deffender, int damage, int amountOfHelthReginedByUsingLeech, boolean lightsDefenderOnfire, Attacks attackType) {
         String fire = ".";
-        if (lightsOnfire) { fire = " and " + Ansi.RED + "lighting them on fire" + Ansi.RESET + " for " + Ansi.RED + deffender.getTurnsOnFireLeft() + Ansi.RESET +" turns";}
-        System.out.println(
-            Ansi.PURPLE + attacker.getName() + Ansi.RESET + " uses "+ attacker.getWeapon().getName() + " to attack " + Ansi.PURPLE + deffender.getName() + Ansi.RESET + 
-            " dealing " + Ansi.YELLOW + damage + Ansi.RESET +" damage" + fire 
-        ); 
+        if (lightsDefenderOnfire) { fire = " and " + Ansi.RED + "lighting them on fire" + Ansi.RESET + " for " + Ansi.RED + deffender.getTurnsOnFireLeft() + Ansi.RESET +" turns";}
+
+        if (attackType == Attacks.FLAME_CHARGE) {
+            System.out.println(Ansi.PURPLE + attacker.getName() + Ansi.RESET + " releases the fire ball");
+        } else if (attackType == Attacks.CHARGE) {
+            System.out.println(Ansi.PURPLE + attacker.getName() + Ansi.RESET + " releases a powerful strike");
+        } else if (attackType == Attacks.RAPID_STRIKES) {
+
+        } else if (attackType == Attacks.RAPID_FLAME_STRIKES) {
+
+        }  else if (attackType == Attacks.LEECH) {
+            System.out.println(
+                Ansi.PURPLE + attacker.getName() + Ansi.RESET + " drains " + Ansi.YELLOW + damage + Ansi.RESET +" health from " + Ansi.PURPLE + deffender.getName() +
+                Ansi.RESET + " and recovers " + Ansi.GREEN + amountOfHelthReginedByUsingLeech + Ansi.RESET + " health, bringing their helth up to " + Ansi.GREEN + 
+                attacker.getHelth() + Ansi.RESET
+            );
+        }  else if (attackType == Attacks.WILD_ABANDON) {
+
+        }  else if (attackType == Attacks.THROW_GUNPOWDER) {
+            System.out.println(Attacks.THROW_GUNPOWDER);
+        } else if (attackType == Attacks.DETONATE) {
+
+        }
+        if (attackType == Attacks.FLAME_CHARGE || attackType == Attacks.CHARGE || attackType == Attacks.ATTACK || attackType == Attacks.FLAME_ATTACK) {
+            System.out.println(
+                Ansi.PURPLE + attacker.getName() + Ansi.RESET + " uses "+ attacker.getWeapon().getName() + " to attack " + Ansi.PURPLE + deffender.getName() + Ansi.RESET + 
+                " dealing " + Ansi.YELLOW + damage + Ansi.RESET +" damage" + fire 
+            ); 
+        }
         System.out.println(
             Ansi.PURPLE + deffender.getName() + Ansi.RESET + " now has " + Ansi.GREEN + deffender.getHelth() + Ansi.RESET + " Health remaining"
         );

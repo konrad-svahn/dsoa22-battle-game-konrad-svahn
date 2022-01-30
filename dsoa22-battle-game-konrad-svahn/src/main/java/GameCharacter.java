@@ -30,23 +30,23 @@ public abstract class GameCharacter implements Serializable{
     }
 
     public void attack(GameCharacter defender, Attacks attackType) {
-
+        int tempDam;
         if (this.chargeLevel == 2) {
             this.chargeLevel = 0;
             defender.turnsOnFireLeft = 2;
-            UserInterface.printDamage(GameCharacter.this, defender, defender.takeAttackDamage(this, 3d), true);
+            UserInterface.printDamage(GameCharacter.this, defender, defender.takeAttackDamage(this, 3d), 0, true, Attacks.FLAME_CHARGE);
 
         } else if (this.chargeLevel == 1) {
             this.chargeLevel = 0;
-            UserInterface.printDamage(GameCharacter.this, defender, defender.takeAttackDamage(this, 3d), false);
+            UserInterface.printDamage(GameCharacter.this, defender, defender.takeAttackDamage(this, 3d), 0, false, Attacks.CHARGE);
 
         } else {
             if (attackType == Attacks.ATTACK) {
-                UserInterface.printDamage(GameCharacter.this, defender, defender.takeAttackDamage(this, 1d), false);
+                UserInterface.printDamage(GameCharacter.this, defender, defender.takeAttackDamage(this, 1d), 0, false, Attacks.ATTACK);
 
             } else if (attackType == Attacks.FLAME_ATTACK) {
-                defender.turnsOnFireLeft = 2;
-                UserInterface.printDamage(GameCharacter.this, defender, defender.takeAttackDamage(this, 1d), true);
+                defender.turnsOnFireLeft = 3;
+                UserInterface.printDamage(GameCharacter.this, defender, defender.takeAttackDamage(this, 1d), 0, true, Attacks.FLAME_ATTACK);
 
             } else if (attackType == Attacks.CHARGE) {
                 this.chargeLevel = 1;
@@ -57,30 +57,29 @@ public abstract class GameCharacter implements Serializable{
                 UserInterface.printCharge(this);
 
             } else if (attackType == Attacks.RAPID_STRIKES) {
-                UserInterface.printDamage(GameCharacter.this, defender, defender.takeAttackDamage(this, 0.5), false);
+                UserInterface.printDamage(GameCharacter.this, defender, defender.takeAttackDamage(this, 0.5), 0, false, Attacks.RAPID_STRIKES);//nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnneds more work
 
             } else if (attackType == Attacks.RAPID_FLAME_STRIKES) {
-                defender.turnsOnFireLeft = 1;
-                UserInterface.printDamage(GameCharacter.this, defender, defender.takeAttackDamage(this, 0.5), true);
+                defender.turnsOnFireLeft = 2;
+                UserInterface.printDamage(GameCharacter.this, defender, defender.takeAttackDamage(this, 0.5), 0, true, Attacks.RAPID_FLAME_STRIKES);//nnnnnnnnnnnnnnnnnnnnnnnnneds more work
 
             } else if (attackType == Attacks.LEECH) {
-                int tempDam = defender.takeAttackDamage(this, 1d);
-                UserInterface.printDamage(GameCharacter.this, defender, tempDam, false);
-                UserInterface.printRegen(heal(leechCalk(tempDam)),this);
+                tempDam = defender.takeAttackDamage(this, 1d);
+                UserInterface.printDamage(GameCharacter.this, defender, tempDam, heal(leechCalk(tempDam)), false, Attacks.LEECH);// needs flavour text
             } else if (attackType == Attacks.REGENERATE) {
                 UserInterface.printRegen(heal(this.getRegeneration()), this);
                 
             } else if (attackType == Attacks.WILD_ABANDON) {
-                UserInterface.printDamage(GameCharacter.this, defender, defender.takeAttackDamage(this, 1d), false);
+                UserInterface.printDamage(GameCharacter.this, defender, defender.takeAttackDamage(this, 1d), 0, false, Attacks.WILD_ABANDON);//nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnneds more work
 
             } else if (attackType == Attacks.DO_NOTHING) {
                 UserInterface.printDoesNothing(this);
 
             } else if (attackType == Attacks.THROW_GUNPOWDER) {
-                UserInterface.printDamage(GameCharacter.this, defender, defender.takeAttackDamage(this, 1d), false);
+                UserInterface.printDamage(GameCharacter.this, defender, defender.takeAttackDamage(this, 1d), 0, false, Attacks.THROW_GUNPOWDER);//nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnneds more work
      
             } else if (attackType == Attacks.DETONATE) {
-                UserInterface.printDamage(GameCharacter.this, defender, defender.takeAttackDamage(this, 1d), false);
+                UserInterface.printDamage(GameCharacter.this, defender, defender.takeAttackDamage(this, 1d), 0, false, Attacks.DETONATE);//nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnneds more work
             }
         }
         
