@@ -98,7 +98,7 @@ public class CombatManager {
             // if statements that check what the next action is and performs it 
             if (action == 2) {
                 //block
-                fighters.get(playerNum).setArmour(40);
+                fighters.get(playerNum).setArmour(60);
                 UserInterface.printBlock(fighters.get(playerNum));
             } else if (action == 3 || action == 4) {
                 // performs attack1 or attack 2
