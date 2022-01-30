@@ -5,9 +5,10 @@ public class Player extends GameCharacter {
 
     private ArrayList<Weapon> inventory = new ArrayList<>();
 
-    public Player(String name, int helth, int initiative, int armour, int regeneration, Attacks achillesHeel) {
+    public Player(String name, int helth, int initiative, int armour, int regeneration) {
         super(name, helth, initiative, armour, regeneration);
         this.isPlayer = true;
+        this.setAchillesHeel(Attacks.DO_NOTHING);
         setArmour(0);
         setInitiative(initiative);
     } 
@@ -41,12 +42,21 @@ public class Player extends GameCharacter {
         return inventory.size();
     }
 
+    public void delleteEquiped () {
+        for (int i = 0; i < inventory.size(); i++) {
+            if (inventory.get(i).isEquiped()) {
+                removeFromInventory(i);
+            }
+        }
+        this.setWeapon(this.getDefaultWeapon());
+    }
+
     public static Player create(Scanner scanner) {
         UserInterface.enterYourName();
         String name = scanner.nextLine();
 
         // will be changed to: return new Player(name, 1000, 5, 0, 35, Attacks.DO_NOTHING);
-        Player player = new Player(name, 1000, 5, 0, 35, Attacks.DO_NOTHING);
+        Player player = new Player(name, 1000, 5, 0, 35);
 
         player.addToInventory(new Weapon("testWeapon1", 3, 0, Attacks.ATTACK, Attacks.FLAME_ATTACK));
         player.addToInventory(new Weapon("testWeapon2", 3, 0, Attacks.CHARGE, Attacks.FLAME_CHARGE));

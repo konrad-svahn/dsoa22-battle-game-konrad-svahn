@@ -116,7 +116,12 @@ public class UserInterface {
     }
 
     public static void printItemRemoval (Weapon weapon) {
-        System.out.println("you threw away "+weapon.getName());
+        System.out.println(weapon.getName() + " was removed from your inventory");
+    }
+
+    public static void printInventoryEmpty () {
+        System.out.println("there are no items in your inventory");
+        System.out.println();
     }
 
     // the following methods print simple actions related to combat
@@ -225,6 +230,11 @@ public class UserInterface {
         System.out.println();
     }
 
+    public static void printDetonationMessage (GameCharacter character) {
+        System.out.println(Ansi.PURPLE + character.getName() + Ansi.RESET + " detonates their weapon");
+    }
+
+
     public static void printDeath (GameCharacter victim) {
         System.out.println(Ansi.PURPLE + victim.getName() + Ansi.RESET + " has died");
         System.out.println();
@@ -240,7 +250,7 @@ public class UserInterface {
     }
 
     public static void enterYourName () {
-        // not being able to print from method is usualy a good idea but the fackt that i had to make this its own method is stupid
+        // not being able to print from method is usualy a good idea but the fact that i had to make this its own method is stupid
         System.out.println("Enter your name");
     }
 

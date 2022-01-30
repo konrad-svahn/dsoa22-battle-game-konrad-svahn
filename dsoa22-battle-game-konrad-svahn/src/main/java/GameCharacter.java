@@ -32,6 +32,7 @@ public abstract class GameCharacter implements Serializable{
 
     public void attack(GameCharacter defender, ArrayList<GameCharacter> allBatleParticipants, Attacks attackType) {
         int tempDam;
+        //System.out.println(defender.getAchillesHeel());
         if (this.chargeLevel == 2) {
             this.chargeLevel = 0;
             defender.turnsOnFireLeft = 2;
@@ -92,7 +93,14 @@ public abstract class GameCharacter implements Serializable{
                     UserInterface.printDamage(GameCharacter.this, defender, defender.takeDamage(1 - defender.getArmour()), 0, false, Attacks.THROW_GUNPOWDER);
                 }
             } else if (attackType == Attacks.DETONATE) {
+                UserInterface.printDetonationMessage(this);
                 this.attackAll(defender, allBatleParticipants, Attacks.DETONATE);
+                if (this.isPlayer) {
+                    Player P = (Player) this;
+                    P.delleteEquiped();
+                } else {
+                    this.setWeapon(this.getDefaultWeapon());
+                }
             }
         }
         

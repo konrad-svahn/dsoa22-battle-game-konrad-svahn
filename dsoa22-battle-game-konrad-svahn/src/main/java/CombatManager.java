@@ -155,34 +155,38 @@ public class CombatManager {
         int seleckted;
         boolean deleteItems;
 
-        // if addAndRemoveWheaponFromInventory is inabled asks the player if they want too equip or delete whepons 
-        if (addAndRemoveWheaponFromInventory) {
-            UserInterface.equipOrDelete();
-            seleckted = playerAction(scanAction, 2, 0);
-            if (seleckted == 2) {
-                deleteItems = true;
-            } else {
-                deleteItems = false;
-            }
-        } else {
-            deleteItems = false; 
-        }
-        UserInterface.printInventory(player);   
-        // loop that keaps you inside the inventory unless you press q to exit
-        while (true) {
-            UserInterface.printInventoryActionPromt(deleteItems);
-            seleckted = inventoryChoice(scanAction,player.getInventorySize());
-            if (seleckted > 0) {
-                if (deleteItems == true) {
-                    player.removeFromInventory(seleckted - 1);
+        if (player.getInventorySize() > 0) {
+                // if addAndRemoveWheaponFromInventory is inabled asks the player if they want too equip or delete whepons 
+            if (addAndRemoveWheaponFromInventory) {
+                UserInterface.equipOrDelete();
+                seleckted = playerAction(scanAction, 2, 0);
+                if (seleckted == 2) {
+                    deleteItems = true;
                 } else {
-                    player.setWeapon(player.getFromInventory(seleckted - 1));
-                    UserInterface.printEquipMessage(player.getWeapon());
-                    break;
+                    deleteItems = false;
                 }
-            // breaks the loop if you presed q
-            } else if (seleckted == 0) {break;}
-        } 
+            } else {
+                deleteItems = false; 
+            }
+            UserInterface.printInventory(player);   
+            // loop that keaps you inside the inventory unless you press q to exit
+            while (true) {
+                UserInterface.printInventoryActionPromt(deleteItems);
+                seleckted = inventoryChoice(scanAction,player.getInventorySize());
+                if (seleckted > 0) {
+                    if (deleteItems == true) {
+                        player.removeFromInventory(seleckted - 1);
+                    } else {
+                        player.setWeapon(player.getFromInventory(seleckted - 1));
+                        UserInterface.printEquipMessage(player.getWeapon());
+                        break;
+                    }
+                // breaks the loop if you presed q
+                } else if (seleckted == 0) {break;}
+            } 
+        } else {
+            UserInterface.printInventoryEmpty();
+        }
     }
 
     //sorts by higest initiative

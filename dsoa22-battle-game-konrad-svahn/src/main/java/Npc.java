@@ -3,6 +3,7 @@ public class Npc extends GameCharacter{
     public Npc(String name, int helth, int initiative ,int armour ,int regeneration, Attacks achillesHeel) {
         super(name, helth, initiative, armour, regeneration);
         this.isPlayer = false;
+        this.setAchillesHeel(achillesHeel);
         setInitiative(initiative);
     } 
 
