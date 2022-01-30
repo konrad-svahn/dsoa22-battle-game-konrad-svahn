@@ -64,7 +64,9 @@ public abstract class GameCharacter implements Serializable{
                 UserInterface.printDamage(GameCharacter.this, defender, defender.takeAttackDamage(this, 0.5), true);
 
             } else if (attackType == Attacks.LEECH) {
-    
+                int tempDam = defender.takeAttackDamage(this, 1d);
+                UserInterface.printDamage(GameCharacter.this, defender, tempDam, false);
+                UserInterface.printRegen(heal(leechCalk(tempDam)),this);
             } else if (attackType == Attacks.REGENERATE) {
                 UserInterface.printRegen(heal(this.getRegeneration()), this);
                 
@@ -120,6 +122,13 @@ public abstract class GameCharacter implements Serializable{
         this.helth += amount;
         if (this.helth > this.maxHelth) { this.helth = this.maxHelth;}
         return amount;
+    }
+
+    private int leechCalk (int damage) {
+        double leech = this.regeneration/100d; 
+        leech *= damage;
+        int leechInt = (int) leech;
+        return leechInt;
     }
 
     public boolean isDead() {

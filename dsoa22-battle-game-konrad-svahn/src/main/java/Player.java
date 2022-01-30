@@ -44,6 +44,6 @@ public class Player extends GameCharacter {
     public static Player create(Scanner scanner) {
         UserInterface.enterYourName();
         String name = scanner.nextLine();
-        return new Player(name, 1000, 5, 0, 35, Attacks.DO_NOTHING);
+        return new Player(name, 1000, 5, 0, 40, Attacks.DO_NOTHING);
     }
 }
